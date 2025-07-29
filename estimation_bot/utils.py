@@ -7,8 +7,8 @@ import json
 import logging
 from typing import List, Dict, Any
 from datetime import datetime
-from .card import Card, Suit
-from .player import Player
+from estimation_bot.card import Card, Suit
+from estimation_bot.player import Player
 
 
 def setup_logging(log_file: str = "estimation_game.log", level: int = logging.INFO):

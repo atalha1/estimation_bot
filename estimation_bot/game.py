@@ -4,10 +4,10 @@ Manages overall game state, rounds, and progression.
 """
 
 from typing import List, Dict, Optional, Tuple
-from .card import Suit
-from .deck import Deck
-from .player import Player, BotInterface
-from .round import Round
+from estimation_bot.card import Suit
+from estimation_bot.deck import Deck
+from estimation_bot.player import Player, BotInterface
+from estimation_bot.round import Round
 
 
 class EstimationGame:

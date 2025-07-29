@@ -5,7 +5,7 @@ Handles deck creation, shuffling, and dealing cards to players.
 
 import random
 from typing import List, Dict
-from .card import Card, create_deck
+from estimation_bot.card import Card, create_deck
 
 
 class Deck:

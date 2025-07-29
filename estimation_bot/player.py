@@ -5,7 +5,7 @@ Defines player state and strategy interface.
 
 from typing import List, Optional
 from abc import ABC, abstractmethod
-from .card import Card, Suit
+from estimation_bot.card import Card, Suit
 
 
 class Player:

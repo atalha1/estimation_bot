@@ -4,10 +4,10 @@ Handles human player input and game display.
 """
 
 from typing import List, Optional, Tuple
-from ..game.card import Card, Suit
-from ..game.player import Player
-from ..game.round import Round
-from ..game.rules import SUIT_RANKINGS
+from estimation_bot.card import Card, Suit
+from estimation_bot.player import Player
+from estimation_bot.round import Round
+from estimation_bot.rules import SUIT_RANKINGS
 
 
 def display_hand(hand: List[Card], title: str = "Your Hand"):

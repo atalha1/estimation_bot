@@ -5,8 +5,8 @@ Provides a baseline bot that makes random legal moves.
 
 import random
 from typing import List, Optional
-from ..game.card import Card, Suit
-from ..game.player import BotInterface
+from estimation_bot.card import Card, Suit
+from estimation_bot.player import BotInterface
 
 
 class RandomBot(BotInterface):

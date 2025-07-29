@@ -4,7 +4,7 @@ Contains game rules, validation logic, and rule constants.
 """
 
 from typing import List, Optional
-from .card import Card, Suit
+from estimation_bot.card import Card, Suit
 
 
 # Game constants

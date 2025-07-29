@@ -5,9 +5,9 @@ Uses deep Q-learning or policy gradient methods.
 
 import numpy as np
 from typing import List, Optional, Tuple
-from ..game.card import Card, Suit
-from ..game.player import BotInterface
-from .features import FeatureExtractor
+from estimation_bot.card import Card, Suit
+from estimation_bot.player import BotInterface
+from bot.features import FeatureExtractor
 
 
 class RLBot(BotInterface):

@@ -4,8 +4,8 @@ Handles trick resolution and round progression.
 """
 
 from typing import List, Dict, Optional, Tuple
-from .card import Card, Suit
-from .player import Player
+from estimation_bot.card import Card, Suit
+from estimation_bot.player import Player
 
 
 class Trick:

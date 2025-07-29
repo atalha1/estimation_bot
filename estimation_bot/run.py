@@ -6,11 +6,12 @@ Run a complete game with bots or human players.
 
 import argparse
 from typing import List
-from game.player import Player, HumanPlayer
-from game.game import EstimationGame
+from estimation_bot.player import Player, HumanPlayer
+from estimation_bot.game import EstimationGame
+from estimation_bot.utils import setup_logging, GameLogger
 from bot.random_bot import RandomBot, WeightedRandomBot
 from bot.heuristic_bot import HeuristicBot, AdvancedHeuristicBot
-from game.utils import setup_logging, GameLogger
+
 
 
 def create_bot_player(bot_type: str, player_id: int) -> Player:

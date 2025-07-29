@@ -4,8 +4,8 @@ Uses rule-based strategy with card counting and basic tactics.
 """
 
 from typing import List, Optional, Dict
-from ..game.card import Card, Suit, Rank
-from ..game.player import BotInterface
+from estimation_bot.card import Card, Suit, Rank
+from estimation_bot.player import BotInterface
 
 
 class HeuristicBot(BotInterface):

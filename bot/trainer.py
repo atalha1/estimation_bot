@@ -7,11 +7,11 @@ import json
 import time
 from typing import List, Dict, Any
 from datetime import datetime
-from ..game.game import EstimationGame
-from ..game.player import Player
-from ..game.utils import GameLogger, save_game_log
-from .random_bot import RandomBot, WeightedRandomBot
-from .heuristic_bot import HeuristicBot, AdvancedHeuristicBot
+from estimation_bot.game import EstimationGame
+from estimation_bot.player import Player
+from estimation_bot.utils import GameLogger, save_game_log
+from bot.random_bot import RandomBot, WeightedRandomBot
+from bot.heuristic_bot import HeuristicBot, AdvancedHeuristicBot
 
 
 class SelfPlayTrainer:

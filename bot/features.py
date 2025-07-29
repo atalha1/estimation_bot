@@ -5,8 +5,8 @@ Converts game state into numerical features for neural network input.
 
 import numpy as np
 from typing import List, Optional, Dict, Tuple
-from ..game.card import Card, Suit, Rank
-from ..game.player import Player
+from estimation_bot.card import Card, Suit, Rank
+from estimation_bot.player import Player
 
 
 class FeatureExtractor:
@@ -245,15 +245,17 @@ def decode_network_card(card_idx: int) -> Card:
     rank_idx = card_idx % 13
     suit = list(Suit)[suit_idx]
     rank = list(Rank)[rank_idx]
-    return Card(suit, rank)"""
+    return Card(suit, rank)
+    
+"""
 Feature extraction module for Estimation RL bot.
 Converts game state into numerical features for neural network input.
 """
 
 import numpy as np
 from typing import List, Optional, Dict, Tuple
-from ..game.card import Card, Suit, Rank
-from ..game.player import Player
+from estimation_bot.card import Card, Suit, Rank
+from estimation_bot.player import Player
 
 
 class FeatureExtractor:
