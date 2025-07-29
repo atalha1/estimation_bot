@@ -41,7 +41,7 @@ class EstimationGame:
             return False
         speed_start = 14 if self.game_mode == "FULL" else 6
         return round_number >= speed_start
-        
+
     def get_trump_suit(self, round_number):
         """
         Determines the trump suit for a given round.
