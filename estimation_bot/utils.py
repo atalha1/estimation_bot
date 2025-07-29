@@ -216,6 +216,13 @@ class GameLogger:
         """Log start of new round."""
         self.logger.info(f"\n=== Round {round_num} - Trump: {trump_suit} ===")
     
+    def log_game_start(self, game_mode: str, player_names: List[str]):
+        """Log the start of a new game session."""
+        self.logger.info(f"\n=== NEW GAME STARTED ===")
+        self.logger.info(f"Mode: {game_mode}")
+        self.logger.info(f"Players: {', '.join(player_names)}")
+
+    
     def log_game_end(self, winner_name: str, final_scores: Dict[str, int]):
         """Log game completion."""
         self.logger.info(f"\n=== GAME COMPLETE ===")

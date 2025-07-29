@@ -1,0 +1,16 @@
+2025-07-29 22:05:22,987 - INFO - 
+=== NEW GAME STARTED ===
+2025-07-29 22:05:22,989 - INFO - Mode: FULL
+2025-07-29 22:05:22,990 - INFO - Players: RandomBot_0, RandomBot_1, RandomBot_2, RandomBot_3
+2025-07-29 22:05:22,991 - ERROR - Game error: 'EstimationGame' object has no attribute 'get_trump_suit'
+2025-07-29 22:17:02,738 - INFO - 
+=== NEW GAME STARTED ===
+2025-07-29 22:17:02,739 - INFO - Mode: FULL
+2025-07-29 22:17:02,740 - INFO - Players: RandomBot_0, RandomBot_1, RandomBot_2, RandomBot_3
+2025-07-29 22:17:02,746 - INFO - 
+=== GAME COMPLETE ===
+2025-07-29 22:17:02,746 - INFO - Winner: RandomBot_1
+2025-07-29 22:17:02,747 - INFO - RandomBot_0: -170 points
+2025-07-29 22:17:02,748 - INFO - RandomBot_1: -127 points
+2025-07-29 22:17:02,749 - INFO - RandomBot_2: -165 points
+2025-07-29 22:17:02,750 - INFO - RandomBot_3: -206 points

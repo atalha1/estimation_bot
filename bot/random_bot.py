@@ -9,50 +9,78 @@ from estimation_bot.card import Card, Suit
 from estimation_bot.player import BotInterface
 
 
+"""
+Random bot implementation for Estimation card game.
+Provides a baseline bot that makes random legal moves.
+"""
+
+import random
+from typing import List, Optional
+from estimation_bot.card import Card, Suit, Rank
+from estimation_bot.player import BotInterface
+
+
 class RandomBot(BotInterface):
     """Bot that makes completely random legal moves."""
-    
+
     def __init__(self, name: str = "RandomBot"):
         self.name = name
-    
-    def make_bid(self, hand: List[Card], trump_suit: Suit, 
+
+    def make_bid(self, hand: List[Card], trump_suit: Suit,
                  other_bids: List[Optional[int]]) -> int:
-        """
-        Make a random bid between 0 and hand size.
-        
-        Args:
-            hand: Current hand of cards
-            trump_suit: Trump suit for this round  
-            other_bids: Bids made by other players
-            
-        Returns:
-            Random bid (0 to hand_size)
-        """
+        """Random bid between 0 and hand size."""
         return random.randint(0, len(hand))
-    
+
+    def make_estimation(self,
+                        hand: List[Card],
+                        trump_suit: Optional[Suit],
+                        declarer_bid: int,
+                        other_estimations: List[Optional[int]],
+                        is_last_estimator: bool = False) -> int:
+        """
+        Estimate how many tricks this bot expects to win.
+        A basic heuristic based on high cards and trump.
+        """
+        high_ranks = {Rank.ACE, Rank.KING, Rank.QUEEN}
+        estimated_tricks = 0.0
+
+        for card in hand:
+            if trump_suit and card.suit == trump_suit:
+                if card.rank in high_ranks:
+                    estimated_tricks += 1.0
+                else:
+                    estimated_tricks += 0.5
+            else:
+                if card.rank == Rank.ACE:
+                    estimated_tricks += 1.0
+                elif card.rank == Rank.KING:
+                    estimated_tricks += 0.6
+                elif card.rank == Rank.QUEEN:
+                    estimated_tricks += 0.4
+                elif card.rank == Rank.JACK:
+                    estimated_tricks += 0.3
+
+        estimate = int(round(estimated_tricks))
+
+        if is_last_estimator:
+            total_so_far = sum(e for e in other_estimations if e is not None)
+            if total_so_far + estimate == declarer_bid:
+                estimate = max(0, estimate - 1)
+
+        return max(0, min(13, estimate))
+
     def choose_card(self, hand: List[Card], valid_plays: List[Card],
-                   trump_suit: Suit, led_suit: Optional[Suit],
-                   trick_cards: List[Card]) -> Card:
-        """
-        Choose a random valid card to play.
-        
-        Args:
-            hand: Current hand
-            valid_plays: Cards that can legally be played
-            trump_suit: Trump suit for this round
-            led_suit: Suit led in current trick
-            trick_cards: Cards already played in current trick
-            
-        Returns:
-            Randomly selected valid card
-        """
+                    trump_suit: Suit, led_suit: Optional[Suit],
+                    trick_cards: List[Card]) -> Card:
+        """Choose a random valid card to play."""
         if not valid_plays:
             raise ValueError("No valid plays available")
-        
+
         return random.choice(valid_plays)
-    
+
     def __str__(self):
         return self.name
+
 
 
 class WeightedRandomBot(BotInterface):

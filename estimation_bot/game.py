@@ -41,6 +41,15 @@ class EstimationGame:
             return False
         speed_start = 14 if self.game_mode == "FULL" else 6
         return round_number >= speed_start
+        
+    def get_trump_suit(self, round_number):
+        """
+        Determines the trump suit for a given round.
+        For now, let's assume the trump suit is always randomly chosen from suits.
+        You can later replace this logic with actual Estimation rules.
+        """
+        import random
+        return random.choice(['S', 'H', 'D', 'C'])  # Spades, Hearts, Diamonds, Clubs
     
     def get_speed_round_trump(self, round_number: int) -> Optional[Suit]:
         """Get predetermined trump for speed rounds."""
