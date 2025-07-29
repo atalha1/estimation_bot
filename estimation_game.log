@@ -14,3 +14,25 @@
 2025-07-29 22:17:02,748 - INFO - RandomBot_1: -127 points
 2025-07-29 22:17:02,749 - INFO - RandomBot_2: -165 points
 2025-07-29 22:17:02,750 - INFO - RandomBot_3: -206 points
+2025-07-30 00:28:31,017 - INFO - 
+=== NEW GAME STARTED ===
+2025-07-30 00:28:31,017 - INFO - Mode: FULL
+2025-07-30 00:28:31,017 - INFO - Players: RandomBot_0, RandomBot_1, RandomBot_2, RandomBot_3
+2025-07-30 00:28:31,033 - INFO - 
+=== GAME COMPLETE ===
+2025-07-30 00:28:31,033 - INFO - Winner: RandomBot_1
+2025-07-30 00:28:31,034 - INFO - RandomBot_0: -132 points
+2025-07-30 00:28:31,035 - INFO - RandomBot_1: -125 points
+2025-07-30 00:28:31,036 - INFO - RandomBot_2: -248 points
+2025-07-30 00:28:31,036 - INFO - RandomBot_3: -125 points
+2025-07-30 00:30:01,025 - INFO - 
+=== NEW GAME STARTED ===
+2025-07-30 00:30:01,026 - INFO - Mode: MICRO
+2025-07-30 00:30:01,027 - INFO - Players: RandomBot_0, RandomBot_1, RandomBot_2, RandomBot_3
+2025-07-30 00:30:01,031 - INFO - 
+=== GAME COMPLETE ===
+2025-07-30 00:30:01,031 - INFO - Winner: RandomBot_1
+2025-07-30 00:30:01,032 - INFO - RandomBot_0: -78 points
+2025-07-30 00:30:01,033 - INFO - RandomBot_1: -46 points
+2025-07-30 00:30:01,033 - INFO - RandomBot_2: -47 points
+2025-07-30 00:30:01,034 - INFO - RandomBot_3: -102 points

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Main entry point for Estimation card game.
-Run a complete game with bots or human players.
+Run a complete game with random bots or human players.
 """
 
 import argparse
@@ -9,25 +9,16 @@ from typing import List
 from estimation_bot.player import Player, HumanPlayer
 from estimation_bot.game import EstimationGame
 from estimation_bot.utils import setup_logging, GameLogger
-from bot.random_bot import RandomBot, WeightedRandomBot
-from bot.heuristic_bot import HeuristicBot, AdvancedHeuristicBot
-
+from bot.random_bot import RandomBot
 
 
 def create_bot_player(bot_type: str, player_id: int) -> Player:
     """Create a bot player of specified type."""
-    bot_map = {
-        'random': RandomBot,
-        'weighted': WeightedRandomBot,
-        'heuristic': HeuristicBot,
-        'advanced': AdvancedHeuristicBot
-    }
+    if bot_type != 'random':
+        raise ValueError(f"Only 'random' bot type is supported, got: {bot_type}")
     
-    if bot_type not in bot_map:
-        raise ValueError(f"Unknown bot type: {bot_type}")
-    
-    player = Player(player_id, f"{bot_type.title()}Bot_{player_id}")
-    player.strategy = bot_map[bot_type](f"{bot_type.title()}Bot_{player_id}")
+    player = Player(player_id, f"RandomBot_{player_id}")
+    player.strategy = RandomBot(f"RandomBot_{player_id}")
     return player
 
 
@@ -38,6 +29,11 @@ def create_human_player(player_id: int, name: str = None) -> HumanPlayer:
 
 def run_bot_game(bot_types: List[str], game_mode: str = "FULL") -> dict:
     """Run a game with only bots."""
+    # Validate all bot types are 'random'
+    for bot_type in bot_types:
+        if bot_type != 'random':
+            raise ValueError(f"Only 'random' bot type is supported, got: {bot_type}")
+    
     players = []
     for i, bot_type in enumerate(bot_types):
         players.append(create_bot_player(bot_type, i))
@@ -67,6 +63,11 @@ def run_bot_game(bot_types: List[str], game_mode: str = "FULL") -> dict:
 
 def run_mixed_game(human_count: int, bot_types: List[str], game_mode: str = "FULL") -> dict:
     """Run a game with humans and bots."""
+    # Validate all bot types are 'random'
+    for bot_type in bot_types:
+        if bot_type != 'random':
+            raise ValueError(f"Only 'random' bot type is supported, got: {bot_type}")
+    
     players = []
     
     # Add human players
@@ -116,9 +117,9 @@ def main():
     parser.add_argument('--mode', choices=['FULL', 'MINI', 'MICRO'], 
                        default='FULL', help='Game mode (Bola type)')
     parser.add_argument('--bots', nargs='+', 
-                       choices=['random', 'weighted', 'heuristic', 'advanced'],
+                       choices=['random'],
                        default=['random', 'random', 'random', 'random'],
-                       help='Bot types for 4 players')
+                       help='Bot types for players (only random supported)')
     parser.add_argument('--humans', type=int, default=0,
                        help='Number of human players (0-4)')
     parser.add_argument('--verbose', action='store_true',

@@ -1,6 +1,6 @@
 """
 Round module for Estimation card game.
-Handles trick resolution and round progression.
+Handles trick resolution, round progression, and proper scoring calculation.
 """
 
 from typing import List, Dict, Optional, Tuple
@@ -32,12 +32,12 @@ class Trick:
         """Check if all 4 players have played."""
         return len(self.cards) == 4
     
-    def determine_winner(self, trump_suit: Suit) -> int:
+    def determine_winner(self, trump_suit: Optional[Suit]) -> int:
         """
-        Determine winner of the trick.
+        Determine winner of the trick using proper card comparison.
         
         Args:
-            trump_suit: Current trump suit
+            trump_suit: Current trump suit (None for No Trump)
             
         Returns:
             Player ID of trick winner
@@ -60,9 +60,9 @@ class Trick:
 
 
 class Round:
-    """Manages a complete round of Estimation."""
+    """Manages a complete round of Estimation with proper scoring."""
     
-    def __init__(self, round_number: int, trump_suit: Suit, players: List[Player]):
+    def __init__(self, round_number: int, trump_suit: Optional[Suit], players: List[Player]):
         self.round_number = round_number
         self.trump_suit = trump_suit
         self.players = {p.player_id: p for p in players}
@@ -70,20 +70,21 @@ class Round:
         self.current_trick: Optional[Trick] = None
         self.leader_id = 0  # First player leads first trick
         self.bids: Dict[int, int] = {}
+        self.estimations: Dict[int, int] = {}
+        self.declarer_id: Optional[int] = None
+        self.declarer_bid: Optional[int] = None
         
-    def collect_bids(self):
-        """Collect bids from all players."""
-        for player_id in range(len(self.players)):
-            player = self.players[player_id]
-            # This would be called by game loop with bot/human logic
-            # Just store the bid for now
-            pass
-    
     def set_bid(self, player_id: int, bid: int):
         """Set a player's bid."""
         if 0 <= bid <= 13:
             self.bids[player_id] = bid
             self.players[player_id].bid = bid
+    
+    def set_estimation(self, player_id: int, estimation: int):
+        """Set a player's estimation."""
+        if 0 <= estimation <= 13:
+            self.estimations[player_id] = estimation
+            self.players[player_id].estimation = estimation
     
     def start_trick(self, leader_id: int):
         """Start a new trick with specified leader."""
@@ -109,7 +110,7 @@ class Round:
         valid_plays = player.get_valid_plays(self.current_trick.led_suit)
         
         if card not in valid_plays:
-            raise ValueError(f"Invalid play: {card}")
+            raise ValueError(f"Invalid play: {card} not in valid plays {valid_plays}")
         
         # Play the card
         player.play_card(card)
@@ -148,24 +149,79 @@ class Round:
     
     def calculate_scores(self) -> Dict[int, int]:
         """
-        Calculate round scores based on bids vs tricks won.
+        Calculate round scores based on Estimation rules.
         
         Returns:
             Dictionary of player_id -> points earned
         """
         scores = {}
         
-        for player_id, player in self.players.items():
-            bid = self.bids.get(player_id, 0)
+        # Get all estimations and actual tricks
+        all_estimations = []
+        all_tricks = []
+        
+        for player_id in range(4):
+            player = self.players[player_id]
+            estimation = self.estimations.get(player_id, 0)
             tricks = player.tricks_won
             
-            if tricks == bid:
-                # Made bid exactly: +10 + bid
-                points = 10 + bid
+            all_estimations.append(estimation)
+            all_tricks.append(tricks)
+        
+        # Check for Risk situation (total estimations = 13)
+        total_estimations = sum(all_estimations)
+        is_risk = (total_estimations == 13)
+        risk_level = 1 if is_risk else 0
+        
+        # Calculate scores for each player
+        for player_id in range(4):
+            player = self.players[player_id]
+            estimation = all_estimations[player_id]
+            tricks = all_tricks[player_id]
+            
+            # Base scoring
+            if tricks == estimation:
+                # Made estimation exactly
+                points = 10 + estimation
+                
+                # Bonuses for making estimation
+                if estimation == 0:  # Dash call
+                    if self.round_number <= 13:  # Under rounds
+                        points = 33
+                    else:  # Over rounds  
+                        points = 25
+                
+                # Risk bonus
+                if is_risk:
+                    points += 10 * risk_level
+                
+                # Check for sole winner (only player to make estimation)
+                others_made = sum(1 for i in range(4) if i != player_id and 
+                                all_tricks[i] == all_estimations[i])
+                if others_made == 0:
+                    points += 10
+                    
             else:
-                # Missed bid: -10 - difference
-                difference = abs(tricks - bid)
+                # Missed estimation
+                difference = abs(tricks - estimation)
                 points = -10 - difference
+                
+                # Risk penalty
+                if is_risk:
+                    points -= 10 * risk_level
+                
+                # Check for sole loser (only player to miss estimation)  
+                others_missed = sum(1 for i in range(4) if i != player_id and 
+                                  all_tricks[i] != all_estimations[i])
+                if others_missed == 0:
+                    points -= 10
+                
+                # Dash penalty
+                if estimation == 0:
+                    if self.round_number <= 13:  # Under rounds
+                        points = -33
+                    else:  # Over rounds
+                        points = -25
             
             scores[player_id] = points
             
@@ -175,10 +231,12 @@ class Round:
         """Get current round status for display."""
         return {
             'round_number': self.round_number,
-            'trump_suit': str(self.trump_suit),
+            'trump_suit': str(self.trump_suit) if self.trump_suit else "No Trump",
             'tricks_completed': len(self.tricks),
-            'bids': self.bids,
+            'estimations': self.estimations,
             'tricks_won': {pid: p.tricks_won for pid, p in self.players.items()},
             'current_leader': self.leader_id,
-            'is_complete': self.is_complete()
+            'is_complete': self.is_complete(),
+            'declarer_id': self.declarer_id,
+            'declarer_bid': self.declarer_bid
         }
