@@ -16,7 +16,7 @@ Estimation is a popular 4-player trick-taking card game where players bid on how
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/estimation-bot.git
+git clone https://github.com/atalha1/estimation-bot.git
 cd estimation-bot
 
 # Install dependencies
@@ -175,9 +175,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-- Project maintainer: [AbdelRahman Talha](mailto:your.email@example.com)
-- Issues: [GitHub Issues](https://github.com/yourusername/estimation-bot/issues)
-- Discussions: [GitHub Discussions](https://github.com/yourusername/estimation-bot/discussions)
+- Project maintainer: [AbdelRahman Talha]
+- Issues: [GitHub Issues](https://github.com/atalha1/estimation-bot/issues)
+- Discussions: [GitHub Discussions](https://github.com/atalha1/estimation-bot/discussions)
 
 ---
 
