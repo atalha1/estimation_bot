@@ -278,17 +278,45 @@ class HumanPlayer(Player):
         if other_estimations:
             current_total = sum(other_estimations)
             print(f"Other estimations so far: {other_estimations} (Total: {current_total})")
-
+        
         print(f"\nOptions:")
         if is_last_estimator:
             current_total = sum(other_estimations)
             forbidden = 13 - current_total
             print(f"⚠️  You are the Risk player! Cannot estimate {forbidden} (total would be 13)")
 
-        # Only show WITH option if player can actually go WITH (same bid as declarer)
         print(f"1. Regular estimation (0-{declarer_bid})")
         if can_dash:
             print("2. DASH (estimate 0 tricks)")
+        print(f"3. WITH (estimate {declarer_bid} same as declarer)")
+        
+        while True:
+            try:
+                choice = input("Enter your choice (1/2/3): ").strip()
+                
+                if choice == "2" and can_dash:
+                    return "DASH"
+                elif choice == "3":
+                    return declarer_bid  # WITH call
+                elif choice == "1":
+                    while True:
+                        try:
+                            estimation = int(input(f"Enter estimation (0-{declarer_bid}): "))
+                            if 0 <= estimation <= declarer_bid:
+                                # Check risk constraint
+                                if is_last_estimator:
+                                    current_total = sum(other_estimations)
+                                    if current_total + estimation == 13:
+                                        print(f"Cannot estimate {estimation} - total would be exactly 13 (Risk rule)")
+                                        continue
+                                return estimation
+                            print(f"Estimation must be between 0 and {declarer_bid}")
+                        except ValueError:
+                            print("Please enter a valid number")
+                else:
+                    print("Invalid choice. Please enter 1, 2, or 3")
+            except (ValueError, KeyboardInterrupt):
+                print("Please enter a valid choice")
     
     def choose_card_interactive(self, valid_plays: List[Card], trump_suit: Optional[Suit], 
                                led_suit: Optional[Suit], cards_on_table: List[str] = None) -> Card:
