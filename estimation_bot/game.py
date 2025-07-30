@@ -175,9 +175,13 @@ class EstimationGame:
                     round_obj.other_bids[player_id] = None
             else:
                 # Normal bid (amount, trump_suit)
-                amount, trump_suit = bid_result
-                print(f"{player.name} bids {amount} {trump_suit.name if trump_suit else 'No Trump'}")
-                round_obj.set_bid(player_id, amount, trump_suit)
+                if isinstance(bid_result, tuple) and len(bid_result) == 2:
+                    amount, trump_suit = bid_result
+                    print(f"{player.name} bids {amount} {trump_suit.name if trump_suit else 'No Trump'}")
+                    round_obj.set_bid(player_id, amount, trump_suit)
+                else:
+                    print(f"Invalid bid format from {player.name}: {bid_result}, treating as pass")
+                    round_obj.other_bids[player_id] = None
         
         # Determine winner
         round_obj.determine_declarer()

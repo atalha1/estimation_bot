@@ -166,11 +166,13 @@ class HumanPlayer(Player):
             if bid is None:
                 bid_summary.append(f"Player {i}: Pass")
             elif bid == "DASH":
-                bid_summary.append(f"Player {i}: DASH CALL")
-            else:
+                bid_summary.append(f"Player {i}: DASH CALL")                
+            elif isinstance(bid, tuple):
                 amount, trump = bid
                 trump_str = trump.name if trump else "No Trump"
                 bid_summary.append(f"Player {i}: {amount} {trump_str}")
+            else:
+                bid_summary.append(f"Player {i}: Unknown bid")
         
         if any(b is not None for b in other_bids):
             print(f"Previous bids: {', '.join(bid_summary)}")
