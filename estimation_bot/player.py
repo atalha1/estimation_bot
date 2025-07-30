@@ -35,6 +35,22 @@ class Player:
     def receive_cards(self, cards: List[Card]):
         """Add cards to player's hand."""
         self.hand = cards
+
+    def make_dash_choice(self) -> bool:
+    """Ask human player if they want to make a dash call."""
+    print(f"\n{self.name}, do you want to make a DASH CALL (0 tricks)?")
+    print("This is decided BEFORE seeing other bids - it's risky!")
+    
+    while True:
+        try:
+            choice = input("Make DASH CALL? (y/n): ").strip().lower()
+            if choice in ['y', 'yes']:
+                return True
+            elif choice in ['n', 'no']:
+                return False
+            print("Please enter 'y' or 'n'")
+        except (ValueError, KeyboardInterrupt):
+            print("Please enter 'y' or 'n'")
         
     def play_card(self, card: Card) -> Card:
         """
@@ -162,7 +178,7 @@ class HumanPlayer(Player):
         
         # Show other bids
         bid_summary = []
-        for i, bid in enumerate(other_bids.values() if hasattr(other_bids, 'values') else other_bids):
+        for i, bid in enumerate(other_bids):
             if bid is None:
                 bid_summary.append(f"Player {i}: Pass")
             elif bid == "DASH":
@@ -171,9 +187,11 @@ class HumanPlayer(Player):
                 amount, trump = bid
                 trump_str = trump.name if trump else "No Trump"
                 bid_summary.append(f"Player {i}: {amount} {trump_str}")
-        
-        if any(b is not None for b in other_bids):
-            print(f"Previous bids: {', '.join(bid_summary)}")
+            else:
+                bid_summary.append(f"Player {i}: Unknown bid")
+                
+                if any(b is not None for b in other_bids):
+                    print(f"Previous bids: {', '.join(bid_summary)}")
         
         print("\nOptions:")
         print("1. Make a regular bid (4-13 tricks + trump suit)")
@@ -258,7 +276,7 @@ class HumanPlayer(Player):
         
         # Show other estimations
         if other_estimations:
-            current_total = sum(other_estimations)
+            current_total = sum(v for v in round_obj.estimations.values() if v is not None) + (estimation if estimation is not None else 0)            
             print(f"Other estimations so far: {other_estimations} (Total: {current_total})")
         
         print(f"\nOptions:")
@@ -287,26 +305,31 @@ class HumanPlayer(Player):
         
         while True:
             try:
-                choice = input("Enter card to play (e.g., 'A♠' or '10♦'): ").strip()
+                choice = input("Enter your choice: ").strip()
                 
-                # Try to match the input to a valid card
-                for card in valid_plays:
-                    if str(card) == choice or choice.upper() in str(card).upper():
-                        return card
-                
-                # Alternative matching - try by rank and suit separately
-                for card in valid_plays:
-                    rank_str = str(card.rank)
-                    suit_str = str(card.suit)
-                    if choice.upper() == f"{rank_str}{suit_str}":
-                        return card
-                
-                print("Invalid card. Please choose from valid plays.")
-                print(f"Valid options: {', '.join(str(card) for card in valid_plays)}")
-                
+                if choice == "2" and can_dash:
+                    return "DASH"
+                elif choice == "1":
+                    while True:
+                        try:
+                            estimation = int(input(f"Enter estimation (0-{declarer_bid}): "))
+                            if 0 <= estimation <= declarer_bid:
+                                # Check risk constraint
+                                if is_last_estimator:
+                                    current_total = sum(other_estimations)
+                                    if current_total + estimation == 13:
+                                        print(f"Cannot estimate {estimation} - total would be exactly 13 (Risk rule)")
+                                        continue
+                                return estimation
+                            print(f"Estimation must be between 0 and {declarer_bid}")
+                        except ValueError:
+                            print("Please enter a valid number")
+                else:
+                    print("Invalid choice")
             except (ValueError, KeyboardInterrupt):
-                print("Please enter a valid card")
-    
+                print("Please enter a valid choice")
+                
+                    
     def _format_hand(self) -> str:
         """Format hand for display grouped by suit."""
         if not self.hand:
