@@ -202,6 +202,9 @@ class EstimationGame:
         
         # Set declarer's estimation to their bid
         round_obj.estimations[round_obj.declarer_id] = round_obj.declarer_bid
+
+        # Set the declarer as the leader for first trick
+        round_obj.leader_id = round_obj.declarer_id
         
         # Other players estimate
         estimation_order = [i for i in range(4) if i != round_obj.declarer_id]

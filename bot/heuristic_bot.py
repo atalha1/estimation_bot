@@ -46,8 +46,8 @@ class HeuristicBot(BotInterface):
         
         # Check if we can outbid others
         highest_bid = 0
-        for bid in other_bids:
-            if bid and bid != "DASH":
+        for bid in (other_bids.values() if hasattr(other_bids, 'values') else other_bids):
+            if bid and bid != "DASH" and isinstance(bid, tuple):
                 amount, trump = bid
                 if amount > highest_bid:
                     highest_bid = amount
@@ -223,14 +223,13 @@ class AdvancedHeuristicBot(HeuristicBot):
             return None
         
         # Analyze competition
-        active_bidders = sum(1 for bid in other_bids if bid is not None)
+        active_bidders = sum(1 for bid in (other_bids.values() if hasattr(other_bids, 'values') else other_bids) if bid is not None)
         highest_bid = 0
-        
-        for bid in other_bids:
-            if bid and bid != "DASH":
+
+        for bid in (other_bids.values() if hasattr(other_bids, 'values') else other_bids):
+            if bid and bid != "DASH" and isinstance(bid, tuple):
                 amount, trump = bid
                 highest_bid = max(highest_bid, amount)
-        
         # More conservative if many active bidders
         competition_factor = active_bidders * 0.1
         

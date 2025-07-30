@@ -162,17 +162,15 @@ class HumanPlayer(Player):
         
         # Show other bids
         bid_summary = []
-        for i, bid in enumerate(other_bids):
+        for i, bid in enumerate(other_bids.values() if hasattr(other_bids, 'values') else other_bids):
             if bid is None:
                 bid_summary.append(f"Player {i}: Pass")
             elif bid == "DASH":
-                bid_summary.append(f"Player {i}: DASH CALL")                
+                bid_summary.append(f"Player {i}: DASH CALL")
             elif isinstance(bid, tuple):
                 amount, trump = bid
                 trump_str = trump.name if trump else "No Trump"
                 bid_summary.append(f"Player {i}: {amount} {trump_str}")
-            else:
-                bid_summary.append(f"Player {i}: Unknown bid")
         
         if any(b is not None for b in other_bids):
             print(f"Previous bids: {', '.join(bid_summary)}")
@@ -248,47 +246,15 @@ class HumanPlayer(Player):
             print(f"Other estimations so far: {other_estimations} (Total: {current_total})")
         
         print(f"\nOptions:")
-        print(f"1. Regular estimation (0-{declarer_bid})")
-        print(f"2. WITH (estimate {declarer_bid} - same as declarer)")
-        if can_dash:
-            print("3. DASH (estimate 0 tricks)")
-        
         if is_last_estimator:
             current_total = sum(other_estimations)
             forbidden = 13 - current_total
-            print(f"\n⚠️  You are the Risk player! Cannot estimate {forbidden} (total would be 13)")
-        
-        while True:
-            try:
-                choice = input("Enter your choice: ").strip()
-                
-                if choice == "2":
-                    return declarer_bid  # WITH
-                
-                elif choice == "3" and can_dash:
-                    return "DASH"
-                
-                elif choice == "1":
-                    while True:
-                        try:
-                            estimation = int(input(f"Enter estimation (0-{declarer_bid}): "))
-                            if 0 <= estimation <= declarer_bid:
-                                # Check risk constraint
-                                if is_last_estimator:
-                                    current_total = sum(other_estimations)
-                                    if current_total + estimation == 13:
-                                        print(f"Cannot estimate {estimation} - total would be exactly 13 (Risk rule)")
-                                        continue
-                                return estimation
-                            print(f"Estimation must be between 0 and {declarer_bid}")
-                        except ValueError:
-                            print("Please enter a valid number")
-                
-                else:
-                    print("Invalid choice")
-                    
-            except (ValueError, KeyboardInterrupt):
-                print("Please enter a valid choice")
+            print(f"⚠️  You are the Risk player! Cannot estimate {forbidden} (total would be 13)")
+
+        # Only show WITH option if player can actually go WITH (same bid as declarer)
+        print(f"1. Regular estimation (0-{declarer_bid})")
+        if can_dash:
+            print("2. DASH (estimate 0 tricks)")
     
     def choose_card_interactive(self, valid_plays: List[Card], trump_suit: Optional[Suit], 
                                led_suit: Optional[Suit], cards_on_table: List[str] = None) -> Card:
