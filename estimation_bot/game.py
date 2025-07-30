@@ -9,6 +9,7 @@ from estimation_bot.deck import Deck
 from estimation_bot.player import Player, BotInterface
 from estimation_bot.round import Round
 from estimation_bot.utils import GameLogger
+from estimation_bot.player import Player, BotInterface, HumanPlayer
 import json
 import random
 
@@ -29,7 +30,8 @@ class EstimationGame:
         self.total_rounds = self._get_total_rounds()
         self.multiplier = 1  # For Sa'aydeh (doubled) rounds
         self.logger = GameLogger()
-        
+        self.sa_aydeh_multiplier = 1  # Multiplier for failed rounds
+
         # Game data for comprehensive logging
         self.game_data = {
             'game_mode': game_mode,
@@ -105,7 +107,7 @@ class EstimationGame:
             self._collect_estimations_normal_round(round_obj)
         
         # Log the round type (Over/Under)
-        total_estimations = sum(round_obj.estimations.values())
+        total_estimations = sum(v for v in round_obj.estimations.values() if v is not None)
         round_type = "Over" if total_estimations > 13 else "Under" if total_estimations < 13 else "Exact"
         
         print(f"\n=== Round {round_obj.round_number} Setup Complete ===")
@@ -143,29 +145,40 @@ class EstimationGame:
         
         # First, ask all players about DASH intentions
         dash_intentions = {}
-        bidding_order = [(i + 1) % 4 for i in range(4)]
         
         print("\n--- DASH CALL PHASE ---")
-        for player_id in bidding_order:
+        dash_count = 0
+        for player_id in range(4):
             player = self.players[player_id]
+            
+            # Show hand to player before dash decision
+            if isinstance(player, HumanPlayer):
+                print(f"\n{player.name}'s hand: {player._format_hand()}")
+            
+            can_dash = dash_count < 2  # Only allow 2 dash calls maximum
             
             if hasattr(player, 'strategy') and isinstance(player.strategy, BotInterface):
                 # Bot decides on dash
-                dash_choice = random.choice([True, False]) if hasattr(player.strategy, 'make_bid') else False
-            elif hasattr(player, 'make_dash_choice'):
+                dash_choice = random.choice([True, False]) if can_dash and hasattr(player.strategy, 'make_bid') else False
+            elif hasattr(player, 'make_dash_choice') and can_dash:
                 dash_choice = player.make_dash_choice()
             else:
-                # Default: no dash
+                # Default: no dash or can't dash
                 dash_choice = False
                 
             dash_intentions[player_id] = dash_choice
             if dash_choice:
                 print(f"{player.name} chooses DASH CALL (0 tricks)")
                 round_obj.set_dash_call(player_id)
+                dash_count += 1
             else:
-                print(f"{player.name} chooses to bid normally")
+                if not can_dash and hasattr(player, 'make_dash_choice'):
+                    print(f"{player.name} cannot DASH (2 players already called DASH)")
+                else:
+                    print(f"{player.name} chooses to bid normally")
         
         # Now regular bidding for non-dash players
+        bidding_order = list(range(4))  # 0, 1, 2, 3
         print("\n--- REGULAR BIDDING PHASE ---")
         for player_id in bidding_order:
             if dash_intentions[player_id]:
@@ -198,8 +211,13 @@ class EstimationGame:
         round_obj.determine_declarer()
         
         if round_obj.declarer_id is None:
-            print("All players passed! Skipping round...")
-            return
+            print("All players passed! This becomes a Sa'aydeh round (doubled scoring).")
+            self.sa_aydeh_multiplier *= 2
+            print(f"Next successful round will have {self.sa_aydeh_multiplier}x scoring multiplier")
+            
+            # Reset and start a completely new round
+            self.current_round -= 1  # Don't count the failed round
+            return "RESTART_ROUND"  # Signal to restart
     
     def _collect_estimations_normal_round(self, round_obj: Round):
         """Collect estimations for normal rounds after declarer is determined."""
@@ -394,30 +412,37 @@ class EstimationGame:
         return round_obj.leader_id
     
     def play_round(self) -> Dict[int, int]:
-        """
-        Play a complete round.
-        
-        Returns:
-            Dictionary of player scores for this round
-        """
-        round_obj = self.start_new_round()
-        
-        # Collect bids and estimations
-        self.collect_bids_and_estimations(round_obj)
-        
-        # Play all 13 tricks
-        for trick_num in range(1, 14):
-            self.play_trick(round_obj, trick_num)
-        
-        # Calculate and apply scores
-        round_scores = round_obj.calculate_scores()
-        for player_id, score in round_scores.items():
-            self.players[player_id].add_score(score)
-        
-        # Log round completion
-        self._log_round_completion(round_obj, round_scores)
-        
-        return round_scores
+        """Play a complete round."""
+        while True:
+            round_obj = self.start_new_round()
+            
+            # Collect bids and estimations
+            result = self.collect_bids_and_estimations(round_obj)
+            
+            if result == "RESTART_ROUND":
+                continue  # Restart with a new round
+            
+            # Play all 13 tricks
+            for trick_num in range(1, 14):
+                self.play_trick(round_obj, trick_num)
+            
+            # Calculate and apply scores
+            round_scores = round_obj.calculate_scores()
+            
+            # Apply Sa'aydeh multiplier if active
+            if self.sa_aydeh_multiplier > 1:
+                print(f"Applying Sa'aydeh {self.sa_aydeh_multiplier}x multiplier to scores!")
+                for player_id in round_scores:
+                    round_scores[player_id] *= self.sa_aydeh_multiplier
+                self.sa_aydeh_multiplier = 1  # Reset multiplier after use
+            
+            for player_id, score in round_scores.items():
+                self.players[player_id].add_score(score)
+            
+            # Log round completion
+            self._log_round_completion(round_obj, round_scores)
+            
+            return round_scores
     
     def _log_round_completion(self, round_obj: Round, round_scores: Dict[int, int]):
         """Log detailed round completion data."""

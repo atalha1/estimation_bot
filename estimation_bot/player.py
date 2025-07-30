@@ -179,19 +179,19 @@ class HumanPlayer(Player):
         # Show other bids
         bid_summary = []
         for i, bid in enumerate(other_bids):
+            if i == self.player_id:
+                continue  # Skip showing own bid slot
             if bid is None:
-                bid_summary.append(f"Player {i}: Pass")
+                continue  # Don't show passes until there are actual bids
             elif bid == "DASH":
                 bid_summary.append(f"Player {i}: DASH CALL")
             elif isinstance(bid, tuple):
                 amount, trump = bid
                 trump_str = trump.name if trump else "No Trump"
                 bid_summary.append(f"Player {i}: {amount} {trump_str}")
-            else:
-                bid_summary.append(f"Player {i}: Unknown bid")
-                
-                if any(b is not None for b in other_bids):
-                    print(f"Previous bids: {', '.join(bid_summary)}")
+        
+        if bid_summary:
+            print(f"Previous bids: {', '.join(bid_summary)}")
         
         print("\nOptions:")
         print("1. Make a regular bid (4-13 tricks + trump suit)")
@@ -276,9 +276,9 @@ class HumanPlayer(Player):
         
         # Show other estimations
         if other_estimations:
-            current_total = sum(v for v in round_obj.estimations.values() if v is not None) + (estimation if estimation is not None else 0)            
+            current_total = sum(other_estimations)
             print(f"Other estimations so far: {other_estimations} (Total: {current_total})")
-        
+
         print(f"\nOptions:")
         if is_last_estimator:
             current_total = sum(other_estimations)
@@ -305,29 +305,36 @@ class HumanPlayer(Player):
         
         while True:
             try:
-                choice = input("Enter your choice: ").strip()
+                choice = input("Choose a card to play: ").strip()
                 
-                if choice == "2" and can_dash:
-                    return "DASH"
-                elif choice == "1":
-                    while True:
-                        try:
-                            estimation = int(input(f"Enter estimation (0-{declarer_bid}): "))
-                            if 0 <= estimation <= declarer_bid:
-                                # Check risk constraint
-                                if is_last_estimator:
-                                    current_total = sum(other_estimations)
-                                    if current_total + estimation == 13:
-                                        print(f"Cannot estimate {estimation} - total would be exactly 13 (Risk rule)")
-                                        continue
-                                return estimation
-                            print(f"Estimation must be between 0 and {declarer_bid}")
-                        except ValueError:
-                            print("Please enter a valid number")
-                else:
-                    print("Invalid choice")
+                # Try multiple matching strategies
+                for card in valid_plays:
+                    card_str = str(card)
+                    # Direct match
+                    if card_str == choice:
+                        return card
+                    # Case insensitive match
+                    if card_str.lower() == choice.lower():
+                        return card
+                    # Match just the rank if suits match context
+                    if str(card.rank) == choice and led_suit and card.suit == led_suit:
+                        return card
+                    # Match rank + suit symbol
+                    rank_str = str(card.rank)
+                    suit_str = str(card.suit)
+                    if f"{rank_str}{suit_str}" == choice:
+                        return card
+                    # Try without suit
+                    if rank_str == choice and len([c for c in valid_plays if str(c.rank) == choice]) == 1:
+                        return card
+                
+                # If no match, show what we're looking for
+                print(f"'{choice}' is not a valid card.")
+                print(f"Try typing exactly: {', '.join(str(card) for card in valid_plays)}")
+                print("Or just the rank if unique (e.g., 'A', '10', 'K')")
+                
             except (ValueError, KeyboardInterrupt):
-                print("Please enter a valid choice")
+                print("Please enter a valid card")  
                 
                     
     def _format_hand(self) -> str:
