@@ -10,6 +10,7 @@ from estimation_bot.player import Player, BotInterface
 from estimation_bot.round import Round
 from estimation_bot.utils import GameLogger
 import json
+import random
 
 
 class EstimationGame:
@@ -131,7 +132,7 @@ class EstimationGame:
         print()
     
     def _collect_bids_normal_round(self, round_obj: Round):
-        """Collect bids for normal rounds."""
+        """Collect bids for normal rounds with proper DASH logic."""
         print(f"\n=== BIDDING PHASE - Round {round_obj.round_number} ===")
         
         # Check for Avoid declarations first
@@ -140,24 +141,46 @@ class EstimationGame:
             if missing_suits:
                 print(f"{player.name} declares AVOID: {', '.join(suit.name for suit in missing_suits)}")
         
-        # Bidding order: start with player to right of dealer (player 1 if dealer is 0)
+        # First, ask all players about DASH intentions
+        dash_intentions = {}
         bidding_order = [(i + 1) % 4 for i in range(4)]
-        dash_calls_made = 0
         
+        print("\n--- DASH CALL PHASE ---")
         for player_id in bidding_order:
             player = self.players[player_id]
             
-            # Check dash call availability
-            can_dash = dash_calls_made < 2
+            if hasattr(player, 'strategy') and isinstance(player.strategy, BotInterface):
+                # Bot decides on dash
+                dash_choice = random.choice([True, False]) if hasattr(player.strategy, 'make_bid') else False
+            elif hasattr(player, 'make_dash_choice'):
+                dash_choice = player.make_dash_choice()
+            else:
+                # Default: no dash
+                dash_choice = False
+                
+            dash_intentions[player_id] = dash_choice
+            if dash_choice:
+                print(f"{player.name} chooses DASH CALL (0 tricks)")
+                round_obj.set_dash_call(player_id)
+            else:
+                print(f"{player.name} chooses to bid normally")
+        
+        # Now regular bidding for non-dash players
+        print("\n--- REGULAR BIDDING PHASE ---")
+        for player_id in bidding_order:
+            if dash_intentions[player_id]:
+                continue  # Skip dash players
+                
+            player = self.players[player_id]
             
             if hasattr(player, 'strategy') and isinstance(player.strategy, BotInterface):
                 # Bot player
                 bid_result = player.strategy.make_bid(
-                    player.hand, round_obj.other_bids, False, can_dash
+                    player.hand, round_obj.other_bids, False, False  # No more dash calls
                 )
             elif hasattr(player, 'make_bid_interactive'):
                 # Human player
-                bid_result = player.make_bid_interactive(round_obj.other_bids, can_dash)
+                bid_result = player.make_bid_interactive(round_obj.other_bids, False)
             else:
                 # Default pass
                 bid_result = None
@@ -165,30 +188,17 @@ class EstimationGame:
             if bid_result is None:
                 print(f"{player.name} passes")
                 round_obj.other_bids[player_id] = None
-            elif bid_result == "DASH":
-                if can_dash:
-                    print(f"{player.name} bids DASH CALL")
-                    round_obj.set_dash_call(player_id)
-                    dash_calls_made += 1
-                else:
-                    print(f"{player.name} cannot make DASH CALL (limit reached), passes instead")
-                    round_obj.other_bids[player_id] = None
             else:
                 # Normal bid (amount, trump_suit)
-                if isinstance(bid_result, tuple) and len(bid_result) == 2:
-                    amount, trump_suit = bid_result
-                    print(f"{player.name} bids {amount} {trump_suit.name if trump_suit else 'No Trump'}")
-                    round_obj.set_bid(player_id, amount, trump_suit)
-                else:
-                    print(f"Invalid bid format from {player.name}: {bid_result}, treating as pass")
-                    round_obj.other_bids[player_id] = None
+                amount, trump_suit = bid_result
+                print(f"{player.name} bids {amount} {trump_suit.name if trump_suit else 'No Trump'}")
+                round_obj.set_bid(player_id, amount, trump_suit)
         
         # Determine winner
         round_obj.determine_declarer()
         
         if round_obj.declarer_id is None:
             print("All players passed! Skipping round...")
-            # TODO: Handle all-pass situation
             return
     
     def _collect_estimations_normal_round(self, round_obj: Round):
@@ -256,8 +266,7 @@ class EstimationGame:
             # Validate estimation
             if is_last_estimator:
                 # Risk player - cannot make total = 13
-                current_total = sum(round_obj.estimations.values()) + estimation
-                if current_total == 13:
+                    current_total = sum(v for v in round_obj.estimations.values() if v is not None) + (estimation if estimation is not None else 0)
                     if estimation > 0:
                         estimation -= 1
                     else:

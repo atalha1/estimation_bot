@@ -230,7 +230,23 @@ class HumanPlayer(Player):
                     
             except (ValueError, KeyboardInterrupt):
                 print("Please enter a valid choice")
-    
+
+    def make_dash_choice(self) -> bool:
+        """Ask human player if they want to make a dash call."""
+        print(f"\n{self.name}, do you want to make a DASH CALL (0 tricks)?")
+        print("This is decided BEFORE seeing other bids - it's risky!")
+        
+        while True:
+            try:
+                choice = input("Make DASH CALL? (y/n): ").strip().lower()
+                if choice in ['y', 'yes']:
+                    return True
+                elif choice in ['n', 'no']:
+                    return False
+                print("Please enter 'y' or 'n'")
+            except (ValueError, KeyboardInterrupt):
+                print("Please enter 'y' or 'n'")
+
     def make_estimation_interactive(self, trump_suit: Optional[Suit], declarer_bid: int,
                                   other_estimations: List[int], is_last_estimator: bool = False,
                                   can_dash: bool = True) -> Union[int, str]:
