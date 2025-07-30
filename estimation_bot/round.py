@@ -1,9 +1,9 @@
 """
 Round module for Estimation card game.
-Handles trick resolution, round progression, and proper scoring calculation.
+Handles trick resolution and round progression with proper bidding flow.
 """
 
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional, Tuple, Set
 from estimation_bot.card import Card, Suit
 from estimation_bot.player import Player
 
@@ -34,7 +34,7 @@ class Trick:
     
     def determine_winner(self, trump_suit: Optional[Suit]) -> int:
         """
-        Determine winner of the trick using proper card comparison.
+        Determine winner of the trick.
         
         Args:
             trump_suit: Current trump suit (None for No Trump)
@@ -60,31 +60,79 @@ class Trick:
 
 
 class Round:
-    """Manages a complete round of Estimation with proper scoring."""
+    """Manages a complete round of Estimation with proper bidding flow."""
     
-    def __init__(self, round_number: int, trump_suit: Optional[Suit], players: List[Player]):
+    def __init__(self, round_number: int, trump_suit: Optional[Suit], players: List[Player], is_speed_round: bool = False):
         self.round_number = round_number
-        self.trump_suit = trump_suit
+        self.trump_suit = trump_suit  # For speed rounds, this is predetermined
         self.players = {p.player_id: p for p in players}
+        self.is_speed_round = is_speed_round
+        
         self.tricks: List[Trick] = []
         self.current_trick: Optional[Trick] = None
         self.leader_id = 0  # First player leads first trick
-        self.bids: Dict[int, int] = {}
-        self.estimations: Dict[int, int] = {}
+        
+        # Bidding phase data
+        self.other_bids: Dict[int, Optional[Tuple[int, Optional[Suit]]]] = {i: None for i in range(4)}
+        self.dash_players: Set[int] = set()  # Players who made dash calls
+        
+        # After declarer is determined
         self.declarer_id: Optional[int] = None
         self.declarer_bid: Optional[int] = None
         
-    def set_bid(self, player_id: int, bid: int):
-        """Set a player's bid."""
-        if 0 <= bid <= 13:
-            self.bids[player_id] = bid
-            self.players[player_id].bid = bid
+        # Estimation phase data
+        self.estimations: Dict[int, int] = {}
+        self.with_players: Set[int] = set()  # Players who bid "with"
+        
+    def set_bid(self, player_id: int, amount: int, trump_suit: Optional[Suit]):
+        """Set a player's bid during bidding phase."""
+        if 4 <= amount <= 13:  # Valid bid range
+            self.other_bids[player_id] = (amount, trump_suit)
+            self.players[player_id].bid = amount
+            self.players[player_id].trump_suit = trump_suit
     
-    def set_estimation(self, player_id: int, estimation: int):
-        """Set a player's estimation."""
-        if 0 <= estimation <= 13:
-            self.estimations[player_id] = estimation
-            self.players[player_id].estimation = estimation
+    def set_dash_call(self, player_id: int):
+        """Set a player's dash call."""
+        self.dash_players.add(player_id)
+        self.other_bids[player_id] = "DASH"
+        self.players[player_id].is_dash = True
+    
+    def determine_declarer(self):
+        """Determine the declarer (highest bidder) after bidding phase."""
+        if self.is_speed_round:
+            return  # No declarer in speed rounds, handled differently
+        
+        highest_bid = 0
+        highest_trump_rank = 0
+        declarer_candidates = []
+        
+        # Find highest bid(s)
+        for player_id, bid_data in self.other_bids.items():
+            if bid_data and bid_data != "DASH":
+                amount, trump_suit = bid_data
+                if amount > highest_bid:
+                    highest_bid = amount
+                    declarer_candidates = [(player_id, trump_suit)]
+                elif amount == highest_bid:
+                    declarer_candidates.append((player_id, trump_suit))
+        
+        if not declarer_candidates:
+            # All passed or only dash calls
+            self.declarer_id = None
+            return
+        
+        # If tied, use trump suit ranking
+        if len(declarer_candidates) > 1:
+            # Trump suit rankings: No Trump > Spades > Hearts > Diamonds > Clubs
+            suit_ranks = {None: 5, Suit.SPADES: 4, Suit.HEARTS: 3, Suit.DIAMONDS: 2, Suit.CLUBS: 1}
+            
+            best_candidate = max(declarer_candidates, key=lambda x: suit_ranks.get(x[1], 0))
+            self.declarer_id, self.trump_suit = best_candidate
+        else:
+            self.declarer_id, self.trump_suit = declarer_candidates[0]
+        
+        self.declarer_bid = highest_bid
+        self.players[self.declarer_id].is_declarer = True
     
     def start_trick(self, leader_id: int):
         """Start a new trick with specified leader."""
@@ -110,7 +158,7 @@ class Round:
         valid_plays = player.get_valid_plays(self.current_trick.led_suit)
         
         if card not in valid_plays:
-            raise ValueError(f"Invalid play: {card} not in valid plays {valid_plays}")
+            raise ValueError(f"Invalid play: {card}")
         
         # Play the card
         player.play_card(card)
@@ -149,94 +197,107 @@ class Round:
     
     def calculate_scores(self) -> Dict[int, int]:
         """
-        Calculate round scores based on Estimation rules.
+        Calculate round scores based on bids vs tricks won with full Estimation rules.
         
         Returns:
             Dictionary of player_id -> points earned
         """
         scores = {}
+        total_estimations = sum(self.estimations.values())
         
-        # Get all estimations and actual tricks
-        all_estimations = []
-        all_tricks = []
+        # Determine round type
+        is_over_round = total_estimations > 13
+        is_under_round = total_estimations < 13
         
-        for player_id in range(4):
-            player = self.players[player_id]
+        # Calculate risk level
+        risk_level = abs(total_estimations - 13) // 2
+        
+        # Count winners and losers
+        winners = []
+        losers = []
+        
+        for player_id, player in self.players.items():
             estimation = self.estimations.get(player_id, 0)
-            tricks = player.tricks_won
+            actual_tricks = player.tricks_won
             
-            all_estimations.append(estimation)
-            all_tricks.append(tricks)
-        
-        # Check for Risk situation (total estimations = 13)
-        total_estimations = sum(all_estimations)
-        is_risk = (total_estimations == 13)
-        risk_level = 1 if is_risk else 0
+            if actual_tricks == estimation:
+                winners.append(player_id)
+            else:
+                losers.append(player_id)
         
         # Calculate scores for each player
-        for player_id in range(4):
-            player = self.players[player_id]
-            estimation = all_estimations[player_id]
-            tricks = all_tricks[player_id]
+        for player_id, player in self.players.items():
+            estimation = self.estimations.get(player_id, 0)
+            actual_tricks = player.tricks_won
+            score = 0
             
-            # Base scoring
-            if tricks == estimation:
+            if actual_tricks == estimation:
                 # Made estimation exactly
-                points = 10 + estimation
+                score = 10 + estimation  # Base points
                 
-                # Bonuses for making estimation
-                if estimation == 0:  # Dash call
-                    if self.round_number <= 13:  # Under rounds
-                        points = 33
-                    else:  # Over rounds  
-                        points = 25
+                # Call/With bonus
+                if player_id == self.declarer_id or player_id in self.with_players:
+                    score += 10
+                
+                # Sole winner bonus
+                if len(winners) == 1:
+                    score += 10
                 
                 # Risk bonus
-                if is_risk:
-                    points += 10 * risk_level
+                if risk_level > 0:
+                    score += 10 * risk_level
                 
-                # Check for sole winner (only player to make estimation)
-                others_made = sum(1 for i in range(4) if i != player_id and 
-                                all_tricks[i] == all_estimations[i])
-                if others_made == 0:
-                    points += 10
-                    
+                # Dash bonus
+                if player_id in self.dash_players:
+                    if is_over_round:
+                        score = 25  # Override base calculation
+                    elif is_under_round:
+                        score = 33  # Override base calculation
+                
             else:
                 # Missed estimation
-                difference = abs(tricks - estimation)
-                points = -10 - difference
+                difference = abs(actual_tricks - estimation)
+                score = -difference  # Base penalty per trick difference
+                
+                # Additional penalties
+                score -= 10  # Base penalty for missing
+                
+                # Call/With penalty
+                if player_id == self.declarer_id or player_id in self.with_players:
+                    score -= 10
+                
+                # Sole loser penalty
+                if len(losers) == 1:
+                    score -= 10
                 
                 # Risk penalty
-                if is_risk:
-                    points -= 10 * risk_level
-                
-                # Check for sole loser (only player to miss estimation)  
-                others_missed = sum(1 for i in range(4) if i != player_id and 
-                                  all_tricks[i] != all_estimations[i])
-                if others_missed == 0:
-                    points -= 10
+                if risk_level > 0:
+                    score -= 10 * risk_level
                 
                 # Dash penalty
-                if estimation == 0:
-                    if self.round_number <= 13:  # Under rounds
-                        points = -33
-                    else:  # Over rounds
-                        points = -25
+                if player_id in self.dash_players:
+                    if is_over_round:
+                        score = -25  # Override base calculation
+                    elif is_under_round:
+                        score = -33  # Override base calculation
             
-            scores[player_id] = points
-            
+            scores[player_id] = score
+        
         return scores
     
     def get_status(self) -> Dict:
         """Get current round status for display."""
         return {
             'round_number': self.round_number,
-            'trump_suit': str(self.trump_suit) if self.trump_suit else "No Trump",
+            'trump_suit': str(self.trump_suit) if self.trump_suit else 'No Trump',
+            'is_speed_round': self.is_speed_round,
             'tricks_completed': len(self.tricks),
-            'estimations': self.estimations,
+            'declarer_id': self.declarer_id,
+            'declarer_bid': self.declarer_bid,
+            'estimations': dict(self.estimations),
             'tricks_won': {pid: p.tricks_won for pid, p in self.players.items()},
             'current_leader': self.leader_id,
             'is_complete': self.is_complete(),
-            'declarer_id': self.declarer_id,
-            'declarer_bid': self.declarer_bid
+            'with_players': list(self.with_players),
+            'dash_players': list(self.dash_players)
         }

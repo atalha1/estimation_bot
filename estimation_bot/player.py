@@ -1,9 +1,9 @@
 """
 Player module for Estimation card game.
-Defines player state and strategy interface with proper rule enforcement.
+Defines player state and strategy interface.
 """
 
-from typing import List, Optional, Tuple
+from typing import List, Optional, Union, Tuple
 from abc import ABC, abstractmethod
 from estimation_bot.card import Card, Suit
 
@@ -34,7 +34,7 @@ class Player:
         
     def receive_cards(self, cards: List[Card]):
         """Add cards to player's hand."""
-        self.hand = cards.copy()  # Make a copy to avoid reference issues
+        self.hand = cards
         
     def play_card(self, card: Card) -> Card:
         """
@@ -50,7 +50,7 @@ class Player:
             ValueError: If card not in hand
         """
         if card not in self.hand:
-            raise ValueError(f"Card {card} not in hand {self.hand}")
+            raise ValueError(f"Card {card} not in hand")
         self.hand.remove(card)
         return card
     
@@ -60,7 +60,7 @@ class Player:
     
     def get_valid_plays(self, led_suit: Optional[Suit]) -> List[Card]:
         """
-        Get cards that can legally be played following Estimation rules.
+        Get cards that can legally be played.
         
         Args:
             led_suit: Suit that was led (None if leading)
@@ -68,28 +68,21 @@ class Player:
         Returns:
             List of valid cards to play
         """
-        if led_suit is None:
-            # Leading - can play any card
+        if led_suit is None or not self.has_suit(led_suit):
             return self.hand.copy()
         
         # Must follow suit if possible
-        following_suit = [card for card in self.hand if card.suit == led_suit]
-        if following_suit:
-            return following_suit
-        
-        # Cannot follow suit - can play any remaining card
-        return self.hand.copy()
+        return [card for card in self.hand if card.suit == led_suit]
     
     def reset_round(self):
         """Reset player state for new round."""
         self.hand = []
         self.bid = None
-        self.estimation = None
         self.tricks_won = 0
         self.is_declarer = False
         self.is_with = False
         self.is_dash = False
-        self.has_avoid = False
+        self.estimation = None
     
     def add_score(self, points: int):
         """Add points to player's total score."""
@@ -103,25 +96,26 @@ class BotInterface(ABC):
     """Abstract interface that all bots must implement."""
     
     @abstractmethod
-    def make_bid(self, hand: List[Card], other_bids: List[Optional[tuple]], 
-                 is_speed_round: bool = False) -> Optional[Tuple[int, Optional[Suit]]]:
+    def make_bid(self, hand: List[Card], other_bids: List[Optional[Union[Tuple[int, Optional[Suit]], str]]], 
+                 is_speed_round: bool = False, can_dash: bool = True) -> Optional[Union[Tuple[int, Optional[Suit]], str]]:
         """
         Make a bid for the round.
         
         Args:
             hand: Current hand of cards
-            other_bids: List of (amount, trump_suit) tuples from other players
-            is_speed_round: Whether this is a speed round (no bidding)
+            other_bids: List of bids from other players (None, (amount, trump_suit), or "DASH")
+            is_speed_round: Whether this is a speed round
+            can_dash: Whether dash calls are still available
             
         Returns:
-            Tuple of (bid_amount, trump_suit) or None for pass
+            Tuple of (bid_amount, trump_suit), "DASH", or None for pass
         """
         pass
     
     @abstractmethod
     def make_estimation(self, hand: List[Card], trump_suit: Optional[Suit],
                        declarer_bid: int, other_estimations: List[Optional[int]],
-                       is_last_estimator: bool = False) -> int:
+                       is_last_estimator: bool = False, can_dash: bool = True) -> Union[int, str]:
         """
         Make estimation after trump is determined.
         
@@ -131,9 +125,10 @@ class BotInterface(ABC):
             declarer_bid: Declarer's winning bid amount
             other_estimations: Estimations from other players
             is_last_estimator: Whether this player is last to estimate (Risk)
+            can_dash: Whether dash estimations are still available
             
         Returns:
-            Estimation (0-13)
+            Estimation (0-13), "DASH", or declarer_bid for "WITH"
         """
         pass
     
@@ -160,140 +155,196 @@ class BotInterface(ABC):
 class HumanPlayer(Player):
     """Human player that gets input from console."""
     
-    def make_bid_interactive(self, other_bids: List[Optional[tuple]]) -> Optional[Tuple[int, Optional[Suit]]]:
+    def make_bid_interactive(self, other_bids: List[Optional[Union[Tuple[int, Optional[Suit]], str]]], can_dash: bool = True) -> Optional[Union[Tuple[int, Optional[Suit]], str]]:
         """Get bid from human player via console input."""
         print(f"\n{self.name}'s turn to bid")
         print(f"Your hand: {self._format_hand()}")
-        print(f"Other bids: {self._format_other_bids(other_bids)}")
         
-        # Determine minimum bid
-        valid_bids = [bid for bid in other_bids if bid is not None]
-        min_bid = 4
-        if valid_bids:
-            highest_bid = max(bid[0] for bid in valid_bids)
-            min_bid = max(4, highest_bid + 1)
+        # Show other bids
+        bid_summary = []
+        for i, bid in enumerate(other_bids):
+            if bid is None:
+                bid_summary.append(f"Player {i}: Pass")
+            elif bid == "DASH":
+                bid_summary.append(f"Player {i}: DASH CALL")
+            else:
+                amount, trump = bid
+                trump_str = trump.name if trump else "No Trump"
+                bid_summary.append(f"Player {i}: {amount} {trump_str}")
         
-        print(f"Minimum bid: {min_bid}, Maximum: {len(self.hand)}")
+        if any(b is not None for b in other_bids):
+            print(f"Previous bids: {', '.join(bid_summary)}")
+        
+        print("\nOptions:")
+        print("1. Make a regular bid (4-13 tricks + trump suit)")
+        if can_dash:
+            print("2. Make a DASH CALL (0 tricks)")
+        print("3. Pass")
         
         while True:
             try:
-                choice = input("Enter bid amount (or 'p' to pass): ").strip().lower()
-                if choice == 'p':
-                    return None
+                choice = input("Enter your choice (1/2/3): ").strip()
                 
-                bid_amount = int(choice)
-                if bid_amount < min_bid or bid_amount > len(self.hand):
-                    print(f"Bid must be between {min_bid} and {len(self.hand)}")
-                    continue
+                if choice == "3":
+                    return None  # Pass
                 
-                # Choose trump suit
-                print("Choose trump suit:")
-                print("1. Spades ♠")
-                print("2. Hearts ♥") 
-                print("3. Diamonds ♦")
-                print("4. Clubs ♣")
-                print("5. No Trump")
+                elif choice == "2" and can_dash:
+                    return "DASH"
                 
-                trump_choice = input("Enter choice (1-5): ").strip()
-                trump_map = {
-                    '1': Suit.SPADES, '2': Suit.HEARTS, '3': Suit.DIAMONDS,
-                    '4': Suit.CLUBS, '5': None
-                }
+                elif choice == "1":
+                    # Regular bid
+                    while True:
+                        try:
+                            amount = int(input("Enter bid amount (4-13): "))
+                            if 4 <= amount <= 13:
+                                break
+                            print("Bid must be between 4 and 13")
+                        except ValueError:
+                            print("Please enter a valid number")
+                    
+                    print("Choose trump suit:")
+                    print("1. No Trump")
+                    print("2. Spades ♠")
+                    print("3. Hearts ♥") 
+                    print("4. Diamonds ♦")
+                    print("5. Clubs ♣")
+                    
+                    while True:
+                        try:
+                            trump_choice = int(input("Enter trump choice (1-5): "))
+                            trump_map = {
+                                1: None,
+                                2: Suit.SPADES,
+                                3: Suit.HEARTS,
+                                4: Suit.DIAMONDS,
+                                5: Suit.CLUBS
+                            }
+                            if trump_choice in trump_map:
+                                return (amount, trump_map[trump_choice])
+                            print("Please enter 1-5")
+                        except ValueError:
+                            print("Please enter a valid number")
                 
-                if trump_choice not in trump_map:
-                    print("Invalid trump choice")
-                    continue
-                
-                return (bid_amount, trump_map[trump_choice])
-                
-            except ValueError:
-                print("Please enter a valid number or 'p' to pass")
+                else:
+                    print("Invalid choice")
+                    
+            except (ValueError, KeyboardInterrupt):
+                print("Please enter a valid choice")
     
     def make_estimation_interactive(self, trump_suit: Optional[Suit], declarer_bid: int,
-                                  other_estimations: List[Optional[int]], 
-                                  is_last_estimator: bool = False) -> int:
-        """Get estimation from human player."""
+                                  other_estimations: List[int], is_last_estimator: bool = False,
+                                  can_dash: bool = True) -> Union[int, str]:
+        """Get estimation from human player via console input."""
         print(f"\n{self.name}'s turn to estimate")
-        print(f"Trump: {trump_suit or 'No Trump'}")
+        print(f"Trump suit: {trump_suit.name if trump_suit else 'No Trump'}")
         print(f"Declarer bid: {declarer_bid}")
         print(f"Your hand: {self._format_hand()}")
-        print(f"Other estimations: {other_estimations}")
+        
+        # Show other estimations
+        if other_estimations:
+            current_total = sum(other_estimations)
+            print(f"Other estimations so far: {other_estimations} (Total: {current_total})")
+        
+        print(f"\nOptions:")
+        print(f"1. Regular estimation (0-{declarer_bid})")
+        print(f"2. WITH (estimate {declarer_bid} - same as declarer)")
+        if can_dash:
+            print("3. DASH (estimate 0 tricks)")
         
         if is_last_estimator:
-            total_so_far = sum(e for e in other_estimations if e is not None)
-            print(f"WARNING: You are last estimator. Total so far: {total_so_far}")
-            print(f"Cannot estimate {13 - total_so_far} (would make total = 13, Risk rule)")
+            current_total = sum(other_estimations)
+            forbidden = 13 - current_total
+            print(f"\n⚠️  You are the Risk player! Cannot estimate {forbidden} (total would be 13)")
         
         while True:
             try:
-                estimation = int(input(f"Enter estimation (0-{declarer_bid}): "))
-                if estimation < 0 or estimation > declarer_bid:
-                    print(f"Estimation must be between 0 and {declarer_bid}")
-                    continue
+                choice = input("Enter your choice: ").strip()
                 
-                if is_last_estimator:
-                    total_so_far = sum(e for e in other_estimations if e is not None)
-                    if total_so_far + estimation == 13:
-                        print("Cannot make total equal 13 (Risk rule)")
-                        continue
+                if choice == "2":
+                    return declarer_bid  # WITH
                 
-                return estimation
+                elif choice == "3" and can_dash:
+                    return "DASH"
                 
-            except ValueError:
-                print("Please enter a valid number")
+                elif choice == "1":
+                    while True:
+                        try:
+                            estimation = int(input(f"Enter estimation (0-{declarer_bid}): "))
+                            if 0 <= estimation <= declarer_bid:
+                                # Check risk constraint
+                                if is_last_estimator:
+                                    current_total = sum(other_estimations)
+                                    if current_total + estimation == 13:
+                                        print(f"Cannot estimate {estimation} - total would be exactly 13 (Risk rule)")
+                                        continue
+                                return estimation
+                            print(f"Estimation must be between 0 and {declarer_bid}")
+                        except ValueError:
+                            print("Please enter a valid number")
+                
+                else:
+                    print("Invalid choice")
+                    
+            except (ValueError, KeyboardInterrupt):
+                print("Please enter a valid choice")
     
-    def choose_card_interactive(self, valid_plays: List[Card], 
-                               trump_suit: Optional[Suit], led_suit: Optional[Suit]) -> Card:
+    def choose_card_interactive(self, valid_plays: List[Card], trump_suit: Optional[Suit], 
+                               led_suit: Optional[Suit], cards_on_table: List[str] = None) -> Card:
         """Get card choice from human player via console input."""
         print(f"\n{self.name}'s turn to play")
-        print(f"Trump: {trump_suit or 'No Trump'}, Led: {led_suit or 'Leading'}")
+        print(f"Trump: {trump_suit.name if trump_suit else 'No Trump'}")
+        print(f"Led suit: {led_suit.name if led_suit else 'Leading'}")
+        
+        if cards_on_table:
+            print(f"Cards on table: {', '.join(cards_on_table)}")
+        
         print(f"Your hand: {self._format_hand()}")
         print(f"Valid plays: {', '.join(str(card) for card in valid_plays)}")
         
         while True:
             try:
                 choice = input("Enter card to play (e.g., 'A♠' or '10♦'): ").strip()
+                
+                # Try to match the input to a valid card
                 for card in valid_plays:
-                    if str(card) == choice:
+                    if str(card) == choice or choice.upper() in str(card).upper():
                         return card
+                
+                # Alternative matching - try by rank and suit separately
+                for card in valid_plays:
+                    rank_str = str(card.rank)
+                    suit_str = str(card.suit)
+                    if choice.upper() == f"{rank_str}{suit_str}":
+                        return card
+                
                 print("Invalid card. Please choose from valid plays.")
+                print(f"Valid options: {', '.join(str(card) for card in valid_plays)}")
+                
             except (ValueError, KeyboardInterrupt):
                 print("Please enter a valid card")
     
     def _format_hand(self) -> str:
-        """Format hand for display."""
+        """Format hand for display grouped by suit."""
         if not self.hand:
-            return "Empty"
+            return "Empty hand"
         
         # Group by suit
         by_suit = {}
         for card in self.hand:
-            suit = card.suit
-            if suit not in by_suit:
-                by_suit[suit] = []
-            by_suit[suit].append(card)
+            suit_name = card.suit
+            if suit_name not in by_suit:
+                by_suit[suit_name] = []
+            by_suit[suit_name].append(card)
         
         # Sort within each suit
         for suit in by_suit:
-            by_suit[suit].sort(key=lambda c: c.rank.value)
+            by_suit[suit].sort(key=lambda c: c.rank.value, reverse=True)  # High to low
         
         # Format by suit
         suit_strings = []
         for suit in [Suit.SPADES, Suit.HEARTS, Suit.DIAMONDS, Suit.CLUBS]:
             if suit in by_suit:
-                cards_str = ' '.join(str(card) for card in by_suit[suit])
-                suit_strings.append(f"{suit.name[0]}: {cards_str}")
+                cards_str = ' '.join(str(card.rank) for card in by_suit[suit])
+                suit_strings.append(f"{suit.value}: {cards_str}")
         
         return ' | '.join(suit_strings)
-    
-    def _format_other_bids(self, other_bids: List[Optional[tuple]]) -> str:
-        """Format other players' bids for display."""
-        formatted = []
-        for i, bid in enumerate(other_bids):
-            if bid is None:
-                formatted.append(f"P{i}: Pass")
-            else:
-                amount, trump = bid
-                trump_str = trump.name if trump else "No Trump"
-                formatted.append(f"P{i}: {amount} {trump_str}")
-        return ", ".join(formatted)

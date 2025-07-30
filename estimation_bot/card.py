@@ -70,9 +70,9 @@ class Card:
             return NotImplemented
         return self.rank < other.rank
     
-    def beats(self, other: 'Card', trump_suit: Optional[Suit], led_suit: Suit) -> bool:
+    def beats(self, other: 'Card', trump_suit: Optional[Suit], led_suit: Optional[Suit]) -> bool:
         """
-        Determine if this card beats another in a trick following Estimation rules.
+        Determine if this card beats another in a trick.
         
         Args:
             other: The card to compare against
@@ -82,39 +82,25 @@ class Card:
         Returns:
             True if this card beats the other card
         """
-        # Handle No Trump case
-        if trump_suit is None:
-            # No trump - only led suit can win
+        # Trump beats non-trump
+        if trump_suit:
+            if self.suit == trump_suit and other.suit != trump_suit:
+                return True
+            if other.suit == trump_suit and self.suit != trump_suit:
+                return False
+        
+        # Both trump or both non-trump: higher rank wins if same suit
+        if self.suit == other.suit:
+            return self.rank > other.rank
+        
+        # Different suits, neither trump: led suit wins
+        if led_suit:
             if self.suit == led_suit and other.suit != led_suit:
                 return True
             if other.suit == led_suit and self.suit != led_suit:
                 return False
-            if self.suit == other.suit:
-                return self.rank > other.rank
-            # Neither follows led suit - first played wins (handled by caller)
-            return False
         
-        # Trump vs Non-Trump
-        if self.suit == trump_suit and other.suit != trump_suit:
-            return True
-        if other.suit == trump_suit and self.suit != trump_suit:
-            return False
-            
-        # Both trump - higher rank wins
-        if self.suit == trump_suit and other.suit == trump_suit:
-            return self.rank > other.rank
-        
-        # Neither trump - led suit wins, then rank
-        if self.suit == led_suit and other.suit != led_suit:
-            return True
-        if other.suit == led_suit and self.suit != led_suit:
-            return False
-            
-        # Both follow led suit or neither follows - higher rank wins
-        if self.suit == other.suit:
-            return self.rank > other.rank
-            
-        # Different suits, neither trump, neither led - first played wins
+        # Neither follows led suit, neither trump: first played wins (return False)
         return False
 
 
