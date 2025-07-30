@@ -1,0 +1,54 @@
+{
+  "heuristic_b52f7d76_0": {
+    "model_id": "heuristic_b52f7d76_0",
+    "games_played": 0,
+    "wins": 0,
+    "total_score": 0,
+    "estimation_accuracy": 0.0,
+    "successful_calls": 0,
+    "failed_calls": 0,
+    "avg_score_per_game": 0.0,
+    "win_rate": 0.0,
+    "avg_margin_of_victory": 0.0,
+    "consistency_score": 0.0
+  },
+  "heuristic_20a7dc4c_1": {
+    "model_id": "heuristic_20a7dc4c_1",
+    "games_played": 0,
+    "wins": 0,
+    "total_score": 0,
+    "estimation_accuracy": 0.0,
+    "successful_calls": 0,
+    "failed_calls": 0,
+    "avg_score_per_game": 0.0,
+    "win_rate": 0.0,
+    "avg_margin_of_victory": 0.0,
+    "consistency_score": 0.0
+  },
+  "heuristic_c850da0f_2": {
+    "model_id": "heuristic_c850da0f_2",
+    "games_played": 0,
+    "wins": 0,
+    "total_score": 0,
+    "estimation_accuracy": 0.0,
+    "successful_calls": 0,
+    "failed_calls": 0,
+    "avg_score_per_game": 0.0,
+    "win_rate": 0.0,
+    "avg_margin_of_victory": 0.0,
+    "consistency_score": 0.0
+  },
+  "heuristic_c2c1aa60_3": {
+    "model_id": "heuristic_c2c1aa60_3",
+    "games_played": 0,
+    "wins": 0,
+    "total_score": 0,
+    "estimation_accuracy": 0.0,
+    "successful_calls": 0,
+    "failed_calls": 0,
+    "avg_score_per_game": 0.0,
+    "win_rate": 0.0,
+    "avg_margin_of_victory": 0.0,
+    "consistency_score": 0.0
+  }
+}

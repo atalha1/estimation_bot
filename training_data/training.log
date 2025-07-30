@@ -1,0 +1,116 @@
+2025-07-31 02:07:34,627 - SelfPlayTrainer - INFO - Starting training for 5 generations
+2025-07-31 02:07:34,627 - SelfPlayTrainer - INFO - Games per generation: 50
+2025-07-31 02:07:34,627 - SelfPlayTrainer - INFO - Workers: 8
+2025-07-31 02:07:34,628 - SelfPlayTrainer - INFO - 
+=== Generation 1/5 ===
+2025-07-31 02:07:45,702 - SelfPlayTrainer - INFO - New champion: Model 0 with score 0.000
+2025-07-31 02:07:45,753 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_0
+2025-07-31 02:07:45,754 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 02:07:45,755 - SelfPlayTrainer - INFO -   heuristic_b52f7d76_0:
+2025-07-31 02:07:45,755 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:45,755 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:45,756 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:45,757 - SelfPlayTrainer - INFO -   heuristic_23e68600_1:
+2025-07-31 02:07:45,757 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:45,757 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:45,758 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:45,758 - SelfPlayTrainer - INFO -   heuristic_9152a1ed_2:
+2025-07-31 02:07:45,758 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:45,759 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:45,759 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:45,760 - SelfPlayTrainer - INFO -   heuristic_989afbc6_3:
+2025-07-31 02:07:45,760 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:45,760 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:45,761 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:45,761 - SelfPlayTrainer - INFO - 
+=== Generation 2/5 ===
+2025-07-31 02:07:56,052 - SelfPlayTrainer - INFO - New champion: Model 0 with score 0.000
+2025-07-31 02:07:56,101 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_1
+2025-07-31 02:07:56,102 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 02:07:56,102 - SelfPlayTrainer - INFO -   heuristic_b52f7d76_0:
+2025-07-31 02:07:56,102 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:56,103 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:56,103 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:56,103 - SelfPlayTrainer - INFO -   heuristic_98aabaae_1:
+2025-07-31 02:07:56,103 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:56,104 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:56,104 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:56,104 - SelfPlayTrainer - INFO -   heuristic_faa870eb_2:
+2025-07-31 02:07:56,104 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:56,105 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:56,105 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:56,105 - SelfPlayTrainer - INFO -   heuristic_324bcf20_3:
+2025-07-31 02:07:56,106 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:07:56,106 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:07:56,106 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:07:56,107 - SelfPlayTrainer - INFO - 
+=== Generation 3/5 ===
+2025-07-31 02:08:06,768 - SelfPlayTrainer - INFO - New champion: Model 0 with score 0.000
+2025-07-31 02:08:06,822 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_2
+2025-07-31 02:08:06,822 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 02:08:06,823 - SelfPlayTrainer - INFO -   heuristic_b52f7d76_0:
+2025-07-31 02:08:06,823 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:06,823 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:06,824 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:06,824 - SelfPlayTrainer - INFO -   heuristic_68f5feca_1:
+2025-07-31 02:08:06,825 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:06,826 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:06,826 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:06,826 - SelfPlayTrainer - INFO -   heuristic_cf55d401_2:
+2025-07-31 02:08:06,827 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:06,827 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:06,827 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:06,827 - SelfPlayTrainer - INFO -   heuristic_2b16910b_3:
+2025-07-31 02:08:06,828 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:06,828 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:06,828 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:06,828 - SelfPlayTrainer - INFO - 
+=== Generation 4/5 ===
+2025-07-31 02:08:17,622 - SelfPlayTrainer - INFO - New champion: Model 0 with score 0.000
+2025-07-31 02:08:17,678 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_3
+2025-07-31 02:08:17,679 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 02:08:17,679 - SelfPlayTrainer - INFO -   heuristic_b52f7d76_0:
+2025-07-31 02:08:17,680 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:17,680 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:17,680 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:17,680 - SelfPlayTrainer - INFO -   heuristic_20a7dc4c_1:
+2025-07-31 02:08:17,681 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:17,681 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:17,681 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:17,682 - SelfPlayTrainer - INFO -   heuristic_c850da0f_2:
+2025-07-31 02:08:17,682 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:17,682 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:17,682 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:17,683 - SelfPlayTrainer - INFO -   heuristic_c2c1aa60_3:
+2025-07-31 02:08:17,683 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:17,683 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:17,683 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:17,683 - SelfPlayTrainer - INFO - 
+=== Generation 5/5 ===
+2025-07-31 02:08:29,571 - SelfPlayTrainer - INFO - New champion: Model 0 with score 0.000
+2025-07-31 02:08:29,615 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_4
+2025-07-31 02:08:29,615 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 02:08:29,616 - SelfPlayTrainer - INFO -   heuristic_b52f7d76_0:
+2025-07-31 02:08:29,616 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:29,617 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:29,617 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:29,617 - SelfPlayTrainer - INFO -   heuristic_bc1671f8_1:
+2025-07-31 02:08:29,618 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:29,618 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:29,619 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:29,620 - SelfPlayTrainer - INFO -   heuristic_e8397aa1_2:
+2025-07-31 02:08:29,620 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:29,620 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:29,621 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:29,621 - SelfPlayTrainer - INFO -   heuristic_4d03864c_3:
+2025-07-31 02:08:29,621 - SelfPlayTrainer - INFO -     Win Rate: 0.00%
+2025-07-31 02:08:29,622 - SelfPlayTrainer - INFO -     Avg Score: 0.0
+2025-07-31 02:08:29,622 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.00%
+2025-07-31 02:08:29,622 - SelfPlayTrainer - INFO - 
+Training complete!
+2025-07-31 02:08:29,842 - SelfPlayTrainer - INFO - Final results saved to training_data
