@@ -47,7 +47,7 @@ class HeuristicBot(BotInterface):
         # Check if we can outbid others
         highest_bid = 0
         for bid in other_bids:
-            if bid and bid != "DASH":
+            if bid and bid != "DASH" and isinstance(bid, tuple):
                 amount, trump = bid
                 if amount > highest_bid:
                     highest_bid = amount
@@ -227,7 +227,7 @@ class AdvancedHeuristicBot(HeuristicBot):
         highest_bid = 0
         
         for bid in other_bids:
-            if bid and bid != "DASH":
+            if bid and bid != "DASH" and isinstance(bid, tuple):
                 amount, trump = bid
                 highest_bid = max(highest_bid, amount)
         

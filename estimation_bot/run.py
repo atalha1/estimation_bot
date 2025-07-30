@@ -23,7 +23,7 @@ def create_bot_player(bot_type: str, player_id: int) -> Player:
     }
     
     if bot_type not in bot_map:
-        raise ValueError(f"Unknown bot type: {bot_type}")
+        raise ValueError(f"Unknown bot type: {bot_type}. Available: {list(bot_map.keys())}")
     
     player = Player(player_id, f"{bot_type.title()}Bot_{player_id}")
     player.strategy = bot_map[bot_type](f"{bot_type.title()}Bot_{player_id}")
@@ -103,16 +103,28 @@ def main():
     parser = argparse.ArgumentParser(description="Play Estimation card game")
     parser.add_argument('--mode', choices=['FULL', 'MINI', 'MICRO'], 
                        default='FULL', help='Game mode (Bola type)')
-    parser.add_argument('--bots', nargs='+', 
+    parser.add_argument('--bots', nargs='*', 
                        choices=['random', 'weighted', 'heuristic', 'advanced'],
-                       default=['random', 'random', 'random', 'random'],
-                       help='Bot types for 4 players')
-    parser.add_argument('--humans', type=int, default=0,
+                       help='Bot types for remaining players')
+    parser.add_argument('--humans', type=int, default=1,
                        help='Number of human players (0-4)')
     parser.add_argument('--verbose', action='store_true',
                        help='Enable verbose logging')
     
+    # Handle positional arguments for bot types (for backward compatibility)
+    # This allows: python -m estimation_bot.run --mode MICRO --humans 1 advanced weighted
+    parser.add_argument('extra_bots', nargs='*', 
+                       choices=['random', 'weighted', 'heuristic', 'advanced'],
+                       help='Additional bot types')
+    
     args = parser.parse_args()
+    
+    # Combine --bots and positional bot arguments
+    if args.extra_bots:
+        if args.bots:
+            args.bots.extend(args.extra_bots)
+        else:
+            args.bots = args.extra_bots
     
     # Setup logging
     if args.verbose:
@@ -122,22 +134,26 @@ def main():
     
     print("🎴 Welcome to Estimation! 🎴")
     
+    # Calculate total players needed
+    total_needed = 4 - args.humans
+    
+    # If no bots specified, fill with random bots
+    if not args.bots:
+        args.bots = ['random'] * total_needed
+    elif len(args.bots) < total_needed:
+        # Fill remaining slots with random bots
+        args.bots.extend(['random'] * (total_needed - len(args.bots)))
+    elif len(args.bots) > total_needed:
+        # Truncate excess bots
+        args.bots = args.bots[:total_needed]
+    
     if args.humans == 0:
         # Bot-only game
-        if len(args.bots) != 4:
-            print("Error: Need exactly 4 bot types for bot-only game")
-            return
-        
         result = run_bot_game(args.bots, args.mode)
         
-    elif args.humans + len(args.bots) == 4:
+    else:
         # Mixed game
         result = run_mixed_game(args.humans, args.bots, args.mode)
-        
-    else:
-        print(f"Error: Need exactly 4 players total. "
-              f"Got {args.humans} humans + {len(args.bots)} bots")
-        return
     
     if not result.get('interrupted'):
         print(f"\n✅ Game completed successfully!")

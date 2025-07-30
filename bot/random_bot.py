@@ -29,7 +29,7 @@ class RandomBot(BotInterface):
         if can_dash and random.random() < 0.1:  # 10% chance
             return "DASH"
         
-        # Regular bid
+        # Regular bid - ensure we return a proper tuple
         amount = random.randint(4, min(10, len(hand)))  # Conservative random bid
         trump_suit = random.choice([None, Suit.SPADES, Suit.HEARTS, Suit.DIAMONDS, Suit.CLUBS])
         
@@ -123,7 +123,7 @@ class WeightedRandomBot(BotInterface):
         if can_dash and hand_strength < 0.2 and random.random() < 0.15:
             return "DASH"
         
-        # Regular bid
+        # Regular bid - ensure we return a proper tuple
         if hand_strength < 0.3:
             amount = random.randint(4, 6)
         elif hand_strength > 0.7:
