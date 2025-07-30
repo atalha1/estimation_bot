@@ -58,37 +58,33 @@ class GameResult:
 
 @dataclass
 class ModelStats:
-    """Tracks performance statistics for a model."""
-    model_id: str
-    games_played: int = 0
-    wins: int = 0
-    total_score: int = 0
-    estimation_accuracy: float = 0.0
-    successful_calls: int = 0
-    failed_calls: int = 0
-    
-    # Advanced metrics
-    avg_score_per_game: float = 0.0
-    win_rate: float = 0.0
-    avg_margin_of_victory: float = 0.0
-    consistency_score: float = 0.0  # Std dev of scores
+    def __init__(self, model_id: str):
+        self.model_id = model_id
+        self.games_played = 0
+        self.wins = 0
+        self.total_score = 0
+        self.estimation_accuracy_sum = 0.0  # Track sum for averaging
+        self.estimation_accuracy = None  # Not 0.0!
     
     def update(self, game_result: GameResult, player_id: int):
-        """Update stats based on game result."""
         self.games_played += 1
+        
         if game_result.winner_id == player_id:
             self.wins += 1
+            
         self.total_score += game_result.final_scores[player_id]
         
-        # Update running averages
-        self.win_rate = self.wins / self.games_played
+        # Win rate with zero handling
+        self.win_rate = self.wins / self.games_played if self.games_played else 0.0
+        
+        # Average score
         self.avg_score_per_game = self.total_score / self.games_played
         
-        # Update accuracy if available
+        # Estimation accuracy (proper averaging)
         if player_id in game_result.estimation_accuracy:
-            alpha = 0.1  # Learning rate for moving average
-            self.estimation_accuracy = (1 - alpha) * self.estimation_accuracy + \
-                                     alpha * game_result.estimation_accuracy[player_id]
+            accuracy = game_result.estimation_accuracy[player_id]
+            self.estimation_accuracy_sum += accuracy
+            self.estimation_accuracy = self.estimation_accuracy_sum / self.games_played
 
 
 class ModelInterface(ABC):
@@ -337,10 +333,11 @@ class SelfPlayTrainer:
         
         # Initialize stats for each model
         for i, model in enumerate(population):
-            model_id = f"{model.get_id()}_{i}"
-            if model_id not in self.model_stats:
-                self.model_stats[model_id] = ModelStats(model_id)
-            stats[model_id] = self.model_stats[model_id]
+            # Use base ID without suffix
+            base_id = model.get_id()
+            if base_id not in self.model_stats:
+                self.model_stats[base_id] = ModelStats(base_id)
+            stats[base_id] = self.model_stats[base_id]
         
         # Update stats from games
         for result in game_results:

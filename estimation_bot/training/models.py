@@ -12,7 +12,7 @@ import copy
 from estimation_bot.player import BotInterface
 from bot.heuristic_bot import HeuristicBot, AdvancedHeuristicBot
 from bot.random_bot import RandomBot, WeightedRandomBot
-from training.trainer import ModelInterface
+from estimation_bot.training.trainer import ModelInterface
 
 
 class HeuristicModelWrapper(ModelInterface):
