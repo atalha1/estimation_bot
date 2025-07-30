@@ -37,20 +37,20 @@ class Player:
         self.hand = cards
 
     def make_dash_choice(self) -> bool:
-    """Ask human player if they want to make a dash call."""
-    print(f"\n{self.name}, do you want to make a DASH CALL (0 tricks)?")
-    print("This is decided BEFORE seeing other bids - it's risky!")
-    
-    while True:
-        try:
-            choice = input("Make DASH CALL? (y/n): ").strip().lower()
-            if choice in ['y', 'yes']:
-                return True
-            elif choice in ['n', 'no']:
-                return False
-            print("Please enter 'y' or 'n'")
-        except (ValueError, KeyboardInterrupt):
-            print("Please enter 'y' or 'n'")
+        """Ask human player if they want to make a dash call."""
+        print(f"\n{self.name}, do you want to make a DASH CALL (0 tricks)?")
+        print("This is decided BEFORE seeing other bids - it's risky!")
+        
+        while True:
+            try:
+                choice = input("Make DASH CALL? (y/n): ").strip().lower()
+                if choice in ['y', 'yes']:
+                    return True
+                elif choice in ['n', 'no']:
+                    return False
+                print("Please enter 'y' or 'n'")
+            except (ValueError, KeyboardInterrupt):
+                print("Please enter 'y' or 'n'")
         
     def play_card(self, card: Card) -> Card:
         """
