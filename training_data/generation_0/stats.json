@@ -1,42 +1,42 @@
 {
-  "heuristic_2b11a57f": {
-    "model_id": "heuristic_2b11a57f",
-    "games_played": 50,
-    "wins": 16,
-    "total_score": -4714,
-    "estimation_accuracy_sum": -12.8452380952381,
-    "estimation_accuracy": -0.256904761904762,
-    "win_rate": 0.32,
-    "avg_score_per_game": -94.28
+  "NADL_v1.0": {
+    "model_id": "NADL_v1.0",
+    "games_played": 1000,
+    "wins": 258,
+    "total_score": -295533,
+    "estimation_accuracy_sum": -282.17440476190467,
+    "estimation_accuracy": -0.2821744047619047,
+    "win_rate": 0.258,
+    "avg_score_per_game": -295.533
   },
-  "heuristic_566dd4f5": {
-    "model_id": "heuristic_566dd4f5",
-    "games_played": 50,
-    "wins": 15,
-    "total_score": -4987,
-    "estimation_accuracy_sum": -27.11714285714286,
-    "estimation_accuracy": -0.5423428571428572,
+  "heuristic_98674a81": {
+    "model_id": "heuristic_98674a81",
+    "games_played": 1000,
+    "wins": 225,
+    "total_score": -307777,
+    "estimation_accuracy_sum": -311.43353174603163,
+    "estimation_accuracy": -0.3114335317460316,
+    "win_rate": 0.225,
+    "avg_score_per_game": -307.777
+  },
+  "heuristic_f583c743": {
+    "model_id": "heuristic_f583c743",
+    "games_played": 1000,
+    "wins": 300,
+    "total_score": -281616,
+    "estimation_accuracy_sum": -111.0408730158729,
+    "estimation_accuracy": -0.1110408730158729,
     "win_rate": 0.3,
-    "avg_score_per_game": -99.74
+    "avg_score_per_game": -281.616
   },
-  "heuristic_15610e44": {
-    "model_id": "heuristic_15610e44",
-    "games_played": 50,
-    "wins": 12,
-    "total_score": -4699,
-    "estimation_accuracy_sum": -16.787380952380957,
-    "estimation_accuracy": -0.33574761904761913,
-    "win_rate": 0.24,
-    "avg_score_per_game": -93.98
-  },
-  "heuristic_b79f4d33": {
-    "model_id": "heuristic_b79f4d33",
-    "games_played": 50,
-    "wins": 7,
-    "total_score": -5905,
-    "estimation_accuracy_sum": -19.622380952380954,
-    "estimation_accuracy": -0.3924476190476191,
-    "win_rate": 0.14,
-    "avg_score_per_game": -118.1
+  "heuristic_9a669977": {
+    "model_id": "heuristic_9a669977",
+    "games_played": 1000,
+    "wins": 217,
+    "total_score": -313260,
+    "estimation_accuracy_sum": -24.25795855379186,
+    "estimation_accuracy": -0.02425795855379186,
+    "win_rate": 0.217,
+    "avg_score_per_game": -313.26
   }
 }

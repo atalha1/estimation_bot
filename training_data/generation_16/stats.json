@@ -1,0 +1,42 @@
+{
+  "NADL_v1.0": {
+    "model_id": "NADL_v1.0",
+    "games_played": 850,
+    "wins": 218,
+    "total_score": -83704,
+    "estimation_accuracy_sum": -517.1333333333328,
+    "estimation_accuracy": -0.6083921568627444,
+    "win_rate": 0.2564705882352941,
+    "avg_score_per_game": -98.47529411764705
+  },
+  "heuristic_d20f16d1": {
+    "model_id": "heuristic_d20f16d1",
+    "games_played": 50,
+    "wins": 17,
+    "total_score": -3719,
+    "estimation_accuracy_sum": -16.13190476190476,
+    "estimation_accuracy": -0.3226380952380952,
+    "win_rate": 0.34,
+    "avg_score_per_game": -74.38
+  },
+  "heuristic_4dec063e": {
+    "model_id": "heuristic_4dec063e",
+    "games_played": 50,
+    "wins": 12,
+    "total_score": -3736,
+    "estimation_accuracy_sum": -8.920476190476196,
+    "estimation_accuracy": -0.1784095238095239,
+    "win_rate": 0.24,
+    "avg_score_per_game": -74.72
+  },
+  "heuristic_cc00006b": {
+    "model_id": "heuristic_cc00006b",
+    "games_played": 50,
+    "wins": 9,
+    "total_score": -5336,
+    "estimation_accuracy_sum": -17.955952380952375,
+    "estimation_accuracy": -0.3591190476190475,
+    "win_rate": 0.18,
+    "avg_score_per_game": -106.72
+  }
+}

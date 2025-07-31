@@ -252,3 +252,1181 @@ Generation Summary:
 2025-07-31 02:35:39,262 - SelfPlayTrainer - INFO - 
 Training complete!
 2025-07-31 02:35:39,452 - SelfPlayTrainer - INFO - Final results saved to training_data
+2025-07-31 18:07:02,748 - SelfPlayTrainer - INFO - Starting training for 10 generations
+2025-07-31 18:07:02,749 - SelfPlayTrainer - INFO - Games per generation: 100
+2025-07-31 18:07:02,749 - SelfPlayTrainer - INFO - Workers: 8
+2025-07-31 18:07:02,749 - SelfPlayTrainer - INFO - 
+=== Generation 1/10 ===
+2025-07-31 18:07:44,083 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_0
+2025-07-31 18:07:44,084 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:07:44,084 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:07:44,085 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:07:44,085 - SelfPlayTrainer - INFO -     Avg Score: -128.3
+2025-07-31 18:07:44,085 - SelfPlayTrainer - INFO -     Est. Accuracy: 2.96%
+2025-07-31 18:07:44,086 - SelfPlayTrainer - INFO -   heuristic_cc8451d9:
+2025-07-31 18:07:44,086 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:07:44,086 - SelfPlayTrainer - INFO -     Avg Score: -124.9
+2025-07-31 18:07:44,087 - SelfPlayTrainer - INFO -     Est. Accuracy: 2.10%
+2025-07-31 18:07:44,087 - SelfPlayTrainer - INFO -   heuristic_b425df66:
+2025-07-31 18:07:44,087 - SelfPlayTrainer - INFO -     Win Rate: 25.00%
+2025-07-31 18:07:44,088 - SelfPlayTrainer - INFO -     Avg Score: -129.6
+2025-07-31 18:07:44,088 - SelfPlayTrainer - INFO -     Est. Accuracy: 13.00%
+2025-07-31 18:07:44,088 - SelfPlayTrainer - INFO -   heuristic_0784aa10:
+2025-07-31 18:07:44,088 - SelfPlayTrainer - INFO -     Win Rate: 23.00%
+2025-07-31 18:07:44,089 - SelfPlayTrainer - INFO -     Avg Score: -147.2
+2025-07-31 18:07:44,089 - SelfPlayTrainer - INFO -     Est. Accuracy: 13.34%
+2025-07-31 18:07:44,089 - SelfPlayTrainer - INFO - 
+=== Generation 2/10 ===
+2025-07-31 18:08:26,724 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_1
+2025-07-31 18:08:26,724 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:08:26,725 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:08:26,725 - SelfPlayTrainer - INFO -     Win Rate: 25.50%
+2025-07-31 18:08:26,726 - SelfPlayTrainer - INFO -     Avg Score: -130.1
+2025-07-31 18:08:26,726 - SelfPlayTrainer - INFO -     Est. Accuracy: 1.70%
+2025-07-31 18:08:26,726 - SelfPlayTrainer - INFO -   heuristic_67d497a0:
+2025-07-31 18:08:26,727 - SelfPlayTrainer - INFO -     Win Rate: 25.00%
+2025-07-31 18:08:26,727 - SelfPlayTrainer - INFO -     Avg Score: -144.8
+2025-07-31 18:08:26,728 - SelfPlayTrainer - INFO -     Est. Accuracy: -5.08%
+2025-07-31 18:08:26,728 - SelfPlayTrainer - INFO -   heuristic_51dd6d03:
+2025-07-31 18:08:26,728 - SelfPlayTrainer - INFO -     Win Rate: 32.00%
+2025-07-31 18:08:26,729 - SelfPlayTrainer - INFO -     Avg Score: -123.9
+2025-07-31 18:08:26,729 - SelfPlayTrainer - INFO -     Est. Accuracy: 15.17%
+2025-07-31 18:08:26,729 - SelfPlayTrainer - INFO -   heuristic_dccd9a22:
+2025-07-31 18:08:26,730 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:08:26,730 - SelfPlayTrainer - INFO -     Avg Score: -145.6
+2025-07-31 18:08:26,731 - SelfPlayTrainer - INFO -     Est. Accuracy: 13.19%
+2025-07-31 18:08:26,731 - SelfPlayTrainer - INFO - 
+=== Generation 3/10 ===
+2025-07-31 18:09:06,690 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_2
+2025-07-31 18:09:06,690 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:09:06,691 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:09:06,691 - SelfPlayTrainer - INFO -     Win Rate: 25.33%
+2025-07-31 18:09:06,691 - SelfPlayTrainer - INFO -     Avg Score: -130.0
+2025-07-31 18:09:06,692 - SelfPlayTrainer - INFO -     Est. Accuracy: 2.42%
+2025-07-31 18:09:06,692 - SelfPlayTrainer - INFO -   heuristic_a9e9abd0:
+2025-07-31 18:09:06,692 - SelfPlayTrainer - INFO -     Win Rate: 25.00%
+2025-07-31 18:09:06,692 - SelfPlayTrainer - INFO -     Avg Score: -143.1
+2025-07-31 18:09:06,693 - SelfPlayTrainer - INFO -     Est. Accuracy: -7.76%
+2025-07-31 18:09:06,693 - SelfPlayTrainer - INFO -   heuristic_7f086521:
+2025-07-31 18:09:06,693 - SelfPlayTrainer - INFO -     Win Rate: 31.00%
+2025-07-31 18:09:06,694 - SelfPlayTrainer - INFO -     Avg Score: -129.9
+2025-07-31 18:09:06,694 - SelfPlayTrainer - INFO -     Est. Accuracy: 10.71%
+2025-07-31 18:09:06,694 - SelfPlayTrainer - INFO -   heuristic_e1be624a:
+2025-07-31 18:09:06,695 - SelfPlayTrainer - INFO -     Win Rate: 19.00%
+2025-07-31 18:09:06,695 - SelfPlayTrainer - INFO -     Avg Score: -145.2
+2025-07-31 18:09:06,695 - SelfPlayTrainer - INFO -     Est. Accuracy: 15.00%
+2025-07-31 18:09:06,695 - SelfPlayTrainer - INFO - 
+=== Generation 4/10 ===
+2025-07-31 18:09:47,733 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_3
+2025-07-31 18:09:47,733 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:09:47,734 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:09:47,735 - SelfPlayTrainer - INFO -     Win Rate: 25.50%
+2025-07-31 18:09:47,735 - SelfPlayTrainer - INFO -     Avg Score: -130.1
+2025-07-31 18:09:47,736 - SelfPlayTrainer - INFO -     Est. Accuracy: 1.70%
+2025-07-31 18:09:47,737 - SelfPlayTrainer - INFO -   heuristic_e3041968:
+2025-07-31 18:09:47,737 - SelfPlayTrainer - INFO -     Win Rate: 19.00%
+2025-07-31 18:09:47,738 - SelfPlayTrainer - INFO -     Avg Score: -157.8
+2025-07-31 18:09:47,738 - SelfPlayTrainer - INFO -     Est. Accuracy: -7.42%
+2025-07-31 18:09:47,738 - SelfPlayTrainer - INFO -   heuristic_e0918318:
+2025-07-31 18:09:47,739 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:09:47,739 - SelfPlayTrainer - INFO -     Avg Score: -133.2
+2025-07-31 18:09:47,739 - SelfPlayTrainer - INFO -     Est. Accuracy: 8.41%
+2025-07-31 18:09:47,740 - SelfPlayTrainer - INFO -   heuristic_bac68a9d:
+2025-07-31 18:09:47,740 - SelfPlayTrainer - INFO -     Win Rate: 27.00%
+2025-07-31 18:09:47,741 - SelfPlayTrainer - INFO -     Avg Score: -147.3
+2025-07-31 18:09:47,741 - SelfPlayTrainer - INFO -     Est. Accuracy: 10.88%
+2025-07-31 18:09:47,754 - SelfPlayTrainer - INFO - 
+=== Generation 5/10 ===
+2025-07-31 18:10:28,361 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_4
+2025-07-31 18:10:28,362 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:10:28,362 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:10:28,363 - SelfPlayTrainer - INFO -     Win Rate: 25.40%
+2025-07-31 18:10:28,363 - SelfPlayTrainer - INFO -     Avg Score: -129.0
+2025-07-31 18:10:28,363 - SelfPlayTrainer - INFO -     Est. Accuracy: 1.58%
+2025-07-31 18:10:28,363 - SelfPlayTrainer - INFO -   heuristic_ac6f3839:
+2025-07-31 18:10:28,364 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:10:28,364 - SelfPlayTrainer - INFO -     Avg Score: -130.4
+2025-07-31 18:10:28,364 - SelfPlayTrainer - INFO -     Est. Accuracy: -3.57%
+2025-07-31 18:10:28,365 - SelfPlayTrainer - INFO -   heuristic_bda539e4:
+2025-07-31 18:10:28,365 - SelfPlayTrainer - INFO -     Win Rate: 27.00%
+2025-07-31 18:10:28,365 - SelfPlayTrainer - INFO -     Avg Score: -137.2
+2025-07-31 18:10:28,366 - SelfPlayTrainer - INFO -     Est. Accuracy: 12.46%
+2025-07-31 18:10:28,366 - SelfPlayTrainer - INFO -   heuristic_643687f1:
+2025-07-31 18:10:28,366 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:10:28,367 - SelfPlayTrainer - INFO -     Avg Score: -142.5
+2025-07-31 18:10:28,367 - SelfPlayTrainer - INFO -     Est. Accuracy: 16.20%
+2025-07-31 18:10:28,367 - SelfPlayTrainer - INFO - 
+=== Generation 6/10 ===
+2025-07-31 18:11:07,857 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_5
+2025-07-31 18:11:07,858 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:11:07,858 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:11:07,859 - SelfPlayTrainer - INFO -     Win Rate: 25.50%
+2025-07-31 18:11:07,859 - SelfPlayTrainer - INFO -     Avg Score: -128.2
+2025-07-31 18:11:07,859 - SelfPlayTrainer - INFO -     Est. Accuracy: 1.40%
+2025-07-31 18:11:07,860 - SelfPlayTrainer - INFO -   heuristic_3c9109e8:
+2025-07-31 18:11:07,860 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:11:07,860 - SelfPlayTrainer - INFO -     Avg Score: -136.1
+2025-07-31 18:11:07,861 - SelfPlayTrainer - INFO -     Est. Accuracy: -1.20%
+2025-07-31 18:11:07,861 - SelfPlayTrainer - INFO -   heuristic_4b18c2fd:
+2025-07-31 18:11:07,862 - SelfPlayTrainer - INFO -     Win Rate: 27.00%
+2025-07-31 18:11:07,862 - SelfPlayTrainer - INFO -     Avg Score: -119.1
+2025-07-31 18:11:07,862 - SelfPlayTrainer - INFO -     Est. Accuracy: 15.33%
+2025-07-31 18:11:07,863 - SelfPlayTrainer - INFO -   heuristic_e5e2fd48:
+2025-07-31 18:11:07,863 - SelfPlayTrainer - INFO -     Win Rate: 27.00%
+2025-07-31 18:11:07,863 - SelfPlayTrainer - INFO -     Avg Score: -145.2
+2025-07-31 18:11:07,864 - SelfPlayTrainer - INFO -     Est. Accuracy: 13.32%
+2025-07-31 18:11:07,864 - SelfPlayTrainer - INFO - 
+=== Generation 7/10 ===
+2025-07-31 18:11:46,745 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_6
+2025-07-31 18:11:46,746 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:11:46,747 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:11:46,747 - SelfPlayTrainer - INFO -     Win Rate: 25.57%
+2025-07-31 18:11:46,748 - SelfPlayTrainer - INFO -     Avg Score: -128.4
+2025-07-31 18:11:46,748 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.33%
+2025-07-31 18:11:46,748 - SelfPlayTrainer - INFO -   heuristic_4273ff63:
+2025-07-31 18:11:46,749 - SelfPlayTrainer - INFO -     Win Rate: 23.00%
+2025-07-31 18:11:46,749 - SelfPlayTrainer - INFO -     Avg Score: -140.8
+2025-07-31 18:11:46,749 - SelfPlayTrainer - INFO -     Est. Accuracy: -1.50%
+2025-07-31 18:11:46,750 - SelfPlayTrainer - INFO -   heuristic_dea9e9de:
+2025-07-31 18:11:46,750 - SelfPlayTrainer - INFO -     Win Rate: 25.00%
+2025-07-31 18:11:46,750 - SelfPlayTrainer - INFO -     Avg Score: -134.2
+2025-07-31 18:11:46,750 - SelfPlayTrainer - INFO -     Est. Accuracy: 8.85%
+2025-07-31 18:11:46,751 - SelfPlayTrainer - INFO -   heuristic_ba0817ee:
+2025-07-31 18:11:46,751 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:11:46,751 - SelfPlayTrainer - INFO -     Avg Score: -138.9
+2025-07-31 18:11:46,752 - SelfPlayTrainer - INFO -     Est. Accuracy: 12.94%
+2025-07-31 18:11:46,752 - SelfPlayTrainer - INFO - 
+=== Generation 8/10 ===
+2025-07-31 18:12:28,699 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_7
+2025-07-31 18:12:28,700 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:12:28,700 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:12:28,700 - SelfPlayTrainer - INFO -     Win Rate: 25.87%
+2025-07-31 18:12:28,701 - SelfPlayTrainer - INFO -     Avg Score: -129.9
+2025-07-31 18:12:28,701 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.44%
+2025-07-31 18:12:28,702 - SelfPlayTrainer - INFO -   heuristic_1eadaf48:
+2025-07-31 18:12:28,702 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:12:28,702 - SelfPlayTrainer - INFO -     Avg Score: -154.8
+2025-07-31 18:12:28,703 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.76%
+2025-07-31 18:12:28,703 - SelfPlayTrainer - INFO -   heuristic_d667ce75:
+2025-07-31 18:12:28,703 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:12:28,703 - SelfPlayTrainer - INFO -     Avg Score: -144.1
+2025-07-31 18:12:28,704 - SelfPlayTrainer - INFO -     Est. Accuracy: 5.11%
+2025-07-31 18:12:28,704 - SelfPlayTrainer - INFO -   heuristic_7c5b8082:
+2025-07-31 18:12:28,704 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:12:28,705 - SelfPlayTrainer - INFO -     Avg Score: -167.5
+2025-07-31 18:12:28,705 - SelfPlayTrainer - INFO -     Est. Accuracy: 9.44%
+2025-07-31 18:12:28,705 - SelfPlayTrainer - INFO - 
+=== Generation 9/10 ===
+2025-07-31 18:13:10,543 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_8
+2025-07-31 18:13:10,544 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:13:10,545 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:13:10,545 - SelfPlayTrainer - INFO -     Win Rate: 26.89%
+2025-07-31 18:13:10,546 - SelfPlayTrainer - INFO -     Avg Score: -128.8
+2025-07-31 18:13:10,546 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.87%
+2025-07-31 18:13:10,547 - SelfPlayTrainer - INFO -   heuristic_43010419:
+2025-07-31 18:13:10,547 - SelfPlayTrainer - INFO -     Win Rate: 23.00%
+2025-07-31 18:13:10,548 - SelfPlayTrainer - INFO -     Avg Score: -145.3
+2025-07-31 18:13:10,548 - SelfPlayTrainer - INFO -     Est. Accuracy: -7.30%
+2025-07-31 18:13:10,548 - SelfPlayTrainer - INFO -   heuristic_d53d45bf:
+2025-07-31 18:13:10,549 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:13:10,549 - SelfPlayTrainer - INFO -     Avg Score: -134.4
+2025-07-31 18:13:10,549 - SelfPlayTrainer - INFO -     Est. Accuracy: 13.89%
+2025-07-31 18:13:10,550 - SelfPlayTrainer - INFO -   heuristic_0ae52bf9:
+2025-07-31 18:13:10,550 - SelfPlayTrainer - INFO -     Win Rate: 14.00%
+2025-07-31 18:13:10,550 - SelfPlayTrainer - INFO -     Avg Score: -170.2
+2025-07-31 18:13:10,551 - SelfPlayTrainer - INFO -     Est. Accuracy: 11.80%
+2025-07-31 18:13:10,551 - SelfPlayTrainer - INFO - 
+=== Generation 10/10 ===
+2025-07-31 18:13:51,331 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_9
+2025-07-31 18:13:51,332 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:13:51,332 - SelfPlayTrainer - INFO -   heuristic_050e5aa1:
+2025-07-31 18:13:51,333 - SelfPlayTrainer - INFO -     Win Rate: 26.50%
+2025-07-31 18:13:51,333 - SelfPlayTrainer - INFO -     Avg Score: -129.3
+2025-07-31 18:13:51,333 - SelfPlayTrainer - INFO -     Est. Accuracy: 0.22%
+2025-07-31 18:13:51,334 - SelfPlayTrainer - INFO -   heuristic_71714ffa:
+2025-07-31 18:13:51,334 - SelfPlayTrainer - INFO -     Win Rate: 29.00%
+2025-07-31 18:13:51,334 - SelfPlayTrainer - INFO -     Avg Score: -142.4
+2025-07-31 18:13:51,335 - SelfPlayTrainer - INFO -     Est. Accuracy: -3.14%
+2025-07-31 18:13:51,335 - SelfPlayTrainer - INFO -   heuristic_1d95f911:
+2025-07-31 18:13:51,336 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:13:51,336 - SelfPlayTrainer - INFO -     Avg Score: -140.2
+2025-07-31 18:13:51,340 - SelfPlayTrainer - INFO -     Est. Accuracy: 11.69%
+2025-07-31 18:13:51,342 - SelfPlayTrainer - INFO -   heuristic_940563ac:
+2025-07-31 18:13:51,343 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:13:51,345 - SelfPlayTrainer - INFO -     Avg Score: -159.8
+2025-07-31 18:13:51,346 - SelfPlayTrainer - INFO -     Est. Accuracy: 14.01%
+2025-07-31 18:13:51,347 - SelfPlayTrainer - INFO - 
+Training complete!
+2025-07-31 18:13:53,287 - SelfPlayTrainer - INFO - Final results saved to training_data
+2025-07-31 18:40:25,468 - SelfPlayTrainer - INFO - Starting training for 20 generations
+2025-07-31 18:40:25,469 - SelfPlayTrainer - INFO - Games per generation: 50
+2025-07-31 18:40:25,469 - SelfPlayTrainer - INFO - Workers: 2
+2025-07-31 18:40:25,469 - SelfPlayTrainer - INFO - 
+=== Generation 1/20 ===
+2025-07-31 18:40:35,498 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_0
+2025-07-31 18:40:35,499 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:40:35,499 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:40:35,500 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:40:35,500 - SelfPlayTrainer - INFO -     Avg Score: -113.7
+2025-07-31 18:40:35,500 - SelfPlayTrainer - INFO -     Est. Accuracy: -88.64%
+2025-07-31 18:40:35,501 - SelfPlayTrainer - INFO -   heuristic_72070eb6:
+2025-07-31 18:40:35,501 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:40:35,501 - SelfPlayTrainer - INFO -     Avg Score: -103.6
+2025-07-31 18:40:35,502 - SelfPlayTrainer - INFO -     Est. Accuracy: -53.05%
+2025-07-31 18:40:35,502 - SelfPlayTrainer - INFO -   heuristic_e5345981:
+2025-07-31 18:40:35,502 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:40:35,503 - SelfPlayTrainer - INFO -     Avg Score: -89.4
+2025-07-31 18:40:35,503 - SelfPlayTrainer - INFO -     Est. Accuracy: -51.16%
+2025-07-31 18:40:35,503 - SelfPlayTrainer - INFO -   heuristic_777981a7:
+2025-07-31 18:40:35,503 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:40:35,504 - SelfPlayTrainer - INFO -     Avg Score: -111.5
+2025-07-31 18:40:35,504 - SelfPlayTrainer - INFO -     Est. Accuracy: -13.56%
+2025-07-31 18:40:35,504 - SelfPlayTrainer - INFO - 
+=== Generation 2/20 ===
+2025-07-31 18:40:44,810 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_1
+2025-07-31 18:40:44,811 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:40:44,811 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:40:44,811 - SelfPlayTrainer - INFO -     Win Rate: 25.00%
+2025-07-31 18:40:44,811 - SelfPlayTrainer - INFO -     Avg Score: -102.2
+2025-07-31 18:40:44,812 - SelfPlayTrainer - INFO -     Est. Accuracy: -70.97%
+2025-07-31 18:40:44,812 - SelfPlayTrainer - INFO -   heuristic_8f0312d2:
+2025-07-31 18:40:44,812 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:40:44,812 - SelfPlayTrainer - INFO -     Avg Score: -97.4
+2025-07-31 18:40:44,813 - SelfPlayTrainer - INFO -     Est. Accuracy: -49.69%
+2025-07-31 18:40:44,813 - SelfPlayTrainer - INFO -   heuristic_40a3f7df:
+2025-07-31 18:40:44,813 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:40:44,813 - SelfPlayTrainer - INFO -     Avg Score: -88.6
+2025-07-31 18:40:44,813 - SelfPlayTrainer - INFO -     Est. Accuracy: -35.44%
+2025-07-31 18:40:44,813 - SelfPlayTrainer - INFO -   heuristic_0a5301cd:
+2025-07-31 18:40:44,814 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:40:44,814 - SelfPlayTrainer - INFO -     Avg Score: -94.0
+2025-07-31 18:40:44,814 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.15%
+2025-07-31 18:40:44,814 - SelfPlayTrainer - INFO - 
+=== Generation 3/20 ===
+2025-07-31 18:40:54,065 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_2
+2025-07-31 18:40:54,065 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:40:54,066 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:40:54,066 - SelfPlayTrainer - INFO -     Win Rate: 22.67%
+2025-07-31 18:40:54,066 - SelfPlayTrainer - INFO -     Avg Score: -104.5
+2025-07-31 18:40:54,066 - SelfPlayTrainer - INFO -     Est. Accuracy: -71.58%
+2025-07-31 18:40:54,066 - SelfPlayTrainer - INFO -   heuristic_3656e82f:
+2025-07-31 18:40:54,067 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:40:54,067 - SelfPlayTrainer - INFO -     Avg Score: -96.6
+2025-07-31 18:40:54,067 - SelfPlayTrainer - INFO -     Est. Accuracy: -74.70%
+2025-07-31 18:40:54,067 - SelfPlayTrainer - INFO -   heuristic_64de3ceb:
+2025-07-31 18:40:54,067 - SelfPlayTrainer - INFO -     Win Rate: 38.00%
+2025-07-31 18:40:54,068 - SelfPlayTrainer - INFO -     Avg Score: -94.4
+2025-07-31 18:40:54,068 - SelfPlayTrainer - INFO -     Est. Accuracy: -32.43%
+2025-07-31 18:40:54,068 - SelfPlayTrainer - INFO -   heuristic_64ae72af:
+2025-07-31 18:40:54,068 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:40:54,068 - SelfPlayTrainer - INFO -     Avg Score: -122.9
+2025-07-31 18:40:54,069 - SelfPlayTrainer - INFO -     Est. Accuracy: -20.29%
+2025-07-31 18:40:54,069 - SelfPlayTrainer - INFO - 
+=== Generation 4/20 ===
+2025-07-31 18:41:03,609 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_3
+2025-07-31 18:41:03,610 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:41:03,610 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:41:03,611 - SelfPlayTrainer - INFO -     Win Rate: 24.50%
+2025-07-31 18:41:03,611 - SelfPlayTrainer - INFO -     Avg Score: -105.8
+2025-07-31 18:41:03,611 - SelfPlayTrainer - INFO -     Est. Accuracy: -66.15%
+2025-07-31 18:41:03,612 - SelfPlayTrainer - INFO -   heuristic_09e32152:
+2025-07-31 18:41:03,612 - SelfPlayTrainer - INFO -     Win Rate: 14.00%
+2025-07-31 18:41:03,613 - SelfPlayTrainer - INFO -     Avg Score: -122.5
+2025-07-31 18:41:03,613 - SelfPlayTrainer - INFO -     Est. Accuracy: -56.80%
+2025-07-31 18:41:03,613 - SelfPlayTrainer - INFO -   heuristic_9da0ce5f:
+2025-07-31 18:41:03,614 - SelfPlayTrainer - INFO -     Win Rate: 34.00%
+2025-07-31 18:41:03,614 - SelfPlayTrainer - INFO -     Avg Score: -90.4
+2025-07-31 18:41:03,614 - SelfPlayTrainer - INFO -     Est. Accuracy: -19.54%
+2025-07-31 18:41:03,615 - SelfPlayTrainer - INFO -   heuristic_99bbdd01:
+2025-07-31 18:41:03,615 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:41:03,615 - SelfPlayTrainer - INFO -     Avg Score: -113.3
+2025-07-31 18:41:03,616 - SelfPlayTrainer - INFO -     Est. Accuracy: -28.85%
+2025-07-31 18:41:03,616 - SelfPlayTrainer - INFO - 
+=== Generation 5/20 ===
+2025-07-31 18:41:13,072 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_4
+2025-07-31 18:41:13,073 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:41:13,073 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:41:13,074 - SelfPlayTrainer - INFO -     Win Rate: 24.80%
+2025-07-31 18:41:13,074 - SelfPlayTrainer - INFO -     Avg Score: -101.5
+2025-07-31 18:41:13,074 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.29%
+2025-07-31 18:41:13,075 - SelfPlayTrainer - INFO -   heuristic_d73cb31d:
+2025-07-31 18:41:13,075 - SelfPlayTrainer - INFO -     Win Rate: 16.00%
+2025-07-31 18:41:13,075 - SelfPlayTrainer - INFO -     Avg Score: -98.7
+2025-07-31 18:41:13,076 - SelfPlayTrainer - INFO -     Est. Accuracy: -71.74%
+2025-07-31 18:41:13,076 - SelfPlayTrainer - INFO -   heuristic_b3cbfd06:
+2025-07-31 18:41:13,077 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:41:13,077 - SelfPlayTrainer - INFO -     Avg Score: -85.6
+2025-07-31 18:41:13,077 - SelfPlayTrainer - INFO -     Est. Accuracy: -34.19%
+2025-07-31 18:41:13,077 - SelfPlayTrainer - INFO -   heuristic_a3d6ccc0:
+2025-07-31 18:41:13,078 - SelfPlayTrainer - INFO -     Win Rate: 32.00%
+2025-07-31 18:41:13,078 - SelfPlayTrainer - INFO -     Avg Score: -99.4
+2025-07-31 18:41:13,078 - SelfPlayTrainer - INFO -     Est. Accuracy: -21.60%
+2025-07-31 18:41:13,079 - SelfPlayTrainer - INFO - 
+=== Generation 6/20 ===
+2025-07-31 18:41:22,553 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_5
+2025-07-31 18:41:22,553 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:41:22,554 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:41:22,554 - SelfPlayTrainer - INFO -     Win Rate: 25.00%
+2025-07-31 18:41:22,554 - SelfPlayTrainer - INFO -     Avg Score: -102.5
+2025-07-31 18:41:22,555 - SelfPlayTrainer - INFO -     Est. Accuracy: -63.81%
+2025-07-31 18:41:22,555 - SelfPlayTrainer - INFO -   heuristic_8a04979c:
+2025-07-31 18:41:22,555 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:41:22,556 - SelfPlayTrainer - INFO -     Avg Score: -108.8
+2025-07-31 18:41:22,556 - SelfPlayTrainer - INFO -     Est. Accuracy: -72.04%
+2025-07-31 18:41:22,556 - SelfPlayTrainer - INFO -   heuristic_3a5ed7bb:
+2025-07-31 18:41:22,557 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:41:22,557 - SelfPlayTrainer - INFO -     Avg Score: -114.1
+2025-07-31 18:41:22,557 - SelfPlayTrainer - INFO -     Est. Accuracy: -23.04%
+2025-07-31 18:41:22,558 - SelfPlayTrainer - INFO -   heuristic_e3200ba6:
+2025-07-31 18:41:22,558 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:41:22,558 - SelfPlayTrainer - INFO -     Avg Score: -99.6
+2025-07-31 18:41:22,559 - SelfPlayTrainer - INFO -     Est. Accuracy: -10.29%
+2025-07-31 18:41:22,559 - SelfPlayTrainer - INFO - 
+=== Generation 7/20 ===
+2025-07-31 18:41:31,990 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_6
+2025-07-31 18:41:31,991 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:41:31,991 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:41:31,991 - SelfPlayTrainer - INFO -     Win Rate: 25.14%
+2025-07-31 18:41:31,992 - SelfPlayTrainer - INFO -     Avg Score: -103.4
+2025-07-31 18:41:31,992 - SelfPlayTrainer - INFO -     Est. Accuracy: -65.07%
+2025-07-31 18:41:31,992 - SelfPlayTrainer - INFO -   heuristic_540b311c:
+2025-07-31 18:41:31,992 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:41:31,993 - SelfPlayTrainer - INFO -     Avg Score: -99.4
+2025-07-31 18:41:31,993 - SelfPlayTrainer - INFO -     Est. Accuracy: -56.96%
+2025-07-31 18:41:31,993 - SelfPlayTrainer - INFO -   heuristic_4ed0547f:
+2025-07-31 18:41:31,993 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:41:31,994 - SelfPlayTrainer - INFO -     Avg Score: -100.4
+2025-07-31 18:41:31,994 - SelfPlayTrainer - INFO -     Est. Accuracy: -24.65%
+2025-07-31 18:41:31,994 - SelfPlayTrainer - INFO -   heuristic_04a0d223:
+2025-07-31 18:41:31,994 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:41:31,995 - SelfPlayTrainer - INFO -     Avg Score: -90.5
+2025-07-31 18:41:31,995 - SelfPlayTrainer - INFO -     Est. Accuracy: -10.07%
+2025-07-31 18:41:31,995 - SelfPlayTrainer - INFO - 
+=== Generation 8/20 ===
+2025-07-31 18:41:41,693 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_7
+2025-07-31 18:41:41,694 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:41:41,694 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:41:41,694 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:41:41,694 - SelfPlayTrainer - INFO -     Avg Score: -100.1
+2025-07-31 18:41:41,695 - SelfPlayTrainer - INFO -     Est. Accuracy: -64.06%
+2025-07-31 18:41:41,695 - SelfPlayTrainer - INFO -   heuristic_fa47ac3c:
+2025-07-31 18:41:41,695 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:41:41,695 - SelfPlayTrainer - INFO -     Avg Score: -104.7
+2025-07-31 18:41:41,695 - SelfPlayTrainer - INFO -     Est. Accuracy: -88.55%
+2025-07-31 18:41:41,696 - SelfPlayTrainer - INFO -   heuristic_5730064a:
+2025-07-31 18:41:41,696 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:41:41,696 - SelfPlayTrainer - INFO -     Avg Score: -85.4
+2025-07-31 18:41:41,696 - SelfPlayTrainer - INFO -     Est. Accuracy: -18.65%
+2025-07-31 18:41:41,696 - SelfPlayTrainer - INFO -   heuristic_556b351b:
+2025-07-31 18:41:41,696 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:41:41,697 - SelfPlayTrainer - INFO -     Avg Score: -93.5
+2025-07-31 18:41:41,697 - SelfPlayTrainer - INFO -     Est. Accuracy: -17.94%
+2025-07-31 18:41:41,697 - SelfPlayTrainer - INFO - 
+=== Generation 9/20 ===
+2025-07-31 18:41:51,205 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_8
+2025-07-31 18:41:51,206 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:41:51,206 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:41:51,206 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:41:51,206 - SelfPlayTrainer - INFO -     Avg Score: -100.3
+2025-07-31 18:41:51,207 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.27%
+2025-07-31 18:41:51,207 - SelfPlayTrainer - INFO -   heuristic_1affe6f7:
+2025-07-31 18:41:51,207 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:41:51,207 - SelfPlayTrainer - INFO -     Avg Score: -103.2
+2025-07-31 18:41:51,208 - SelfPlayTrainer - INFO -     Est. Accuracy: -52.74%
+2025-07-31 18:41:51,208 - SelfPlayTrainer - INFO -   heuristic_6a25171d:
+2025-07-31 18:41:51,208 - SelfPlayTrainer - INFO -     Win Rate: 32.00%
+2025-07-31 18:41:51,208 - SelfPlayTrainer - INFO -     Avg Score: -84.4
+2025-07-31 18:41:51,209 - SelfPlayTrainer - INFO -     Est. Accuracy: -34.71%
+2025-07-31 18:41:51,209 - SelfPlayTrainer - INFO -   heuristic_4b93960f:
+2025-07-31 18:41:51,209 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:41:51,209 - SelfPlayTrainer - INFO -     Avg Score: -91.7
+2025-07-31 18:41:51,210 - SelfPlayTrainer - INFO -     Est. Accuracy: -20.93%
+2025-07-31 18:41:51,210 - SelfPlayTrainer - INFO - 
+=== Generation 10/20 ===
+2025-07-31 18:42:00,836 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_9
+2025-07-31 18:42:00,836 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:42:00,836 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:42:00,837 - SelfPlayTrainer - INFO -     Win Rate: 26.40%
+2025-07-31 18:42:00,837 - SelfPlayTrainer - INFO -     Avg Score: -100.4
+2025-07-31 18:42:00,837 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.66%
+2025-07-31 18:42:00,837 - SelfPlayTrainer - INFO -   heuristic_a0d7790c:
+2025-07-31 18:42:00,838 - SelfPlayTrainer - INFO -     Win Rate: 14.00%
+2025-07-31 18:42:00,838 - SelfPlayTrainer - INFO -     Avg Score: -125.1
+2025-07-31 18:42:00,838 - SelfPlayTrainer - INFO -     Est. Accuracy: -66.99%
+2025-07-31 18:42:00,838 - SelfPlayTrainer - INFO -   heuristic_5fc5ce3f:
+2025-07-31 18:42:00,839 - SelfPlayTrainer - INFO -     Win Rate: 32.00%
+2025-07-31 18:42:00,839 - SelfPlayTrainer - INFO -     Avg Score: -89.8
+2025-07-31 18:42:00,839 - SelfPlayTrainer - INFO -     Est. Accuracy: -37.37%
+2025-07-31 18:42:00,839 - SelfPlayTrainer - INFO -   heuristic_e6a2f286:
+2025-07-31 18:42:00,840 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:42:00,840 - SelfPlayTrainer - INFO -     Avg Score: -116.6
+2025-07-31 18:42:00,840 - SelfPlayTrainer - INFO -     Est. Accuracy: -35.25%
+2025-07-31 18:42:00,840 - SelfPlayTrainer - INFO - 
+=== Generation 11/20 ===
+2025-07-31 18:42:10,456 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_10
+2025-07-31 18:42:10,456 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:42:10,456 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:42:10,457 - SelfPlayTrainer - INFO -     Win Rate: 26.55%
+2025-07-31 18:42:10,457 - SelfPlayTrainer - INFO -     Avg Score: -99.0
+2025-07-31 18:42:10,457 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.27%
+2025-07-31 18:42:10,458 - SelfPlayTrainer - INFO -   heuristic_7d08a4d1:
+2025-07-31 18:42:10,458 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:42:10,458 - SelfPlayTrainer - INFO -     Avg Score: -94.8
+2025-07-31 18:42:10,458 - SelfPlayTrainer - INFO -     Est. Accuracy: -55.95%
+2025-07-31 18:42:10,459 - SelfPlayTrainer - INFO -   heuristic_decbf98e:
+2025-07-31 18:42:10,459 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:42:10,459 - SelfPlayTrainer - INFO -     Avg Score: -98.2
+2025-07-31 18:42:10,460 - SelfPlayTrainer - INFO -     Est. Accuracy: -17.15%
+2025-07-31 18:42:10,460 - SelfPlayTrainer - INFO -   heuristic_889a1e2f:
+2025-07-31 18:42:10,461 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:42:10,461 - SelfPlayTrainer - INFO -     Avg Score: -99.4
+2025-07-31 18:42:10,461 - SelfPlayTrainer - INFO -     Est. Accuracy: -17.89%
+2025-07-31 18:42:10,462 - SelfPlayTrainer - INFO - 
+=== Generation 12/20 ===
+2025-07-31 18:42:20,174 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_11
+2025-07-31 18:42:20,175 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:42:20,175 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:42:20,176 - SelfPlayTrainer - INFO -     Win Rate: 27.00%
+2025-07-31 18:42:20,176 - SelfPlayTrainer - INFO -     Avg Score: -98.2
+2025-07-31 18:42:20,177 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.14%
+2025-07-31 18:42:20,177 - SelfPlayTrainer - INFO -   heuristic_3b3e8789:
+2025-07-31 18:42:20,177 - SelfPlayTrainer - INFO -     Win Rate: 14.00%
+2025-07-31 18:42:20,178 - SelfPlayTrainer - INFO -     Avg Score: -114.0
+2025-07-31 18:42:20,178 - SelfPlayTrainer - INFO -     Est. Accuracy: -75.42%
+2025-07-31 18:42:20,179 - SelfPlayTrainer - INFO -   heuristic_deff95d7:
+2025-07-31 18:42:20,179 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:42:20,180 - SelfPlayTrainer - INFO -     Avg Score: -109.5
+2025-07-31 18:42:20,181 - SelfPlayTrainer - INFO -     Est. Accuracy: -31.12%
+2025-07-31 18:42:20,181 - SelfPlayTrainer - INFO -   heuristic_723e1a0e:
+2025-07-31 18:42:20,181 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:42:20,182 - SelfPlayTrainer - INFO -     Avg Score: -115.7
+2025-07-31 18:42:20,182 - SelfPlayTrainer - INFO -     Est. Accuracy: -16.74%
+2025-07-31 18:42:20,182 - SelfPlayTrainer - INFO - 
+=== Generation 13/20 ===
+2025-07-31 18:42:30,101 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_12
+2025-07-31 18:42:30,101 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:42:30,102 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:42:30,102 - SelfPlayTrainer - INFO -     Win Rate: 27.38%
+2025-07-31 18:42:30,102 - SelfPlayTrainer - INFO -     Avg Score: -97.8
+2025-07-31 18:42:30,103 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.45%
+2025-07-31 18:42:30,103 - SelfPlayTrainer - INFO -   heuristic_6b859bb9:
+2025-07-31 18:42:30,104 - SelfPlayTrainer - INFO -     Win Rate: 16.00%
+2025-07-31 18:42:30,104 - SelfPlayTrainer - INFO -     Avg Score: -119.1
+2025-07-31 18:42:30,104 - SelfPlayTrainer - INFO -     Est. Accuracy: -62.62%
+2025-07-31 18:42:30,105 - SelfPlayTrainer - INFO -   heuristic_d28413c4:
+2025-07-31 18:42:30,105 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:42:30,106 - SelfPlayTrainer - INFO -     Avg Score: -110.3
+2025-07-31 18:42:30,106 - SelfPlayTrainer - INFO -     Est. Accuracy: -46.38%
+2025-07-31 18:42:30,106 - SelfPlayTrainer - INFO -   heuristic_f62ca573:
+2025-07-31 18:42:30,107 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:42:30,107 - SelfPlayTrainer - INFO -     Avg Score: -113.0
+2025-07-31 18:42:30,107 - SelfPlayTrainer - INFO -     Est. Accuracy: -34.68%
+2025-07-31 18:42:30,108 - SelfPlayTrainer - INFO - 
+=== Generation 14/20 ===
+2025-07-31 18:42:39,859 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_13
+2025-07-31 18:42:39,860 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:42:39,860 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:42:39,860 - SelfPlayTrainer - INFO -     Win Rate: 27.71%
+2025-07-31 18:42:39,861 - SelfPlayTrainer - INFO -     Avg Score: -97.4
+2025-07-31 18:42:39,861 - SelfPlayTrainer - INFO -     Est. Accuracy: -58.87%
+2025-07-31 18:42:39,861 - SelfPlayTrainer - INFO -   heuristic_b640ef29:
+2025-07-31 18:42:39,862 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:42:39,862 - SelfPlayTrainer - INFO -     Avg Score: -102.9
+2025-07-31 18:42:39,862 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.37%
+2025-07-31 18:42:39,862 - SelfPlayTrainer - INFO -   heuristic_194b3063:
+2025-07-31 18:42:39,863 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:42:39,863 - SelfPlayTrainer - INFO -     Avg Score: -91.5
+2025-07-31 18:42:39,863 - SelfPlayTrainer - INFO -     Est. Accuracy: -34.66%
+2025-07-31 18:42:39,864 - SelfPlayTrainer - INFO -   heuristic_4c1917a2:
+2025-07-31 18:42:39,864 - SelfPlayTrainer - INFO -     Win Rate: 16.00%
+2025-07-31 18:42:39,864 - SelfPlayTrainer - INFO -     Avg Score: -113.0
+2025-07-31 18:42:39,864 - SelfPlayTrainer - INFO -     Est. Accuracy: -35.47%
+2025-07-31 18:42:39,865 - SelfPlayTrainer - INFO - 
+=== Generation 15/20 ===
+2025-07-31 18:42:49,506 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_14
+2025-07-31 18:42:49,506 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:42:49,506 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:42:49,507 - SelfPlayTrainer - INFO -     Win Rate: 27.47%
+2025-07-31 18:42:49,507 - SelfPlayTrainer - INFO -     Avg Score: -98.2
+2025-07-31 18:42:49,507 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.25%
+2025-07-31 18:42:49,507 - SelfPlayTrainer - INFO -   heuristic_93315898:
+2025-07-31 18:42:49,508 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:42:49,508 - SelfPlayTrainer - INFO -     Avg Score: -114.2
+2025-07-31 18:42:49,508 - SelfPlayTrainer - INFO -     Est. Accuracy: -51.01%
+2025-07-31 18:42:49,509 - SelfPlayTrainer - INFO -   heuristic_356cc4af:
+2025-07-31 18:42:49,509 - SelfPlayTrainer - INFO -     Win Rate: 36.00%
+2025-07-31 18:42:49,509 - SelfPlayTrainer - INFO -     Avg Score: -96.1
+2025-07-31 18:42:49,509 - SelfPlayTrainer - INFO -     Est. Accuracy: -23.81%
+2025-07-31 18:42:49,510 - SelfPlayTrainer - INFO -   heuristic_471c8d96:
+2025-07-31 18:42:49,510 - SelfPlayTrainer - INFO -     Win Rate: 14.00%
+2025-07-31 18:42:49,510 - SelfPlayTrainer - INFO -     Avg Score: -132.0
+2025-07-31 18:42:49,511 - SelfPlayTrainer - INFO -     Est. Accuracy: -35.55%
+2025-07-31 18:42:49,511 - SelfPlayTrainer - INFO - 
+=== Generation 16/20 ===
+2025-07-31 18:42:59,661 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_15
+2025-07-31 18:42:59,661 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:42:59,661 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:42:59,662 - SelfPlayTrainer - INFO -     Win Rate: 27.62%
+2025-07-31 18:42:59,662 - SelfPlayTrainer - INFO -     Avg Score: -96.3
+2025-07-31 18:42:59,662 - SelfPlayTrainer - INFO -     Est. Accuracy: -58.84%
+2025-07-31 18:42:59,663 - SelfPlayTrainer - INFO -   heuristic_f6a0c297:
+2025-07-31 18:42:59,663 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:42:59,663 - SelfPlayTrainer - INFO -     Avg Score: -96.8
+2025-07-31 18:42:59,663 - SelfPlayTrainer - INFO -     Est. Accuracy: -48.18%
+2025-07-31 18:42:59,663 - SelfPlayTrainer - INFO -   heuristic_c635dae6:
+2025-07-31 18:42:59,664 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:42:59,664 - SelfPlayTrainer - INFO -     Avg Score: -87.2
+2025-07-31 18:42:59,664 - SelfPlayTrainer - INFO -     Est. Accuracy: -36.83%
+2025-07-31 18:42:59,664 - SelfPlayTrainer - INFO -   heuristic_6674ba70:
+2025-07-31 18:42:59,665 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:42:59,665 - SelfPlayTrainer - INFO -     Avg Score: -109.0
+2025-07-31 18:42:59,665 - SelfPlayTrainer - INFO -     Est. Accuracy: -12.22%
+2025-07-31 18:42:59,665 - SelfPlayTrainer - INFO - 
+=== Generation 17/20 ===
+2025-07-31 18:43:09,531 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_16
+2025-07-31 18:43:09,531 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:43:09,532 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:43:09,532 - SelfPlayTrainer - INFO -     Win Rate: 27.65%
+2025-07-31 18:43:09,533 - SelfPlayTrainer - INFO -     Avg Score: -95.8
+2025-07-31 18:43:09,533 - SelfPlayTrainer - INFO -     Est. Accuracy: -58.76%
+2025-07-31 18:43:09,533 - SelfPlayTrainer - INFO -   heuristic_adaf2ab9:
+2025-07-31 18:43:09,533 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:43:09,534 - SelfPlayTrainer - INFO -     Avg Score: -109.4
+2025-07-31 18:43:09,534 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.11%
+2025-07-31 18:43:09,535 - SelfPlayTrainer - INFO -   heuristic_18212377:
+2025-07-31 18:43:09,535 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:43:09,535 - SelfPlayTrainer - INFO -     Avg Score: -98.2
+2025-07-31 18:43:09,536 - SelfPlayTrainer - INFO -     Est. Accuracy: -31.52%
+2025-07-31 18:43:09,536 - SelfPlayTrainer - INFO -   heuristic_297551c5:
+2025-07-31 18:43:09,536 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:43:09,537 - SelfPlayTrainer - INFO -     Avg Score: -85.6
+2025-07-31 18:43:09,537 - SelfPlayTrainer - INFO -     Est. Accuracy: -23.08%
+2025-07-31 18:43:09,537 - SelfPlayTrainer - INFO - 
+=== Generation 18/20 ===
+2025-07-31 18:43:19,428 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_17
+2025-07-31 18:43:19,428 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:43:19,429 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:43:19,429 - SelfPlayTrainer - INFO -     Win Rate: 27.11%
+2025-07-31 18:43:19,429 - SelfPlayTrainer - INFO -     Avg Score: -96.3
+2025-07-31 18:43:19,430 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.21%
+2025-07-31 18:43:19,430 - SelfPlayTrainer - INFO -   heuristic_45fecda6:
+2025-07-31 18:43:19,430 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:43:19,431 - SelfPlayTrainer - INFO -     Avg Score: -95.1
+2025-07-31 18:43:19,431 - SelfPlayTrainer - INFO -     Est. Accuracy: -74.78%
+2025-07-31 18:43:19,431 - SelfPlayTrainer - INFO -   heuristic_997e5ac4:
+2025-07-31 18:43:19,432 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:43:19,432 - SelfPlayTrainer - INFO -     Avg Score: -87.7
+2025-07-31 18:43:19,433 - SelfPlayTrainer - INFO -     Est. Accuracy: -35.40%
+2025-07-31 18:43:19,433 - SelfPlayTrainer - INFO -   heuristic_8d00aef7:
+2025-07-31 18:43:19,433 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:43:19,434 - SelfPlayTrainer - INFO -     Avg Score: -79.4
+2025-07-31 18:43:19,434 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.78%
+2025-07-31 18:43:19,435 - SelfPlayTrainer - INFO - 
+=== Generation 19/20 ===
+2025-07-31 18:43:29,338 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_18
+2025-07-31 18:43:29,338 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:43:29,339 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:43:29,339 - SelfPlayTrainer - INFO -     Win Rate: 26.84%
+2025-07-31 18:43:29,339 - SelfPlayTrainer - INFO -     Avg Score: -96.5
+2025-07-31 18:43:29,340 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.41%
+2025-07-31 18:43:29,340 - SelfPlayTrainer - INFO -   heuristic_d15d61d3:
+2025-07-31 18:43:29,340 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:43:29,341 - SelfPlayTrainer - INFO -     Avg Score: -93.6
+2025-07-31 18:43:29,341 - SelfPlayTrainer - INFO -     Est. Accuracy: -51.62%
+2025-07-31 18:43:29,341 - SelfPlayTrainer - INFO -   heuristic_ce13923f:
+2025-07-31 18:43:29,341 - SelfPlayTrainer - INFO -     Win Rate: 32.00%
+2025-07-31 18:43:29,342 - SelfPlayTrainer - INFO -     Avg Score: -83.8
+2025-07-31 18:43:29,342 - SelfPlayTrainer - INFO -     Est. Accuracy: -29.15%
+2025-07-31 18:43:29,342 - SelfPlayTrainer - INFO -   heuristic_8ffe68eb:
+2025-07-31 18:43:29,343 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:43:29,343 - SelfPlayTrainer - INFO -     Avg Score: -101.5
+2025-07-31 18:43:29,343 - SelfPlayTrainer - INFO -     Est. Accuracy: -9.64%
+2025-07-31 18:43:29,343 - SelfPlayTrainer - INFO - 
+=== Generation 20/20 ===
+2025-07-31 18:43:39,361 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_19
+2025-07-31 18:43:39,361 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:43:39,362 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:43:39,362 - SelfPlayTrainer - INFO -     Win Rate: 26.70%
+2025-07-31 18:43:39,362 - SelfPlayTrainer - INFO -     Avg Score: -96.7
+2025-07-31 18:43:39,362 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.41%
+2025-07-31 18:43:39,362 - SelfPlayTrainer - INFO -   heuristic_13693729:
+2025-07-31 18:43:39,363 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:43:39,363 - SelfPlayTrainer - INFO -     Avg Score: -94.3
+2025-07-31 18:43:39,363 - SelfPlayTrainer - INFO -     Est. Accuracy: -50.84%
+2025-07-31 18:43:39,363 - SelfPlayTrainer - INFO -   heuristic_5e343b6c:
+2025-07-31 18:43:39,364 - SelfPlayTrainer - INFO -     Win Rate: 36.00%
+2025-07-31 18:43:39,364 - SelfPlayTrainer - INFO -     Avg Score: -75.5
+2025-07-31 18:43:39,364 - SelfPlayTrainer - INFO -     Est. Accuracy: -32.91%
+2025-07-31 18:43:39,365 - SelfPlayTrainer - INFO -   heuristic_c04447dc:
+2025-07-31 18:43:39,365 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:43:39,365 - SelfPlayTrainer - INFO -     Avg Score: -99.0
+2025-07-31 18:43:39,365 - SelfPlayTrainer - INFO -     Est. Accuracy: -16.20%
+2025-07-31 18:43:39,365 - SelfPlayTrainer - INFO - 
+Training complete!
+2025-07-31 18:43:40,201 - SelfPlayTrainer - INFO - Final results saved to training_data
+2025-07-31 18:46:43,491 - SelfPlayTrainer - INFO - Starting training for 20 generations
+2025-07-31 18:46:43,491 - SelfPlayTrainer - INFO - Games per generation: 50
+2025-07-31 18:46:43,491 - SelfPlayTrainer - INFO - Workers: 8
+2025-07-31 18:46:43,492 - SelfPlayTrainer - INFO - 
+=== Generation 1/20 ===
+2025-07-31 18:46:53,340 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_0
+2025-07-31 18:46:53,341 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:46:53,341 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:46:53,341 - SelfPlayTrainer - INFO -     Win Rate: 14.00%
+2025-07-31 18:46:53,342 - SelfPlayTrainer - INFO -     Avg Score: -117.5
+2025-07-31 18:46:53,342 - SelfPlayTrainer - INFO -     Est. Accuracy: -53.85%
+2025-07-31 18:46:53,342 - SelfPlayTrainer - INFO -   heuristic_1387503f:
+2025-07-31 18:46:53,343 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:46:53,343 - SelfPlayTrainer - INFO -     Avg Score: -96.1
+2025-07-31 18:46:53,343 - SelfPlayTrainer - INFO -     Est. Accuracy: -51.62%
+2025-07-31 18:46:53,343 - SelfPlayTrainer - INFO -   heuristic_45d568c5:
+2025-07-31 18:46:53,344 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:46:53,344 - SelfPlayTrainer - INFO -     Avg Score: -100.7
+2025-07-31 18:46:53,344 - SelfPlayTrainer - INFO -     Est. Accuracy: -43.26%
+2025-07-31 18:46:53,344 - SelfPlayTrainer - INFO -   heuristic_0eb6ea2b:
+2025-07-31 18:46:53,345 - SelfPlayTrainer - INFO -     Win Rate: 34.00%
+2025-07-31 18:46:53,345 - SelfPlayTrainer - INFO -     Avg Score: -104.9
+2025-07-31 18:46:53,345 - SelfPlayTrainer - INFO -     Est. Accuracy: -21.07%
+2025-07-31 18:46:53,346 - SelfPlayTrainer - INFO - 
+=== Generation 2/20 ===
+2025-07-31 18:47:03,091 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_1
+2025-07-31 18:47:03,091 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:47:03,092 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:47:03,092 - SelfPlayTrainer - INFO -     Win Rate: 19.00%
+2025-07-31 18:47:03,092 - SelfPlayTrainer - INFO -     Avg Score: -100.1
+2025-07-31 18:47:03,093 - SelfPlayTrainer - INFO -     Est. Accuracy: -57.80%
+2025-07-31 18:47:03,093 - SelfPlayTrainer - INFO -   heuristic_397abcb5:
+2025-07-31 18:47:03,093 - SelfPlayTrainer - INFO -     Win Rate: 12.00%
+2025-07-31 18:47:03,093 - SelfPlayTrainer - INFO -     Avg Score: -114.1
+2025-07-31 18:47:03,094 - SelfPlayTrainer - INFO -     Est. Accuracy: -53.17%
+2025-07-31 18:47:03,094 - SelfPlayTrainer - INFO -   heuristic_b867c7dc:
+2025-07-31 18:47:03,094 - SelfPlayTrainer - INFO -     Win Rate: 44.00%
+2025-07-31 18:47:03,095 - SelfPlayTrainer - INFO -     Avg Score: -66.4
+2025-07-31 18:47:03,095 - SelfPlayTrainer - INFO -     Est. Accuracy: -40.78%
+2025-07-31 18:47:03,095 - SelfPlayTrainer - INFO -   heuristic_03fec488:
+2025-07-31 18:47:03,095 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:47:03,096 - SelfPlayTrainer - INFO -     Avg Score: -95.6
+2025-07-31 18:47:03,096 - SelfPlayTrainer - INFO -     Est. Accuracy: -6.75%
+2025-07-31 18:47:03,096 - SelfPlayTrainer - INFO - 
+=== Generation 3/20 ===
+2025-07-31 18:47:12,719 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_2
+2025-07-31 18:47:12,720 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:47:12,720 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:47:12,720 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:47:12,721 - SelfPlayTrainer - INFO -     Avg Score: -97.2
+2025-07-31 18:47:12,721 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.08%
+2025-07-31 18:47:12,721 - SelfPlayTrainer - INFO -   heuristic_725a1c9c:
+2025-07-31 18:47:12,722 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:47:12,722 - SelfPlayTrainer - INFO -     Avg Score: -102.7
+2025-07-31 18:47:12,722 - SelfPlayTrainer - INFO -     Est. Accuracy: -72.57%
+2025-07-31 18:47:12,722 - SelfPlayTrainer - INFO -   heuristic_b8a51491:
+2025-07-31 18:47:12,723 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:47:12,723 - SelfPlayTrainer - INFO -     Avg Score: -88.2
+2025-07-31 18:47:12,723 - SelfPlayTrainer - INFO -     Est. Accuracy: -33.77%
+2025-07-31 18:47:12,724 - SelfPlayTrainer - INFO -   heuristic_63dd5e5f:
+2025-07-31 18:47:12,724 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:47:12,724 - SelfPlayTrainer - INFO -     Avg Score: -95.9
+2025-07-31 18:47:12,725 - SelfPlayTrainer - INFO -     Est. Accuracy: -13.56%
+2025-07-31 18:47:12,725 - SelfPlayTrainer - INFO - 
+=== Generation 4/20 ===
+2025-07-31 18:47:22,478 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_3
+2025-07-31 18:47:22,478 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:47:22,479 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:47:22,479 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:47:22,480 - SelfPlayTrainer - INFO -     Avg Score: -97.2
+2025-07-31 18:47:22,480 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.37%
+2025-07-31 18:47:22,480 - SelfPlayTrainer - INFO -   heuristic_293a71a3:
+2025-07-31 18:47:22,481 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:47:22,481 - SelfPlayTrainer - INFO -     Avg Score: -96.1
+2025-07-31 18:47:22,482 - SelfPlayTrainer - INFO -     Est. Accuracy: -62.40%
+2025-07-31 18:47:22,482 - SelfPlayTrainer - INFO -   heuristic_b4fa636c:
+2025-07-31 18:47:22,482 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:47:22,483 - SelfPlayTrainer - INFO -     Avg Score: -105.3
+2025-07-31 18:47:22,483 - SelfPlayTrainer - INFO -     Est. Accuracy: -20.62%
+2025-07-31 18:47:22,483 - SelfPlayTrainer - INFO -   heuristic_585826b5:
+2025-07-31 18:47:22,484 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:47:22,484 - SelfPlayTrainer - INFO -     Avg Score: -94.9
+2025-07-31 18:47:22,484 - SelfPlayTrainer - INFO -     Est. Accuracy: -13.63%
+2025-07-31 18:47:22,485 - SelfPlayTrainer - INFO - 
+=== Generation 5/20 ===
+2025-07-31 18:47:32,184 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_4
+2025-07-31 18:47:32,184 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:47:32,184 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:47:32,185 - SelfPlayTrainer - INFO -     Win Rate: 28.40%
+2025-07-31 18:47:32,185 - SelfPlayTrainer - INFO -     Avg Score: -92.7
+2025-07-31 18:47:32,185 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.14%
+2025-07-31 18:47:32,185 - SelfPlayTrainer - INFO -   heuristic_ef344a42:
+2025-07-31 18:47:32,186 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:47:32,186 - SelfPlayTrainer - INFO -     Avg Score: -94.6
+2025-07-31 18:47:32,186 - SelfPlayTrainer - INFO -     Est. Accuracy: -50.94%
+2025-07-31 18:47:32,186 - SelfPlayTrainer - INFO -   heuristic_740212b8:
+2025-07-31 18:47:32,186 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:47:32,187 - SelfPlayTrainer - INFO -     Avg Score: -105.4
+2025-07-31 18:47:32,187 - SelfPlayTrainer - INFO -     Est. Accuracy: -36.68%
+2025-07-31 18:47:32,187 - SelfPlayTrainer - INFO -   heuristic_48d9b94d:
+2025-07-31 18:47:32,187 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:47:32,188 - SelfPlayTrainer - INFO -     Avg Score: -105.8
+2025-07-31 18:47:32,188 - SelfPlayTrainer - INFO -     Est. Accuracy: -22.28%
+2025-07-31 18:47:32,188 - SelfPlayTrainer - INFO - 
+=== Generation 6/20 ===
+2025-07-31 18:47:41,829 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_5
+2025-07-31 18:47:41,829 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:47:41,830 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:47:41,830 - SelfPlayTrainer - INFO -     Win Rate: 29.67%
+2025-07-31 18:47:41,830 - SelfPlayTrainer - INFO -     Avg Score: -94.4
+2025-07-31 18:47:41,831 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.37%
+2025-07-31 18:47:41,831 - SelfPlayTrainer - INFO -   heuristic_8cb5340f:
+2025-07-31 18:47:41,831 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:47:41,832 - SelfPlayTrainer - INFO -     Avg Score: -112.0
+2025-07-31 18:47:41,832 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.32%
+2025-07-31 18:47:41,833 - SelfPlayTrainer - INFO -   heuristic_cd124aaa:
+2025-07-31 18:47:41,833 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:47:41,833 - SelfPlayTrainer - INFO -     Avg Score: -112.8
+2025-07-31 18:47:41,834 - SelfPlayTrainer - INFO -     Est. Accuracy: -43.99%
+2025-07-31 18:47:41,834 - SelfPlayTrainer - INFO -   heuristic_10a38e94:
+2025-07-31 18:47:41,834 - SelfPlayTrainer - INFO -     Win Rate: 16.00%
+2025-07-31 18:47:41,834 - SelfPlayTrainer - INFO -     Avg Score: -134.7
+2025-07-31 18:47:41,835 - SelfPlayTrainer - INFO -     Est. Accuracy: -38.64%
+2025-07-31 18:47:41,835 - SelfPlayTrainer - INFO - 
+=== Generation 7/20 ===
+2025-07-31 18:47:51,692 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_6
+2025-07-31 18:47:51,692 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:47:51,693 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:47:51,693 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:47:51,693 - SelfPlayTrainer - INFO -     Avg Score: -96.4
+2025-07-31 18:47:51,694 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.46%
+2025-07-31 18:47:51,694 - SelfPlayTrainer - INFO -   heuristic_4f44c674:
+2025-07-31 18:47:51,694 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:47:51,694 - SelfPlayTrainer - INFO -     Avg Score: -94.0
+2025-07-31 18:47:51,695 - SelfPlayTrainer - INFO -     Est. Accuracy: -65.25%
+2025-07-31 18:47:51,695 - SelfPlayTrainer - INFO -   heuristic_0f4db255:
+2025-07-31 18:47:51,695 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:47:51,695 - SelfPlayTrainer - INFO -     Avg Score: -113.7
+2025-07-31 18:47:51,696 - SelfPlayTrainer - INFO -     Est. Accuracy: -40.56%
+2025-07-31 18:47:51,696 - SelfPlayTrainer - INFO -   heuristic_4c24a3df:
+2025-07-31 18:47:51,696 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:47:51,696 - SelfPlayTrainer - INFO -     Avg Score: -115.1
+2025-07-31 18:47:51,696 - SelfPlayTrainer - INFO -     Est. Accuracy: -27.72%
+2025-07-31 18:47:51,697 - SelfPlayTrainer - INFO - 
+=== Generation 8/20 ===
+2025-07-31 18:48:01,466 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_7
+2025-07-31 18:48:01,466 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:48:01,466 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:48:01,467 - SelfPlayTrainer - INFO -     Win Rate: 27.50%
+2025-07-31 18:48:01,467 - SelfPlayTrainer - INFO -     Avg Score: -95.5
+2025-07-31 18:48:01,467 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.86%
+2025-07-31 18:48:01,468 - SelfPlayTrainer - INFO -   heuristic_07383d18:
+2025-07-31 18:48:01,468 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:48:01,468 - SelfPlayTrainer - INFO -     Avg Score: -102.5
+2025-07-31 18:48:01,469 - SelfPlayTrainer - INFO -     Est. Accuracy: -55.95%
+2025-07-31 18:48:01,469 - SelfPlayTrainer - INFO -   heuristic_937cad10:
+2025-07-31 18:48:01,469 - SelfPlayTrainer - INFO -     Win Rate: 32.00%
+2025-07-31 18:48:01,469 - SelfPlayTrainer - INFO -     Avg Score: -83.9
+2025-07-31 18:48:01,470 - SelfPlayTrainer - INFO -     Est. Accuracy: -28.94%
+2025-07-31 18:48:01,470 - SelfPlayTrainer - INFO -   heuristic_da4a8853:
+2025-07-31 18:48:01,470 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:48:01,471 - SelfPlayTrainer - INFO -     Avg Score: -105.4
+2025-07-31 18:48:01,471 - SelfPlayTrainer - INFO -     Est. Accuracy: -17.33%
+2025-07-31 18:48:01,471 - SelfPlayTrainer - INFO - 
+=== Generation 9/20 ===
+2025-07-31 18:48:11,290 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_8
+2025-07-31 18:48:11,291 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:48:11,291 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:48:11,291 - SelfPlayTrainer - INFO -     Win Rate: 27.78%
+2025-07-31 18:48:11,292 - SelfPlayTrainer - INFO -     Avg Score: -93.1
+2025-07-31 18:48:11,292 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.40%
+2025-07-31 18:48:11,293 - SelfPlayTrainer - INFO -   heuristic_2d67c668:
+2025-07-31 18:48:11,293 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:48:11,293 - SelfPlayTrainer - INFO -     Avg Score: -89.6
+2025-07-31 18:48:11,294 - SelfPlayTrainer - INFO -     Est. Accuracy: -55.25%
+2025-07-31 18:48:11,294 - SelfPlayTrainer - INFO -   heuristic_e9b3b89a:
+2025-07-31 18:48:11,294 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:48:11,295 - SelfPlayTrainer - INFO -     Avg Score: -58.7
+2025-07-31 18:48:11,295 - SelfPlayTrainer - INFO -     Est. Accuracy: -25.42%
+2025-07-31 18:48:11,295 - SelfPlayTrainer - INFO -   heuristic_1b85ecce:
+2025-07-31 18:48:11,295 - SelfPlayTrainer - INFO -     Win Rate: 16.00%
+2025-07-31 18:48:11,296 - SelfPlayTrainer - INFO -     Avg Score: -98.1
+2025-07-31 18:48:11,296 - SelfPlayTrainer - INFO -     Est. Accuracy: -36.70%
+2025-07-31 18:48:11,296 - SelfPlayTrainer - INFO - 
+=== Generation 10/20 ===
+2025-07-31 18:48:21,118 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_9
+2025-07-31 18:48:21,119 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:48:21,119 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:48:21,119 - SelfPlayTrainer - INFO -     Win Rate: 27.60%
+2025-07-31 18:48:21,120 - SelfPlayTrainer - INFO -     Avg Score: -93.2
+2025-07-31 18:48:21,120 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.98%
+2025-07-31 18:48:21,120 - SelfPlayTrainer - INFO -   heuristic_f7ba6cca:
+2025-07-31 18:48:21,121 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:48:21,121 - SelfPlayTrainer - INFO -     Avg Score: -90.6
+2025-07-31 18:48:21,121 - SelfPlayTrainer - INFO -     Est. Accuracy: -37.97%
+2025-07-31 18:48:21,121 - SelfPlayTrainer - INFO -   heuristic_04fe279f:
+2025-07-31 18:48:21,122 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:48:21,122 - SelfPlayTrainer - INFO -     Avg Score: -114.1
+2025-07-31 18:48:21,123 - SelfPlayTrainer - INFO -     Est. Accuracy: -45.74%
+2025-07-31 18:48:21,123 - SelfPlayTrainer - INFO -   heuristic_3f456d4b:
+2025-07-31 18:48:21,123 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:48:21,124 - SelfPlayTrainer - INFO -     Avg Score: -98.9
+2025-07-31 18:48:21,124 - SelfPlayTrainer - INFO -     Est. Accuracy: -29.15%
+2025-07-31 18:48:21,125 - SelfPlayTrainer - INFO - 
+=== Generation 11/20 ===
+2025-07-31 18:48:30,807 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_10
+2025-07-31 18:48:30,807 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:48:30,808 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:48:30,808 - SelfPlayTrainer - INFO -     Win Rate: 26.18%
+2025-07-31 18:48:30,808 - SelfPlayTrainer - INFO -     Avg Score: -95.8
+2025-07-31 18:48:30,809 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.45%
+2025-07-31 18:48:30,809 - SelfPlayTrainer - INFO -   heuristic_ef8faaab:
+2025-07-31 18:48:30,809 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:48:30,809 - SelfPlayTrainer - INFO -     Avg Score: -113.3
+2025-07-31 18:48:30,810 - SelfPlayTrainer - INFO -     Est. Accuracy: -54.59%
+2025-07-31 18:48:30,810 - SelfPlayTrainer - INFO -   heuristic_3793925c:
+2025-07-31 18:48:30,810 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:48:30,810 - SelfPlayTrainer - INFO -     Avg Score: -96.8
+2025-07-31 18:48:30,810 - SelfPlayTrainer - INFO -     Est. Accuracy: -27.72%
+2025-07-31 18:48:30,811 - SelfPlayTrainer - INFO -   heuristic_312212de:
+2025-07-31 18:48:30,811 - SelfPlayTrainer - INFO -     Win Rate: 38.00%
+2025-07-31 18:48:30,811 - SelfPlayTrainer - INFO -     Avg Score: -97.4
+2025-07-31 18:48:30,811 - SelfPlayTrainer - INFO -     Est. Accuracy: -26.22%
+2025-07-31 18:48:30,812 - SelfPlayTrainer - INFO - 
+=== Generation 12/20 ===
+2025-07-31 18:48:40,334 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_11
+2025-07-31 18:48:40,334 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:48:40,335 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:48:40,335 - SelfPlayTrainer - INFO -     Win Rate: 25.33%
+2025-07-31 18:48:40,335 - SelfPlayTrainer - INFO -     Avg Score: -97.0
+2025-07-31 18:48:40,336 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.79%
+2025-07-31 18:48:40,336 - SelfPlayTrainer - INFO -   heuristic_d00fdb28:
+2025-07-31 18:48:40,336 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:48:40,337 - SelfPlayTrainer - INFO -     Avg Score: -113.4
+2025-07-31 18:48:40,337 - SelfPlayTrainer - INFO -     Est. Accuracy: -52.85%
+2025-07-31 18:48:40,337 - SelfPlayTrainer - INFO -   heuristic_46554756:
+2025-07-31 18:48:40,338 - SelfPlayTrainer - INFO -     Win Rate: 32.00%
+2025-07-31 18:48:40,338 - SelfPlayTrainer - INFO -     Avg Score: -83.1
+2025-07-31 18:48:40,338 - SelfPlayTrainer - INFO -     Est. Accuracy: -30.27%
+2025-07-31 18:48:40,338 - SelfPlayTrainer - INFO -   heuristic_05166630:
+2025-07-31 18:48:40,339 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:48:40,339 - SelfPlayTrainer - INFO -     Avg Score: -83.6
+2025-07-31 18:48:40,339 - SelfPlayTrainer - INFO -     Est. Accuracy: -14.90%
+2025-07-31 18:48:40,340 - SelfPlayTrainer - INFO - 
+=== Generation 13/20 ===
+2025-07-31 18:48:49,959 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_12
+2025-07-31 18:48:49,960 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:48:49,960 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:48:49,960 - SelfPlayTrainer - INFO -     Win Rate: 25.69%
+2025-07-31 18:48:49,961 - SelfPlayTrainer - INFO -     Avg Score: -97.6
+2025-07-31 18:48:49,961 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.07%
+2025-07-31 18:48:49,961 - SelfPlayTrainer - INFO -   heuristic_1a90a020:
+2025-07-31 18:48:49,962 - SelfPlayTrainer - INFO -     Win Rate: 10.00%
+2025-07-31 18:48:49,962 - SelfPlayTrainer - INFO -     Avg Score: -109.8
+2025-07-31 18:48:49,963 - SelfPlayTrainer - INFO -     Est. Accuracy: -48.66%
+2025-07-31 18:48:49,963 - SelfPlayTrainer - INFO -   heuristic_c412138c:
+2025-07-31 18:48:49,963 - SelfPlayTrainer - INFO -     Win Rate: 36.00%
+2025-07-31 18:48:49,964 - SelfPlayTrainer - INFO -     Avg Score: -94.7
+2025-07-31 18:48:49,964 - SelfPlayTrainer - INFO -     Est. Accuracy: -19.17%
+2025-07-31 18:48:49,964 - SelfPlayTrainer - INFO -   heuristic_86156732:
+2025-07-31 18:48:49,965 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:48:49,965 - SelfPlayTrainer - INFO -     Avg Score: -120.1
+2025-07-31 18:48:49,965 - SelfPlayTrainer - INFO -     Est. Accuracy: -43.41%
+2025-07-31 18:48:49,966 - SelfPlayTrainer - INFO - 
+=== Generation 14/20 ===
+2025-07-31 18:48:59,781 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_13
+2025-07-31 18:48:59,781 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:48:59,781 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:48:59,782 - SelfPlayTrainer - INFO -     Win Rate: 26.00%
+2025-07-31 18:48:59,782 - SelfPlayTrainer - INFO -     Avg Score: -98.2
+2025-07-31 18:48:59,782 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.49%
+2025-07-31 18:48:59,783 - SelfPlayTrainer - INFO -   heuristic_bf226eed:
+2025-07-31 18:48:59,783 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:48:59,784 - SelfPlayTrainer - INFO -     Avg Score: -104.6
+2025-07-31 18:48:59,784 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.10%
+2025-07-31 18:48:59,784 - SelfPlayTrainer - INFO -   heuristic_4f57534f:
+2025-07-31 18:48:59,785 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:48:59,785 - SelfPlayTrainer - INFO -     Avg Score: -116.7
+2025-07-31 18:48:59,785 - SelfPlayTrainer - INFO -     Est. Accuracy: -46.66%
+2025-07-31 18:48:59,785 - SelfPlayTrainer - INFO -   heuristic_d52e1cc6:
+2025-07-31 18:48:59,786 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:48:59,786 - SelfPlayTrainer - INFO -     Avg Score: -101.4
+2025-07-31 18:48:59,786 - SelfPlayTrainer - INFO -     Est. Accuracy: -16.79%
+2025-07-31 18:48:59,787 - SelfPlayTrainer - INFO - 
+=== Generation 15/20 ===
+2025-07-31 18:49:09,379 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_14
+2025-07-31 18:49:09,379 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:49:09,379 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:49:09,380 - SelfPlayTrainer - INFO -     Win Rate: 25.87%
+2025-07-31 18:49:09,380 - SelfPlayTrainer - INFO -     Avg Score: -97.9
+2025-07-31 18:49:09,380 - SelfPlayTrainer - INFO -     Est. Accuracy: -61.33%
+2025-07-31 18:49:09,380 - SelfPlayTrainer - INFO -   heuristic_7ab769ff:
+2025-07-31 18:49:09,381 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:49:09,381 - SelfPlayTrainer - INFO -     Avg Score: -110.8
+2025-07-31 18:49:09,381 - SelfPlayTrainer - INFO -     Est. Accuracy: -53.71%
+2025-07-31 18:49:09,382 - SelfPlayTrainer - INFO -   heuristic_1fbe3470:
+2025-07-31 18:49:09,382 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 18:49:09,382 - SelfPlayTrainer - INFO -     Avg Score: -89.0
+2025-07-31 18:49:09,383 - SelfPlayTrainer - INFO -     Est. Accuracy: -20.67%
+2025-07-31 18:49:09,383 - SelfPlayTrainer - INFO -   heuristic_7c1cbb96:
+2025-07-31 18:49:09,383 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:49:09,383 - SelfPlayTrainer - INFO -     Avg Score: -99.9
+2025-07-31 18:49:09,384 - SelfPlayTrainer - INFO -     Est. Accuracy: -24.61%
+2025-07-31 18:49:09,384 - SelfPlayTrainer - INFO - 
+=== Generation 16/20 ===
+2025-07-31 18:49:18,954 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_15
+2025-07-31 18:49:18,955 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:49:18,955 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:49:18,956 - SelfPlayTrainer - INFO -     Win Rate: 25.75%
+2025-07-31 18:49:18,956 - SelfPlayTrainer - INFO -     Avg Score: -98.3
+2025-07-31 18:49:18,956 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.48%
+2025-07-31 18:49:18,957 - SelfPlayTrainer - INFO -   heuristic_6fb20205:
+2025-07-31 18:49:18,957 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:49:18,958 - SelfPlayTrainer - INFO -     Avg Score: -111.9
+2025-07-31 18:49:18,958 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.72%
+2025-07-31 18:49:18,958 - SelfPlayTrainer - INFO -   heuristic_ab5def2b:
+2025-07-31 18:49:18,959 - SelfPlayTrainer - INFO -     Win Rate: 36.00%
+2025-07-31 18:49:18,959 - SelfPlayTrainer - INFO -     Avg Score: -85.8
+2025-07-31 18:49:18,959 - SelfPlayTrainer - INFO -     Est. Accuracy: -29.08%
+2025-07-31 18:49:18,960 - SelfPlayTrainer - INFO -   heuristic_97899284:
+2025-07-31 18:49:18,960 - SelfPlayTrainer - INFO -     Win Rate: 16.00%
+2025-07-31 18:49:18,960 - SelfPlayTrainer - INFO -     Avg Score: -111.7
+2025-07-31 18:49:18,961 - SelfPlayTrainer - INFO -     Est. Accuracy: -39.76%
+2025-07-31 18:49:18,961 - SelfPlayTrainer - INFO - 
+=== Generation 17/20 ===
+2025-07-31 18:49:28,702 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_16
+2025-07-31 18:49:28,702 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:49:28,702 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:49:28,702 - SelfPlayTrainer - INFO -     Win Rate: 25.65%
+2025-07-31 18:49:28,703 - SelfPlayTrainer - INFO -     Avg Score: -98.5
+2025-07-31 18:49:28,703 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.84%
+2025-07-31 18:49:28,703 - SelfPlayTrainer - INFO -   heuristic_d20f16d1:
+2025-07-31 18:49:28,704 - SelfPlayTrainer - INFO -     Win Rate: 34.00%
+2025-07-31 18:49:28,704 - SelfPlayTrainer - INFO -     Avg Score: -74.4
+2025-07-31 18:49:28,704 - SelfPlayTrainer - INFO -     Est. Accuracy: -32.26%
+2025-07-31 18:49:28,704 - SelfPlayTrainer - INFO -   heuristic_4dec063e:
+2025-07-31 18:49:28,705 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:49:28,705 - SelfPlayTrainer - INFO -     Avg Score: -74.7
+2025-07-31 18:49:28,705 - SelfPlayTrainer - INFO -     Est. Accuracy: -17.84%
+2025-07-31 18:49:28,706 - SelfPlayTrainer - INFO -   heuristic_cc00006b:
+2025-07-31 18:49:28,706 - SelfPlayTrainer - INFO -     Win Rate: 18.00%
+2025-07-31 18:49:28,707 - SelfPlayTrainer - INFO -     Avg Score: -106.7
+2025-07-31 18:49:28,707 - SelfPlayTrainer - INFO -     Est. Accuracy: -35.91%
+2025-07-31 18:49:28,708 - SelfPlayTrainer - INFO - 
+=== Generation 18/20 ===
+2025-07-31 18:49:38,248 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_17
+2025-07-31 18:49:38,248 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:49:38,249 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:49:38,249 - SelfPlayTrainer - INFO -     Win Rate: 25.78%
+2025-07-31 18:49:38,249 - SelfPlayTrainer - INFO -     Avg Score: -97.5
+2025-07-31 18:49:38,250 - SelfPlayTrainer - INFO -     Est. Accuracy: -60.37%
+2025-07-31 18:49:38,250 - SelfPlayTrainer - INFO -   heuristic_ab966a77:
+2025-07-31 18:49:38,250 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:49:38,250 - SelfPlayTrainer - INFO -     Avg Score: -95.4
+2025-07-31 18:49:38,251 - SelfPlayTrainer - INFO -     Est. Accuracy: -67.59%
+2025-07-31 18:49:38,251 - SelfPlayTrainer - INFO -   heuristic_47a59cc7:
+2025-07-31 18:49:38,251 - SelfPlayTrainer - INFO -     Win Rate: 24.00%
+2025-07-31 18:49:38,252 - SelfPlayTrainer - INFO -     Avg Score: -69.7
+2025-07-31 18:49:38,252 - SelfPlayTrainer - INFO -     Est. Accuracy: -15.96%
+2025-07-31 18:49:38,252 - SelfPlayTrainer - INFO -   heuristic_2c4acc03:
+2025-07-31 18:49:38,252 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:49:38,253 - SelfPlayTrainer - INFO -     Avg Score: -86.9
+2025-07-31 18:49:38,253 - SelfPlayTrainer - INFO -     Est. Accuracy: -17.23%
+2025-07-31 18:49:38,254 - SelfPlayTrainer - INFO - 
+=== Generation 19/20 ===
+2025-07-31 18:49:47,931 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_18
+2025-07-31 18:49:47,932 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:49:47,932 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:49:47,932 - SelfPlayTrainer - INFO -     Win Rate: 25.58%
+2025-07-31 18:49:47,933 - SelfPlayTrainer - INFO -     Avg Score: -97.2
+2025-07-31 18:49:47,933 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.94%
+2025-07-31 18:49:47,934 - SelfPlayTrainer - INFO -   heuristic_01ba4968:
+2025-07-31 18:49:47,934 - SelfPlayTrainer - INFO -     Win Rate: 34.00%
+2025-07-31 18:49:47,934 - SelfPlayTrainer - INFO -     Avg Score: -90.7
+2025-07-31 18:49:47,935 - SelfPlayTrainer - INFO -     Est. Accuracy: -56.21%
+2025-07-31 18:49:47,935 - SelfPlayTrainer - INFO -   heuristic_bfe8dd75:
+2025-07-31 18:49:47,936 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:49:47,936 - SelfPlayTrainer - INFO -     Avg Score: -78.6
+2025-07-31 18:49:47,936 - SelfPlayTrainer - INFO -     Est. Accuracy: -18.88%
+2025-07-31 18:49:47,937 - SelfPlayTrainer - INFO -   heuristic_1e3cdfba:
+2025-07-31 18:49:47,938 - SelfPlayTrainer - INFO -     Win Rate: 16.00%
+2025-07-31 18:49:47,938 - SelfPlayTrainer - INFO -     Avg Score: -115.5
+2025-07-31 18:49:47,939 - SelfPlayTrainer - INFO -     Est. Accuracy: -34.23%
+2025-07-31 18:49:47,939 - SelfPlayTrainer - INFO - 
+=== Generation 20/20 ===
+2025-07-31 18:49:57,608 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_19
+2025-07-31 18:49:57,608 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 18:49:57,609 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 18:49:57,609 - SelfPlayTrainer - INFO -     Win Rate: 25.80%
+2025-07-31 18:49:57,609 - SelfPlayTrainer - INFO -     Avg Score: -97.1
+2025-07-31 18:49:57,609 - SelfPlayTrainer - INFO -     Est. Accuracy: -59.36%
+2025-07-31 18:49:57,610 - SelfPlayTrainer - INFO -   heuristic_928553ea:
+2025-07-31 18:49:57,610 - SelfPlayTrainer - INFO -     Win Rate: 22.00%
+2025-07-31 18:49:57,610 - SelfPlayTrainer - INFO -     Avg Score: -92.6
+2025-07-31 18:49:57,611 - SelfPlayTrainer - INFO -     Est. Accuracy: -69.02%
+2025-07-31 18:49:57,611 - SelfPlayTrainer - INFO -   heuristic_43c0f602:
+2025-07-31 18:49:57,611 - SelfPlayTrainer - INFO -     Win Rate: 28.00%
+2025-07-31 18:49:57,611 - SelfPlayTrainer - INFO -     Avg Score: -93.3
+2025-07-31 18:49:57,612 - SelfPlayTrainer - INFO -     Est. Accuracy: -39.36%
+2025-07-31 18:49:57,612 - SelfPlayTrainer - INFO -   heuristic_fbef2c98:
+2025-07-31 18:49:57,612 - SelfPlayTrainer - INFO -     Win Rate: 20.00%
+2025-07-31 18:49:57,613 - SelfPlayTrainer - INFO -     Avg Score: -98.9
+2025-07-31 18:49:57,613 - SelfPlayTrainer - INFO -     Est. Accuracy: -27.82%
+2025-07-31 18:49:57,613 - SelfPlayTrainer - INFO - 
+Training complete!
+2025-07-31 18:49:58,351 - SelfPlayTrainer - INFO - Final results saved to training_data
+2025-07-31 18:50:57,065 - SelfPlayTrainer - INFO - Starting training for 20 generations
+2025-07-31 18:50:57,065 - SelfPlayTrainer - INFO - Games per generation: 1000
+2025-07-31 18:50:57,066 - SelfPlayTrainer - INFO - Workers: 4
+2025-07-31 18:50:57,066 - SelfPlayTrainer - INFO - 
+=== Generation 1/20 ===
+2025-07-31 19:02:14,188 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_0
+2025-07-31 19:02:14,212 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 19:02:14,213 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 19:02:14,213 - SelfPlayTrainer - INFO -     Win Rate: 25.80%
+2025-07-31 19:02:14,214 - SelfPlayTrainer - INFO -     Avg Score: -295.5
+2025-07-31 19:02:14,214 - SelfPlayTrainer - INFO -     Est. Accuracy: -28.22%
+2025-07-31 19:02:14,215 - SelfPlayTrainer - INFO -   heuristic_98674a81:
+2025-07-31 19:02:14,215 - SelfPlayTrainer - INFO -     Win Rate: 22.50%
+2025-07-31 19:02:14,216 - SelfPlayTrainer - INFO -     Avg Score: -307.8
+2025-07-31 19:02:14,216 - SelfPlayTrainer - INFO -     Est. Accuracy: -31.14%
+2025-07-31 19:02:14,216 - SelfPlayTrainer - INFO -   heuristic_f583c743:
+2025-07-31 19:02:14,217 - SelfPlayTrainer - INFO -     Win Rate: 30.00%
+2025-07-31 19:02:14,217 - SelfPlayTrainer - INFO -     Avg Score: -281.6
+2025-07-31 19:02:14,217 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.10%
+2025-07-31 19:02:14,218 - SelfPlayTrainer - INFO -   heuristic_9a669977:
+2025-07-31 19:02:14,218 - SelfPlayTrainer - INFO -     Win Rate: 21.70%
+2025-07-31 19:02:14,218 - SelfPlayTrainer - INFO -     Avg Score: -313.3
+2025-07-31 19:02:14,219 - SelfPlayTrainer - INFO -     Est. Accuracy: -2.43%
+2025-07-31 19:02:14,219 - SelfPlayTrainer - INFO - 
+=== Generation 2/20 ===
+2025-07-31 19:13:46,222 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_1
+2025-07-31 19:13:46,223 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 19:13:46,223 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 19:13:46,224 - SelfPlayTrainer - INFO -     Win Rate: 25.80%
+2025-07-31 19:13:46,224 - SelfPlayTrainer - INFO -     Avg Score: -291.0
+2025-07-31 19:13:46,224 - SelfPlayTrainer - INFO -     Est. Accuracy: -27.31%
+2025-07-31 19:13:46,225 - SelfPlayTrainer - INFO -   heuristic_ebdc3393:
+2025-07-31 19:13:46,225 - SelfPlayTrainer - INFO -     Win Rate: 22.60%
+2025-07-31 19:13:46,225 - SelfPlayTrainer - INFO -     Avg Score: -302.9
+2025-07-31 19:13:46,226 - SelfPlayTrainer - INFO -     Est. Accuracy: -28.80%
+2025-07-31 19:13:46,226 - SelfPlayTrainer - INFO -   heuristic_122d5c77:
+2025-07-31 19:13:46,226 - SelfPlayTrainer - INFO -     Win Rate: 28.30%
+2025-07-31 19:13:46,227 - SelfPlayTrainer - INFO -     Avg Score: -284.0
+2025-07-31 19:13:46,227 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.85%
+2025-07-31 19:13:46,227 - SelfPlayTrainer - INFO -   heuristic_7e789378:
+2025-07-31 19:13:46,228 - SelfPlayTrainer - INFO -     Win Rate: 23.30%
+2025-07-31 19:13:46,228 - SelfPlayTrainer - INFO -     Avg Score: -306.7
+2025-07-31 19:13:46,229 - SelfPlayTrainer - INFO -     Est. Accuracy: -1.15%
+2025-07-31 19:13:46,229 - SelfPlayTrainer - INFO - 
+=== Generation 3/20 ===
+2025-07-31 19:25:06,167 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_2
+2025-07-31 19:25:06,168 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 19:25:06,168 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 19:25:06,169 - SelfPlayTrainer - INFO -     Win Rate: 26.70%
+2025-07-31 19:25:06,169 - SelfPlayTrainer - INFO -     Avg Score: -289.6
+2025-07-31 19:25:06,170 - SelfPlayTrainer - INFO -     Est. Accuracy: -27.00%
+2025-07-31 19:25:06,170 - SelfPlayTrainer - INFO -   heuristic_18a7974d:
+2025-07-31 19:25:06,171 - SelfPlayTrainer - INFO -     Win Rate: 20.30%
+2025-07-31 19:25:06,171 - SelfPlayTrainer - INFO -     Avg Score: -305.5
+2025-07-31 19:25:06,172 - SelfPlayTrainer - INFO -     Est. Accuracy: -30.28%
+2025-07-31 19:25:06,172 - SelfPlayTrainer - INFO -   heuristic_bb4e77f9:
+2025-07-31 19:25:06,172 - SelfPlayTrainer - INFO -     Win Rate: 29.30%
+2025-07-31 19:25:06,173 - SelfPlayTrainer - INFO -     Avg Score: -282.8
+2025-07-31 19:25:06,173 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.03%
+2025-07-31 19:25:06,174 - SelfPlayTrainer - INFO -   heuristic_170b42ce:
+2025-07-31 19:25:06,174 - SelfPlayTrainer - INFO -     Win Rate: 21.90%
+2025-07-31 19:25:06,175 - SelfPlayTrainer - INFO -     Avg Score: -319.7
+2025-07-31 19:25:06,175 - SelfPlayTrainer - INFO -     Est. Accuracy: -4.63%
+2025-07-31 19:25:06,175 - SelfPlayTrainer - INFO - 
+=== Generation 4/20 ===
+2025-07-31 19:37:05,514 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_3
+2025-07-31 19:37:05,515 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 19:37:05,516 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 19:37:05,516 - SelfPlayTrainer - INFO -     Win Rate: 26.72%
+2025-07-31 19:37:05,516 - SelfPlayTrainer - INFO -     Avg Score: -289.6
+2025-07-31 19:37:05,516 - SelfPlayTrainer - INFO -     Est. Accuracy: -27.21%
+2025-07-31 19:37:05,517 - SelfPlayTrainer - INFO -   heuristic_2e38471e:
+2025-07-31 19:37:05,517 - SelfPlayTrainer - INFO -     Win Rate: 24.80%
+2025-07-31 19:37:05,517 - SelfPlayTrainer - INFO -     Avg Score: -300.3
+2025-07-31 19:37:05,518 - SelfPlayTrainer - INFO -     Est. Accuracy: -28.85%
+2025-07-31 19:37:05,518 - SelfPlayTrainer - INFO -   heuristic_65f6a63b:
+2025-07-31 19:37:05,518 - SelfPlayTrainer - INFO -     Win Rate: 26.50%
+2025-07-31 19:37:05,518 - SelfPlayTrainer - INFO -     Avg Score: -294.1
+2025-07-31 19:37:05,519 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.75%
+2025-07-31 19:37:05,519 - SelfPlayTrainer - INFO -   heuristic_8f42d86f:
+2025-07-31 19:37:05,520 - SelfPlayTrainer - INFO -     Win Rate: 21.90%
+2025-07-31 19:37:05,520 - SelfPlayTrainer - INFO -     Avg Score: -314.5
+2025-07-31 19:37:05,520 - SelfPlayTrainer - INFO -     Est. Accuracy: -4.11%
+2025-07-31 19:37:05,521 - SelfPlayTrainer - INFO - 
+=== Generation 5/20 ===
+2025-07-31 19:50:40,650 - SelfPlayTrainer - INFO - Checkpoint saved to training_data\generation_4
+2025-07-31 19:50:40,652 - SelfPlayTrainer - INFO - 
+Generation Summary:
+2025-07-31 19:50:40,653 - SelfPlayTrainer - INFO -   NADL_v1.0:
+2025-07-31 19:50:40,653 - SelfPlayTrainer - INFO -     Win Rate: 26.48%
+2025-07-31 19:50:40,654 - SelfPlayTrainer - INFO -     Avg Score: -290.1
+2025-07-31 19:50:40,654 - SelfPlayTrainer - INFO -     Est. Accuracy: -27.15%
+2025-07-31 19:50:40,655 - SelfPlayTrainer - INFO -   heuristic_11b29fc5:
+2025-07-31 19:50:40,655 - SelfPlayTrainer - INFO -     Win Rate: 21.70%
+2025-07-31 19:50:40,655 - SelfPlayTrainer - INFO -     Avg Score: -303.3
+2025-07-31 19:50:40,655 - SelfPlayTrainer - INFO -     Est. Accuracy: -29.85%
+2025-07-31 19:50:40,656 - SelfPlayTrainer - INFO -   heuristic_7a659254:
+2025-07-31 19:50:40,656 - SelfPlayTrainer - INFO -     Win Rate: 29.60%
+2025-07-31 19:50:40,656 - SelfPlayTrainer - INFO -     Avg Score: -283.1
+2025-07-31 19:50:40,657 - SelfPlayTrainer - INFO -     Est. Accuracy: -11.23%
+2025-07-31 19:50:40,657 - SelfPlayTrainer - INFO -   heuristic_36f8dc43:
+2025-07-31 19:50:40,658 - SelfPlayTrainer - INFO -     Win Rate: 23.20%
+2025-07-31 19:50:40,658 - SelfPlayTrainer - INFO -     Avg Score: -304.9
+2025-07-31 19:50:40,658 - SelfPlayTrainer - INFO -     Est. Accuracy: -2.13%
+2025-07-31 19:50:40,659 - SelfPlayTrainer - INFO - 
+=== Generation 6/20 ===

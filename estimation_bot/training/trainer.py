@@ -173,44 +173,76 @@ class SelfPlayTrainer:
         return logger
     
     def train(self, num_generations: int):
-        """
-        Run training for specified number of generations.
+        """Run training against progressively stronger opponents."""
+        from .champion import ChampionManager
         
-        Args:
-            num_generations: Number of evolution cycles to run
-        """
-        self.logger.info(f"Starting training for {num_generations} generations")
-        self.logger.info(f"Games per generation: {self.games_per_generation}")
-        self.logger.info(f"Workers: {self.num_workers}")
+        champion_mgr = ChampionManager()
+        champion_mgr.increment_training_session()
         
-        current_champion = self.base_model
+        current_champion = champion_mgr.get_champion()
+        
+        print(f"🎯 Training NADL v{champion_mgr.generation_count}.0")
+        print(f"Training sessions: {champion_mgr.champion_stats['training_sessions']}")
         
         for gen in range(num_generations):
             self.generation = gen
-            self.logger.info(f"\n=== Generation {gen + 1}/{num_generations} ===")
             
-            # Create population (champion + 3 clones)
-            population = self._create_population(current_champion)
+            # Get strong opponents for this generation
+            opponents = champion_mgr.get_training_opponents()
+            population = [current_champion] + opponents
             
-            # Run parallel games
-            game_results = self._run_generation(population)
+            # Run games with reduced logging
+            game_results = self._run_generation_quiet(population)
             
             # Analyze results
             stats = self._analyze_generation(game_results, population)
             
-            # Select new champion
-            new_champion = self._select_champion(population, stats)
+            # Check if champion improved
+            champion_stats = stats.get(current_champion.get_id())
+            if champion_stats and champion_mgr.update_champion(current_champion, champion_stats):
+                current_champion = champion_mgr.get_champion()
             
-            # Save checkpoint
-            self._save_checkpoint(new_champion, stats, game_results)
-            
-            # Log progress
-            self._log_generation_summary(stats)
-            
-            current_champion = new_champion
+            # Brief progress update every 5 generations
+            if (gen + 1) % 5 == 0:
+                self._log_brief_progress(gen + 1, num_generations, champion_stats)
         
-        self.logger.info("\nTraining complete!")
         self._save_final_results()
+        print(f"✅ Training complete! NADL v{champion_mgr.generation_count}.0 ready")
+
+    def _run_generation_quiet(self, population: List[ModelInterface]) -> List[GameResult]:
+        """Run games with minimal logging."""
+        game_results = []
+        
+        with concurrent.futures.ProcessPoolExecutor(max_workers=self.num_workers) as executor:
+            futures = []
+            for i in range(self.games_per_generation):
+                future = executor.submit(self._simulate_game, population, i)
+                futures.append(future)
+            
+            # Show progress bar instead of individual game logs
+            completed = 0
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    result = future.result() 
+                    game_results.append(result)
+                    self.all_game_results.append(result)
+                    completed += 1
+                    
+                    # Simple progress indicator
+                    if completed % (self.games_per_generation // 4) == 0:
+                        progress = (completed / self.games_per_generation) * 100
+                        print(f"Progress: {progress:.0f}% ({completed}/{self.games_per_generation})")
+                        
+                except Exception as e:
+                    self.logger.error(f"Game simulation failed: {e}")
+        
+        return game_results
+
+    def _log_brief_progress(self, current_gen: int, total_gens: int, champion_stats: ModelStats):
+        """Brief progress logging."""
+        if champion_stats:
+            print(f"Gen {current_gen}/{total_gens} | Win Rate: {champion_stats.win_rate:.1%} | "
+                f"Avg Score: {champion_stats.avg_score_per_game:.1f}")
     
     def _create_population(self, champion: ModelInterface) -> List[ModelInterface]:
         """Create population of 4 models (champion + 3 clones)."""
