@@ -99,3 +99,6 @@ Thumbs.db
 tensorboard_logs/
 training_results/
 checkpoints/
+
+#Large files
+estimation_detailed.log
