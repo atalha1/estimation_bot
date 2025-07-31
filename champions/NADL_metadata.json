@@ -1,0 +1,12 @@
+{
+  "stats": {
+    "total_games": 0,
+    "wins": 0,
+    "training_sessions": 1,
+    "best_win_rate": 0.0,
+    "created": "2025-07-31T21:06:48.684216",
+    "last_updated": null
+  },
+  "history": [],
+  "generation_count": 1
+}
