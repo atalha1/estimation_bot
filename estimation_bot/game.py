@@ -12,6 +12,8 @@ from estimation_bot.utils import GameLogger
 from estimation_bot.player import Player, BotInterface, HumanPlayer
 import json
 import random
+import os
+from datetime import datetime
 
 
 class EstimationGame:
@@ -548,9 +550,13 @@ class EstimationGame:
     
     def _save_game_data(self):
         """Save comprehensive game data to file."""
-        from datetime import datetime
+        
+        # Create directory if it doesn't exist
+        dump_dir = "estimation_bot/game_dump"
+        os.makedirs(dump_dir, exist_ok=True)
+        
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S") 
-        filename = f"estimation_game_{timestamp}.json"
+        filename = f"{dump_dir}/estimation_game_{timestamp}.json"
         
         with open(filename, 'w') as f:
             json.dump(self.game_data, f, indent=2)
