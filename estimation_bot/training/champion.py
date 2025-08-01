@@ -7,7 +7,7 @@ import json
 import pickle
 from pathlib import Path
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 import logging
 
 from .models import HeuristicModelWrapper, LearnableModelWrapper
@@ -136,33 +136,42 @@ class ChampionManager:
             })
     
     def get_training_opponents(self) -> list[ModelInterface]:
-        """Get progressively stronger opponents for training."""
+        """Get progressively stronger opponents for training (self-play focused)."""
         opponents = []
         
-        # Always include current champion
+        # Primary opponent: Current champion (50% of games)
         if self.current_champion:
             opponents.append(self.current_champion.clone())
         
-        # Add previous versions as opponents (last 2-3 generations)
+        # Secondary: Previous versions (30% of games) 
         archive_files = sorted(self.champions_dir.glob("NADL_v*_archive.pkl"))
-        recent_archives = archive_files[-2:] if len(archive_files) > 2 else archive_files
+        if archive_files:
+            # Load 1-2 most recent archived versions
+            recent_archives = archive_files[-2:] if len(archive_files) >= 2 else archive_files[-1:]
+            for archive_path in recent_archives:
+                try:
+                    with open(archive_path, 'rb') as f:
+                        archived_champion = pickle.load(f)
+                        opponents.append(archived_champion)
+                except Exception as e:
+                    print(f"⚠️ Could not load archived champion: {e}")
         
-        for archive_path in recent_archives:
-            try:
-                with open(archive_path, 'rb') as f:
-                    archived_champion = pickle.load(f)
-                    opponents.append(archived_champion.clone())
-            except Exception as e:
-                print(f"⚠️ Could not load archived champion: {e}")
-        
-        # Fill remaining slots with champion clones (with small variations)
+        # Tertiary: Heuristic bot only as baseline (20% of games)
+        # Only add heuristic if we don't have enough self-play opponents
         while len(opponents) < 3:
             if self.current_champion:
-                clone = self.current_champion.clone()
-                opponents.append(clone)
+                # Create slightly weakened version of current champion
+                weaker_clone = self.current_champion.clone()
+                if hasattr(weaker_clone, 'add_noise'):
+                    weaker_clone.add_noise(0.2)  # Add more noise to make it weaker
+                opponents.append(weaker_clone)
+            else:
+                # Fallback to heuristic only if no champion exists
+                from training.models import HeuristicModelWrapper
+                opponents.append(HeuristicModelWrapper(f"Fallback_Heuristic_{len(opponents)}"))
         
         return opponents[:3]  # Return exactly 3 opponents
-    
+
     def get_champion(self) -> ModelInterface:
         """Get current NADL champion."""
         return self.current_champion
@@ -171,3 +180,46 @@ class ChampionManager:
         """Record new training session."""
         self.champion_stats['training_sessions'] += 1
         self.save_champion()
+    def load_specific_version(self, version: str) -> Optional[ModelInterface]:
+        """Load a specific version of NADL."""
+        version_path = self.champions_dir / f"NADL_{version}.pkl"
+        if version_path.exists():
+            try:
+                with open(version_path, 'rb') as f:
+                    return pickle.load(f)
+            except Exception as e:
+                print(f"⚠️ Error loading version {version}: {e}")
+        return None
+    
+    def get_training_population(self, population_size: int = 4) -> List[ModelInterface]:
+        """Create diverse training population."""
+        population = []
+        
+        # Always include current champion
+        if self.current_champion:
+            population.append(self.current_champion.clone())
+        
+        # Add some previous versions
+        archive_files = sorted(self.champions_dir.glob("NADL_v*_archive.pkl"))
+        recent_archives = archive_files[-2:] if len(archive_files) > 2 else archive_files
+        
+        for archive_path in recent_archives[:population_size-1]:
+            try:
+                with open(archive_path, 'rb') as f:
+                    archived_model = pickle.load(f)
+                    population.append(archived_model.clone())
+            except Exception as e:
+                print(f"⚠️ Could not load archived model: {e}")
+        
+        # Fill remaining slots with champion variants
+        while len(population) < population_size:
+            if self.current_champion:
+                variant = self.current_champion.clone()
+                # Add small random variations for diversity
+                if hasattr(variant, 'add_noise'):
+                    variant.add_noise(0.1)
+                population.append(variant)
+            else:
+                break
+        
+        return population[:population_size]

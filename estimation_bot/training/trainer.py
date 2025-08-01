@@ -17,6 +17,7 @@ import numpy as np
 from collections import defaultdict
 import logging
 from abc import ABC, abstractmethod
+import signal
 
 from estimation_bot.game import EstimationGame
 from estimation_bot.player import Player, BotInterface
@@ -58,33 +59,46 @@ class GameResult:
 
 @dataclass
 class ModelStats:
+    """Fixed model statistics tracking."""
+    
     def __init__(self, model_id: str):
         self.model_id = model_id
         self.games_played = 0
         self.wins = 0
         self.total_score = 0
-        self.estimation_accuracy_sum = 0.0  # Track sum for averaging
-        self.estimation_accuracy = None  # Not 0.0!
+        self.estimation_accuracy_sum = 0.0
+        self.estimation_count = 0  # Track number of estimations for proper averaging
+        self.successful_calls = 0
+        
+        # Derived properties
+        self.win_rate = 0.0
+        self.avg_score_per_game = 0.0
+        self.estimation_accuracy = 0.0
     
     def update(self, game_result: GameResult, player_id: int):
+        """Update statistics with proper averaging."""
         self.games_played += 1
         
         if game_result.winner_id == player_id:
             self.wins += 1
-            
+        
         self.total_score += game_result.final_scores[player_id]
         
-        # Win rate with zero handling
-        self.win_rate = self.wins / self.games_played if self.games_played else 0.0
-        
-        # Average score
+        # Update derived stats
+        self.win_rate = self.wins / self.games_played
         self.avg_score_per_game = self.total_score / self.games_played
         
-        # Estimation accuracy (proper averaging)
+        # Handle estimation accuracy properly
         if player_id in game_result.estimation_accuracy:
             accuracy = game_result.estimation_accuracy[player_id]
-            self.estimation_accuracy_sum += accuracy
-            self.estimation_accuracy = self.estimation_accuracy_sum / self.games_played
+            if not np.isnan(accuracy):  # Guard against NaN values
+                self.estimation_accuracy_sum += accuracy
+                self.estimation_count += 1
+                self.estimation_accuracy = self.estimation_accuracy_sum / self.estimation_count
+        
+        # Update successful calls
+        if player_id in game_result.successful_calls:
+            self.successful_calls += game_result.successful_calls[player_id]
 
 
 class ModelInterface(ABC):
@@ -254,95 +268,148 @@ class SelfPlayTrainer:
         return population
     
     def _run_generation(self, population: List[ModelInterface]) -> List[GameResult]:
-        """Run games in parallel for current generation."""
+        """Run games with minimal logging."""
         game_results = []
         
         with concurrent.futures.ProcessPoolExecutor(max_workers=self.num_workers) as executor:
-            # Submit game tasks
             futures = []
             for i in range(self.games_per_generation):
-                future = executor.submit(self._simulate_game, population, i)
+                future = executor.submit(self._simulate_game_robust, population, i)  # Use robust version
                 futures.append(future)
             
-            # Collect results
+            completed = 0
             for future in concurrent.futures.as_completed(futures):
                 try:
-                    result = future.result()
-                    game_results.append(result)
-                    self.all_game_results.append(result)
+                    result = future.result() 
+                    if result is not None:  # Only add valid results
+                        game_results.append(result)
+                        self.all_game_results.append(result)
+                    completed += 1
+                    
+                    if completed % (self.games_per_generation // 4) == 0:
+                        progress = (completed / self.games_per_generation) * 100
+                        valid_count = len([r for r in game_results if r is not None])
+                        print(f"Progress: {progress:.0f}% ({completed}/{self.games_per_generation}, {valid_count} valid)")
+                        
                 except Exception as e:
                     self.logger.error(f"Game simulation failed: {e}")
+                    completed += 1
         
         return game_results
     
-    def _simulate_game(self, population: List[ModelInterface], game_num: int) -> GameResult:
-        """Simulate a single game with 4 models."""
-        # Create players with bots from models
-        players = []
-        for i, model in enumerate(population):
-            player = Player(i, f"{model.get_id()}_{i}")
-            player.strategy = model.create_bot(player.name)
-            players.append(player)
+    def _simulate_game(self, population: List[ModelInterface], game_num: int) -> Optional[GameResult]:
+        """Simulate game with robust error handling (Windows compatible)."""
+        max_retries = 3
+        last_error = None
         
-        # Run game
-        game = EstimationGame(players, self.game_mode)
-        game_id = f"gen{self.generation}_game{game_num}"
+        for attempt in range(max_retries):
+            try:
+                # Create players with bots from models
+                players = []
+                for i, model in enumerate(population):
+                    player = Player(i, f"{model.get_id()}_{i}")
+                    player.strategy = model.create_bot(player.name)
+                    players.append(player)
+                
+                # Run game 
+                game = EstimationGame(players, self.game_mode)
+                game_id = f"gen{self.generation}_game{game_num}_attempt{attempt}"
+                
+                # Simple timeout using threading (cross-platform)
+                import threading
+                import time
+                
+                result_container = {'result': None, 'error': None}
+                
+                def run_game():
+                    try:
+                        final_scores = game.play_game()
+                        winner_id, _ = game.get_winner()
+                        result_container['result'] = (final_scores, winner_id)
+                    except Exception as e:
+                        result_container['error'] = e
+                
+                # Start game in separate thread
+                game_thread = threading.Thread(target=run_game, daemon=True)
+                game_thread.start()
+                game_thread.join(timeout=300)  # 5 minute timeout
+                
+                if game_thread.is_alive():
+                    self.logger.warning(f"Game {game_id} timed out")
+                    last_error = "Timeout"
+                    continue
+                
+                if result_container['error']:
+                    raise result_container['error']
+                
+                if result_container['result']:
+                    final_scores, winner_id = result_container['result']
+                    # Create detailed result
+                    result = self._create_game_result(game, game_id, population, final_scores, winner_id)
+                    return result
+                else:
+                    last_error = "No result returned"
+                    continue
+                    
+            except Exception as e:
+                self.logger.error(f"Error in game {game_id}: {e}")
+                last_error = str(e)
+                continue
         
-        try:
-            final_scores = game.play_game()
-            winner_id, _ = game.get_winner()
-            
-            # Calculate metrics
-            result = self._create_game_result(game, game_id, population)
-            
-            return result
-            
-        except Exception as e:
-            self.logger.error(f"Error in game {game_id}: {e}")
-            raise
+        # If all retries failed, return a dummy result
+        self.logger.error(f"All attempts failed for game {game_num}, last error: {last_error}")
+        return None
     
     def _create_game_result(self, game: EstimationGame, game_id: str, 
-                           population: List[ModelInterface]) -> GameResult:
-        """Extract comprehensive game data for training."""
-        # Basic info
-        winner_id, winning_score = game.get_winner()
-        final_scores = {i: p.score for i, p in enumerate(game.players)}
+                               population: List[ModelInterface], final_scores: Dict[int, int],
+                               winner_id: int) -> GameResult:
+        """Create comprehensive game result with enhanced metrics."""
         
-        # Calculate score deltas (final - expected)
-        expected_score = sum(final_scores.values()) / len(final_scores)
-        score_deltas = {i: score - expected_score for i, score in final_scores.items()}
+        # Calculate performance metrics
+        total_score = sum(final_scores.values())
+        avg_score = total_score / len(final_scores)
         
-        # Win margins
-        win_margins = {i: final_scores[winner_id] - score 
-                      for i, score in final_scores.items()}
+        score_deltas = {i: score - avg_score for i, score in final_scores.items()}
+        win_margins = {i: final_scores[winner_id] - score for i, score in final_scores.items()}
         
-        # Estimation accuracy per player
+        # Enhanced estimation accuracy calculation
         estimation_accuracy = {}
         successful_calls = defaultdict(int)
         
-        for round_data in game.game_data['rounds']:
+        for round_data in game.game_data.get('rounds', []):
             for player_id in range(4):
-                estimated = round_data['estimations'].get(player_id, 0)
-                actual = round_data['actual_tricks'].get(player_id, 0)
+                estimated = round_data.get('estimations', {}).get(player_id, 0)
+                actual = round_data.get('actual_tricks', {}).get(player_id, 0)
                 
                 if player_id not in estimation_accuracy:
                     estimation_accuracy[player_id] = []
                 
-                accuracy = 1.0 - abs(estimated - actual) / max(estimated, 1)
+                # More sophisticated accuracy calculation
+                if estimated == 0:  # Dash estimation
+                    accuracy = 1.0 if actual == 0 else 0.0
+                else:
+                    max_possible = max(estimated, actual, 1)
+                    accuracy = 1.0 - (abs(estimated - actual) / max_possible)
+                
                 estimation_accuracy[player_id].append(accuracy)
                 
                 # Track successful special calls
                 if actual == estimated:
                     if player_id == round_data.get('declarer_id'):
-                        successful_calls[player_id] += 2  # CALL bonus
+                        successful_calls[player_id] += 3  # CALL success
                     elif player_id in round_data.get('with_players', []):
-                        successful_calls[player_id] += 2  # WITH bonus
+                        successful_calls[player_id] += 2  # WITH success
                     elif player_id in round_data.get('dash_players', []):
-                        successful_calls[player_id] += 3  # DASH bonus
+                        successful_calls[player_id] += 4  # DASH success
+                    else:
+                        successful_calls[player_id] += 1  # Normal success
         
-        # Average accuracy
+        # Average accuracy per player
         for player_id in estimation_accuracy:
-            estimation_accuracy[player_id] = np.mean(estimation_accuracy[player_id])
+            if estimation_accuracy[player_id]:
+                estimation_accuracy[player_id] = np.mean(estimation_accuracy[player_id])
+            else:
+                estimation_accuracy[player_id] = 0.0
         
         return GameResult(
             game_id=game_id,
@@ -351,31 +418,35 @@ class SelfPlayTrainer:
             winner_id=winner_id,
             final_scores=final_scores,
             game_mode=game.game_mode,
-            rounds=game.game_data['rounds'],
+            rounds=game.game_data.get('rounds', []),
             score_deltas=score_deltas,
             win_margins=win_margins,
             estimation_accuracy=dict(estimation_accuracy),
             successful_calls=dict(successful_calls)
         )
+
     
     def _analyze_generation(self, game_results: List[GameResult], 
-                           population: List[ModelInterface]) -> Dict[str, ModelStats]:
+                       population: List[ModelInterface]) -> Dict[str, ModelStats]:
         """Analyze game results and update model statistics."""
         stats = {}
         
         # Initialize stats for each model
         for i, model in enumerate(population):
-            # Use base ID without suffix
             base_id = model.get_id()
             if base_id not in self.model_stats:
                 self.model_stats[base_id] = ModelStats(base_id)
             stats[base_id] = self.model_stats[base_id]
         
-        # Update stats from games
-        for result in game_results:
+        # Update stats from games (filter out None results)
+        valid_results = [result for result in game_results if result is not None]
+        
+        for result in valid_results:
             for i, model_id in enumerate(result.players):
                 if model_id in stats:
                     stats[model_id].update(result, i)
+        
+        self.logger.info(f"Processed {len(valid_results)}/{len(game_results)} valid game results")
         
         return stats
     
@@ -442,9 +513,12 @@ class SelfPlayTrainer:
     
     def _save_final_results(self):
         """Save complete training results."""
+        # Filter out None results before saving
+        valid_results = [r for r in self.all_game_results if r is not None]
+        
         # Save all game data
         with open(self.data_dir / "all_games.json", 'w') as f:
-            all_games = [r.to_dict() for r in self.all_game_results]
+            all_games = [r.to_dict() for r in valid_results]
             json.dump(all_games, f, indent=2)
         
         # Save final statistics
@@ -452,4 +526,4 @@ class SelfPlayTrainer:
             final_stats = {k: v.__dict__ for k, v in self.model_stats.items()}
             json.dump(final_stats, f, indent=2)
         
-        self.logger.info(f"Final results saved to {self.data_dir}")
+        self.logger.info(f"Final results saved to {self.data_dir} ({len(valid_results)} valid games)")

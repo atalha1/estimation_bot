@@ -2358,3 +2358,45 @@ Generation Summary:
 2025-07-31 21:07:37,162 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
 2025-07-31 21:07:37,163 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
 2025-07-31 21:07:37,163 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 03:32:02,422 - SelfPlayTrainer - INFO - Final results saved to training_data
+2025-08-01 03:49:08,905 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:49:50,319 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:50:31,880 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:51:12,440 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:51:53,425 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:52:35,490 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:53:17,965 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:54:00,620 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:54:42,925 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:55:26,834 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:56:09,292 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:56:50,584 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:57:32,710 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:58:15,473 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:59:03,927 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 03:59:45,168 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:00:26,203 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:01:06,531 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:01:47,884 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:02:30,230 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:10:11,192 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:10:59,209 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:12:05,006 - SelfPlayTrainer - INFO - Processed 0/25 valid game results
+2025-08-01 04:12:05,008 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 04:15:16,712 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 04:15:16,713 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 04:15:16,713 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 04:15:16,713 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 04:15:16,714 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 04:15:16,715 - SelfPlayTrainer - INFO - Processed 20/20 valid game results
+2025-08-01 04:15:16,738 - SelfPlayTrainer - INFO - Final results saved to training_data (20 valid games)
+2025-08-01 04:15:30,482 - SelfPlayTrainer - INFO - Processed 25/25 valid game results
+2025-08-01 04:15:30,501 - SelfPlayTrainer - INFO - Final results saved to training_data (25 valid games)
+2025-08-01 04:18:02,687 - SelfPlayTrainer - INFO - Processed 100/100 valid game results
+2025-08-01 04:18:27,327 - SelfPlayTrainer - INFO - Processed 100/100 valid game results
+2025-08-01 04:18:27,497 - SelfPlayTrainer - INFO - Final results saved to training_data (200 valid games)
+2025-08-01 04:20:17,530 - SelfPlayTrainer - INFO - Processed 200/200 valid game results
+2025-08-01 04:20:59,926 - SelfPlayTrainer - INFO - Processed 200/200 valid game results
+2025-08-01 04:21:43,173 - SelfPlayTrainer - INFO - Processed 200/200 valid game results
+2025-08-01 04:22:27,234 - SelfPlayTrainer - INFO - Processed 200/200 valid game results
+2025-08-01 04:22:28,051 - SelfPlayTrainer - INFO - Final results saved to training_data (800 valid games)

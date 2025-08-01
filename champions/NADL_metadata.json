@@ -1,12 +1,23 @@
 {
   "stats": {
-    "total_games": 0,
-    "wins": 0,
-    "training_sessions": 1,
-    "best_win_rate": 0.0,
+    "total_games": 75,
+    "wins": 29,
+    "training_sessions": 11,
+    "best_win_rate": 0.4,
     "created": "2025-07-31T21:06:48.684216",
-    "last_updated": null
+    "last_updated": "2025-08-01T04:15:30.483116"
   },
-  "history": [],
-  "generation_count": 1
+  "history": [
+    {
+      "version": "v1.0",
+      "archived_at": "2025-08-01T03:21:48.503977",
+      "win_rate": 0.0
+    },
+    {
+      "version": "v2.0",
+      "archived_at": "2025-08-01T04:15:30.483087",
+      "win_rate": 0.38
+    }
+  ],
+  "generation_count": 3
 }
