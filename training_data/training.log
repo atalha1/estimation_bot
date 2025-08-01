@@ -2843,3 +2843,25 @@ Generation Summary:
 2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
 2025-08-01 08:38:20,709 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
 2025-08-01 08:38:20,711 - SelfPlayTrainer - INFO - Processed 18/19 valid game results
+2025-08-01 15:37:49,081 - SelfPlayTrainer - INFO - Processed 100/100 valid game results
+2025-08-01 15:38:11,442 - SelfPlayTrainer - INFO - Processed 100/100 valid game results
+2025-08-01 15:38:11,592 - SelfPlayTrainer - INFO - Final results saved to training_data (200 valid games)
+2025-08-01 15:40:13,407 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 15:41:25,449 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 15:42:38,192 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 15:43:52,021 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 15:43:52,845 - SelfPlayTrainer - INFO - Final results saved to training_data (1200 valid games)
+2025-08-01 16:00:53,585 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 16:02:03,887 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 16:03:14,888 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 16:04:33,288 - SelfPlayTrainer - INFO - Processed 300/300 valid game results
+2025-08-01 16:04:34,153 - SelfPlayTrainer - INFO - Final results saved to training_data (1200 valid games)
+2025-08-01 16:05:58,564 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:06:31,567 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:07:04,043 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:07:35,950 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:08:06,309 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:08:40,721 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:09:13,332 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:09:49,943 - SelfPlayTrainer - INFO - Processed 150/150 valid game results
+2025-08-01 16:09:51,005 - SelfPlayTrainer - INFO - Final results saved to training_data (1200 valid games)
