@@ -17,68 +17,66 @@ class HeuristicBot(BotInterface):
 
     def make_bid(self, hand: List[Card], bid_history: List, 
              is_speed_round: bool = False, can_dash: bool = True) -> Optional[Union[Tuple[int, Optional[Suit]], str]]:
-        """Strategic bidding based on hand analysis with proper trump hierarchy."""
-        if is_speed_round:
-            return None  # No bidding in speed rounds
-        
-        # Analyze hand strength for different trump suits
-        suit_analysis = self._analyze_hand_by_suit(hand)
-        
-        # Determine current minimum requirements
-        min_bid = 4
-        min_trump_rank = 0
-        
-        if bid_history:
-            highest = max(bid_history, key=lambda x: x[1])
-            min_bid = highest[1]
-            current_trump = highest[2]
-            
-            # Trump hierarchy: Clubs=1, Diamonds=2, Hearts=3, Spades=4, NoTrump=5
-            suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
-            min_trump_rank = suit_ranks.get(current_trump, 0)
-        
-        # Find best trump option that meets requirements
-        best_trump = None
-        best_strength = 0
-        best_bid = 0
-        
-        trump_options = [Suit.CLUBS, Suit.DIAMONDS, Suit.HEARTS, Suit.SPADES, None]
-        suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
-        
-        for trump_suit in trump_options:
-            trump_rank = suit_ranks[trump_suit]
-            
-            strength = self._calculate_hand_strength(hand, trump_suit)
-            estimated_tricks = self._estimate_tricks(hand, trump_suit)
-            
-            # Must be able to outbid current high
-            required_bid = min_bid
-            if estimated_tricks == min_bid and trump_rank < min_trump_rank:
-                continue  # Can't match with weaker trump
-            
-            if estimated_tricks < required_bid:
-                continue  # Can't make minimum bid
-            
-            if estimated_tricks >= 4 and strength > best_strength:
-                best_strength = strength
-                best_trump = trump_suit
-                best_bid = min(estimated_tricks, 13)
-        
-        # Decide whether to bid
-        if best_strength < 0.4:  # Weak hand
-            return None  # Pass
-        
-        # Ensure we can legally outbid
-        if best_bid < min_bid:
-            return None
-        
-        if best_bid == min_bid:
-            # Must have stronger trump
-            best_trump_rank = suit_ranks[best_trump]
-            if best_trump_rank < min_trump_rank:
+            """Strategic bidding with proper bid validation."""
+            if is_speed_round:
                 return None
-        
-        return (best_bid, best_trump)
+            
+            # Get current highest bid info
+            min_bid = 4
+            min_trump_rank = 0
+            
+            if bid_history:
+                suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+                highest_value = 0
+                highest_trump_rank = 0
+                
+                for _, amount, trump_suit in bid_history:
+                    trump_rank = suit_ranks.get(trump_suit, 0)
+                    if amount > highest_value or (amount == highest_value and trump_rank > highest_trump_rank):
+                        highest_value = amount
+                        highest_trump_rank = trump_rank
+                
+                min_bid = highest_value
+                min_trump_rank = highest_trump_rank
+            
+            # Analyze hand
+            best_bid = 0
+            best_trump = None
+            best_strength = 0
+            
+            suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+            
+            for trump_suit in [Suit.CLUBS, Suit.DIAMONDS, Suit.HEARTS, Suit.SPADES, None]:
+                trump_rank = suit_ranks[trump_suit]
+                strength = self._calculate_hand_strength(hand, trump_suit)
+                estimated_tricks = self._estimate_tricks(hand, trump_suit)
+                
+                # Must be able to make a legal bid
+                required_bid = min_bid
+                if estimated_tricks == min_bid and trump_rank <= min_trump_rank:
+                    required_bid = min_bid + 1  # Must bid higher
+                
+                if estimated_tricks < required_bid:
+                    continue
+                
+                if strength > best_strength and estimated_tricks >= 4:
+                    best_strength = strength
+                    best_trump = trump_suit
+                    best_bid = min(estimated_tricks, 12)
+            
+            # Only bid if we have reasonable strength and can make legal bid
+            if best_strength < 0.4 or best_bid < min_bid:
+                return None
+            
+            # If same amount as current high, must have stronger trump
+            if best_bid == min_bid:
+                best_trump_rank = suit_ranks[best_trump]
+                if best_trump_rank <= min_trump_rank:
+                    best_bid = min_bid + 1  # Bid higher instead
+                    if best_bid > 12:
+                        return None  # Can't bid higher
+            
+            return (best_bid, best_trump)
 
     def make_estimation(self, hand: List[Card], trump_suit: Optional[Suit],
                        declarer_bid: int, other_estimations: List[Optional[int]],
@@ -228,6 +226,11 @@ class HeuristicBot(BotInterface):
                     estimated += 0.2
         
         return int(round(estimated))
+        
+    def get_action(self, observation, info=None):
+        """Training compatibility method."""
+        # This is called by training - just return a simple action
+        return 0  # Default action for training compatibility
 
     def __str__(self):
         return self.name

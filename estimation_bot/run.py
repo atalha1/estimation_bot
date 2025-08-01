@@ -51,7 +51,9 @@ def run_bot_game(bot_types: List[str], game_mode: str = "FULL") -> dict:
         
         return {
             'winner': players[winner_id].name,
+            'winner_id': winner_id,  # Add this for training
             'scores': {p.name: p.score for p in players},
+            'score_dict': final_scores,  # Add this for training
             'rounds_played': game.current_round
         }
     

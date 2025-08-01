@@ -529,15 +529,10 @@ class EstimationGame:
         print()
     
     def play_game(self) -> Dict[int, int]:
-        """
-        Play a complete game.
-        
-        Returns:
-            Final scores dictionary
-        """
+        """Play a complete game."""
         self.logger.log_game_start(self.game_mode, [p.name for p in self.players])
         
-        for _ in range(self.total_rounds):
+        while self.current_round < self.total_rounds:
             self.play_round()
         
         self.game_complete = True
@@ -607,14 +602,14 @@ class EstimationGame:
         return {i: player.score for i, player in enumerate(self.players)}
     
     def get_winner(self) -> Tuple[int, int]:
-        """
-        Get game winner.
-        
-        Returns:
-            Tuple of (player_id, score)
-        """
+        """Get game winner - training compatible."""
         if not self.game_complete:
-            raise ValueError("Game not yet complete")
+            # Return current leader for incomplete games
+            scores = self.get_final_scores()
+            if not scores:
+                return 0, 0
+            winner_id = max(scores.keys(), key=lambda x: scores[x])
+            return winner_id, scores[winner_id]
         
         scores = self.get_final_scores()
         winner_id = max(scores.keys(), key=lambda x: scores[x])
@@ -645,3 +640,13 @@ class EstimationGame:
         for player in self.players:
             player.score = 0
             player.reset_round()
+
+
+    def get_training_result(self) -> Tuple[int, Dict[int, int]]:
+        """Get training-compatible result tuple."""
+        if not self.game_complete:
+            raise ValueError("Game not complete")
+        
+        winner_id, winning_score = self.get_winner()
+        final_scores = self.get_final_scores()
+        return winner_id, final_scores

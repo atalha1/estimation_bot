@@ -2868,3 +2868,14 @@ Generation Summary:
 2025-08-01 18:31:23,557 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
 2025-08-01 18:31:28,000 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
 2025-08-01 18:31:28,003 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 22:36:02,314 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 22:36:07,222 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 22:36:07,224 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 22:46:44,047 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 22:46:48,565 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 22:46:48,567 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 22:57:44,333 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 22:57:48,740 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 22:57:48,742 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 22:58:08,673 - SelfPlayTrainer - INFO - Processed 0/25 valid game results
+2025-08-01 22:58:08,676 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)

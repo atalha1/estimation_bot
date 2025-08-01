@@ -185,10 +185,25 @@ class HumanPlayer(Player):
         
         # Determine current minimum bid
         if bid_history:
-            current_high = max(bid_history, key=lambda x: x[1])
-            min_bid = current_high[1]
-            current_trump = current_high[2]
-            print(f"Current high bid: {min_bid} {current_trump.name if current_trump else 'No Trump'}")
+            # Find actual highest bid by comparing all bids
+            highest_bid_entry = None
+            highest_value = 0
+            suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+            
+            for player_id, amount, trump_suit in bid_history:
+                trump_rank = suit_ranks.get(trump_suit, 0)
+                if amount > highest_value or (amount == highest_value and trump_rank > suit_ranks.get(highest_bid_entry[2] if highest_bid_entry else None, 0)):
+                    highest_value = amount
+                    highest_bid_entry = (player_id, amount, trump_suit)
+            
+            if highest_bid_entry:
+                min_bid = highest_bid_entry[1]
+                current_trump = highest_bid_entry[2]
+                print(f"Current high bid: {min_bid} {current_trump.name if current_trump else 'No Trump'}")
+            else:
+                min_bid = 4
+                current_trump = None
+                print("No bids yet. Minimum bid: 4")
         else:
             min_bid = 4
             current_trump = None
@@ -224,10 +239,14 @@ class HumanPlayer(Player):
                     print("5. No Trump (strongest)")
                     
                     # Show which suits are valid for current bid amount
+                    # Validate trump hierarchy
                     if amount == min_bid and current_trump is not None:
                         suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
-                        min_rank = suit_ranks[current_trump]
-                        print(f"Must choose trump rank {min_rank} or higher")
+                        current_rank = suit_ranks.get(current_trump, 0)
+                        new_rank = suit_ranks.get(trump_suit, 0)
+                        if new_rank < current_rank:
+                            print(f"Trump suit must be equal or stronger than current ({current_trump.name if current_trump else 'No Trump'})")
+                            continue
                     
                     while True:
                         try:

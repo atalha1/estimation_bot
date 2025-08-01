@@ -11,8 +11,8 @@
     "avg_score_per_game": 0.0,
     "estimation_accuracy": 0.0
   },
-  "heuristic_293a347f": {
-    "model_id": "heuristic_293a347f",
+  "heuristic_eda2f0ce": {
+    "model_id": "heuristic_eda2f0ce",
     "games_played": 0,
     "wins": 0,
     "total_score": 0,
@@ -37,18 +37,6 @@
   },
   "NADL_v2.0": {
     "model_id": "NADL_v2.0",
-    "games_played": 0,
-    "wins": 0,
-    "total_score": 0,
-    "estimation_accuracy_sum": 0.0,
-    "estimation_count": 0,
-    "successful_calls": 0,
-    "win_rate": 0.0,
-    "avg_score_per_game": 0.0,
-    "estimation_accuracy": 0.0
-  },
-  "heuristic_fcc643e0": {
-    "model_id": "heuristic_fcc643e0",
     "games_played": 0,
     "wins": 0,
     "total_score": 0,

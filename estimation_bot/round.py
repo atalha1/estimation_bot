@@ -167,34 +167,25 @@ class Round:
             
         print(f"\n=== PHASE 3: TRUMP BIDDING - Round {self.round_number} ===")
         
-        # Eligible bidders (non-dash players)
         eligible_bidders = [i for i in range(4) if i not in self.dash_players]
         
         if len(eligible_bidders) == 0:
             print("All players declared Dash! Round becomes Sa'aydeh (doubled)")
             return "SA_AYDEH"
         
-        # Set random starting bidder for first round (simplified: use player 0)
         self.current_bidder = eligible_bidders[0]
+        max_passes_in_row = 0
+        total_passes = 0
         
-        bidding_complete = False
-        consecutive_passes = 0
-        
-        while not bidding_complete:
+        while total_passes < len(eligible_bidders) - 1 and max_passes_in_row < len(eligible_bidders):
             current_player = self.players[self.current_bidder]
             
             if self.current_bidder in self.passes:
-                # Skip passed players
                 self.current_bidder = self._get_next_bidder(eligible_bidders)
-                consecutive_passes += 1
-                if consecutive_passes >= len(eligible_bidders) - 1:
-                    bidding_complete = True
+                max_passes_in_row += 1
                 continue
             
-            # Get bid from player
-            print(f"\n{current_player.name}'s turn to bid")
-            print(f"Current highest: {self.highest_bid} {self.trump_suit.name if self.trump_suit else 'No bid yet'}")
-            
+            # Get bid
             if isinstance(current_player, HumanPlayer):
                 bid_result = current_player.make_bid_interactive(self._get_bidding_context(), False)
             elif hasattr(current_player, 'strategy'):
@@ -205,28 +196,23 @@ class Round:
                 bid_result = None
             
             if bid_result is None:
-                # Pass
                 self.passes.add(self.current_bidder)
                 print(f"{current_player.name} passes")
-                consecutive_passes += 1
+                total_passes += 1
+                max_passes_in_row += 1
             else:
-                # New bid
                 bid_amount, trump_suit = bid_result
                 if self._is_valid_bid(bid_amount, trump_suit):
                     self._record_bid(self.current_bidder, bid_amount, trump_suit)
-                    consecutive_passes = 0
+                    max_passes_in_row = 0  # Reset consecutive passes
                 else:
-                    print("Invalid bid, must pass")
+                    print(f"{current_player.name} invalid bid, must pass")
                     self.passes.add(self.current_bidder)
-                    consecutive_passes += 1
+                    total_passes += 1
+                    max_passes_in_row += 1
             
-            # Check if bidding should end
-            if len(self.passes) >= len(eligible_bidders) - 1:
-                bidding_complete = True
-            else:
-                self.current_bidder = self._get_next_bidder(eligible_bidders)
+            self.current_bidder = self._get_next_bidder(eligible_bidders)
         
-        # Determine declarer and WITH players
         self._determine_declarer_and_with()
         
         if self.declarer_id is None:
@@ -298,13 +284,16 @@ class Round:
         
         # Declarer leads first Trick (or highest estimator in speed rounds)
         if self.is_speed_round:
-            highest_est = max(self.estimations.values())
-            for pid, est in self.estimations.items():
-                if est == highest_est:
-                    self.leader_id = pid
-                    break
+            if self.estimations:
+                highest_est = max(self.estimations.values())
+                for pid, est in self.estimations.items():
+                    if est == highest_est:
+                        self.leader_id = pid
+                        break
+            else:
+                self.leader_id = 0  # Default to player 0
         else:
-            self.leader_id = self.declarer_id
+            self.leader_id = self.declarer_id if self.declarer_id is not None else 0
         
         # Play all 13 Tricks
         for Trick_num in range(1, 14):
@@ -380,11 +369,19 @@ class Round:
         return True
     
     def _record_bid(self, player_id: int, amount: int, trump_suit: Optional[Suit]):
-        """Record a valid bid."""
+        """Record a valid bid and update highest."""
         self.bid_history.append((player_id, amount, trump_suit))
-        self.highest_bid = amount
-        self.highest_bidder = player_id
-        self.trump_suit = trump_suit
+        
+        # Update highest bid tracking
+        suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+        current_rank = suit_ranks.get(self.trump_suit, 0)
+        new_rank = suit_ranks.get(trump_suit, 0)
+        
+        if amount > self.highest_bid or (amount == self.highest_bid and new_rank > current_rank):
+            self.highest_bid = amount
+            self.highest_bidder = player_id
+            self.trump_suit = trump_suit
+        
         player_name = self.players[player_id].name
         trump_name = trump_suit.name if trump_suit else "No Trump"
         print(f"{player_name} bids {amount} {trump_name}")
@@ -413,7 +410,16 @@ class Round:
     
     def _get_estimation_order(self) -> List[int]:
         """Get order for estimation phase."""
-        # Order: 2nd highest, 3rd highest, 4th highest bidder, then counterclockwise from declarer
+        if self.is_speed_round or self.declarer_id is None:
+            # Speed rounds or no declarer: go counterclockwise from player 0
+            order = []
+            pos = 3  # Start counterclockwise from 0
+            for _ in range(4):
+                order.append(pos)
+                pos = (pos - 1) % 4
+            return order
+        
+        # Normal rounds: order by bid history then counterclockwise from declarer
         bidders_by_amount = {}
         for player_id, amount, trump_suit in self.bid_history:
             if amount not in bidders_by_amount:
@@ -423,15 +429,12 @@ class Round:
         order = []
         sorted_amounts = sorted(bidders_by_amount.keys(), reverse=True)
         
-        # Add bidders in order of bid amount
         for amount in sorted_amounts[1:]:  # Skip highest (declarer)
             order.extend(bidders_by_amount[amount])
         
-        # Add remaining non-dash players counterclockwise from declarer
         remaining = [i for i in range(4) 
                     if i not in order and i != self.declarer_id and i not in self.dash_players]
         
-        # Sort counterclockwise from declarer
         declarer_pos = self.declarer_id
         remaining_sorted = []
         pos = (declarer_pos - 1) % 4
