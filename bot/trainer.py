@@ -37,9 +37,83 @@ class SelfPlayTrainer:
         player = Player(player_id, f"{bot_type.title()}_{player_id}")
         player.strategy = bot_classes[bot_type](f"{bot_type.title()}_{player_id}")
         return player
+
+    def _extract_action_outcomes(self, game: EstimationGame, players: List[Player]) -> Dict[int, List[Dict]]:
+        """Extract action-outcome pairs for reward calculation."""
+        action_outcomes = {i: [] for i in range(4)}
+        
+        # Extract outcomes from the completed game
+        for player_id in range(4):
+            # Get player's team (0 or 1)
+            team = 0 if player_id < 2 else 1
+            
+            # Determine if player won
+            won_game = game.teams[team].score > game.teams[1 - team].score
+            
+            # Get all actions taken by this player
+            player_actions = []
+            for round_num in range(game.current_round):
+                round_data = game.rounds[round_num]
+                if player_id in round_data.estimations:
+                    player_actions.append({
+                        'action_type': 'estimation',
+                        'action': round_data.estimations[player_id],
+                        'round': round_num,
+                        'final_outcome': 1.0 if won_game else 0.0
+                    })
+                # Add other action types if needed
+            
+            action_outcomes[player_id] = player_actions
+        
+        return action_outcomes
+        
+    def _calculate_estimation_reward(self, outcome: Dict, final_score: int) -> float:
+        """Calculate reward for a specific action outcome."""
+        reward = 0.0
+        action_type = outcome.get('action_type')
+        
+        if action_type == 'estimation':
+            estimated = outcome.get('action', 0)
+            actual = outcome.get('actual_tricks', 0)
+            
+            if estimated == actual:
+                # Base reward for accurate estimation
+                reward += 3.0
+                
+                # Bonus rewards
+                if outcome.get('was_dash', False):
+                    reward += 2.0  # DASH success bonus
+                elif outcome.get('was_declarer', False):
+                    reward += 1.5  # Declarer success bonus
+                elif outcome.get('was_with', False):
+                    reward += 1.0  # WITH success bonus
+                    
+                # Difficulty bonus
+                if estimated == 0 or estimated >= 8:
+                    reward += 1.0  # Difficult estimation bonus
+            else:
+                # Penalty for inaccurate estimation
+                penalty = abs(estimated - actual)
+                reward -= penalty * 0.8
+                
+                # Extra penalty for special calls
+                if outcome.get('was_declarer', False):
+                    reward -= 1.0  # Declarer failure penalty
+        
+        elif action_type == 'bid':
+            if outcome.get('made_bid', False):
+                reward += 2.0  # Successful bid
+            else:
+                reward -= 3.0  # Failed bid penalty
+        
+        # Small contribution from round score
+        round_score = outcome.get('round_score', 0)
+        reward += round_score / 20.0  # Normalize round score impact
+        
+        return reward
     
     def run_single_game(self, bot_types: List[str], game_mode: str = "FULL", 
-                       verbose: bool = False) -> Dict[str, Any]:
+                   verbose: bool = False) -> Dict[str, Any]:
         """Run a single game between bots."""
         players = [self.create_bot(bot_type, i) for i, bot_type in enumerate(bot_types)]
         game = EstimationGame(players, game_mode)
@@ -50,6 +124,9 @@ class SelfPlayTrainer:
             final_scores = game.play_game()
             winner_id, winning_score = game.get_winner()
             
+            # Extract action outcomes AFTER the game completes
+            action_outcomes = self._extract_action_outcomes(game, players)
+            
             game_duration = time.time() - start_time
             
             result = {
@@ -59,9 +136,10 @@ class SelfPlayTrainer:
                 'winner_id': winner_id,
                 'winner_type': bot_types[winner_id],
                 'final_scores': {f"{bot_types[i]}_{i}": score 
-                               for i, score in final_scores.items()},
+                            for i, score in final_scores.items()},
                 'rounds_played': game.current_round,
                 'duration_seconds': game_duration,
+                'action_outcomes': action_outcomes,  # Add this
                 'success': True
             }
             

@@ -18,6 +18,7 @@ from collections import defaultdict
 import logging
 from abc import ABC, abstractmethod
 import signal
+import time
 
 from estimation_bot.game import EstimationGame
 from estimation_bot.player import Player, BotInterface
@@ -76,7 +77,7 @@ class ModelStats:
         self.estimation_accuracy = 0.0
     
     def update(self, game_result: GameResult, player_id: int):
-        """Update statistics with proper averaging."""
+        """Update statistics with proper averaging and rewards."""
         self.games_played += 1
         
         if game_result.winner_id == player_id:
@@ -91,10 +92,17 @@ class ModelStats:
         # Handle estimation accuracy properly
         if player_id in game_result.estimation_accuracy:
             accuracy = game_result.estimation_accuracy[player_id]
-            if not np.isnan(accuracy):  # Guard against NaN values
+            if not np.isnan(accuracy):
                 self.estimation_accuracy_sum += accuracy
                 self.estimation_count += 1
                 self.estimation_accuracy = self.estimation_accuracy_sum / self.estimation_count
+        
+        # NEW: Track rewards if available
+        if hasattr(game_result, 'player_rewards') and player_id in game_result.player_rewards:
+            if not hasattr(self, 'total_reward'):
+                self.total_reward = 0.0
+            self.total_reward += game_result.player_rewards[player_id]
+            self.avg_reward_per_game = self.total_reward / self.games_played
         
         # Update successful calls
         if player_id in game_result.successful_calls:
@@ -344,6 +352,8 @@ class SelfPlayTrainer:
                 
                 if result_container['result']:
                     final_scores, winner_id = result_container['result']
+                    # NEW: Collect detailed action-outcome pairs for rewards
+                    detailed_outcomes = self._extract_action_outcomes(game, players)
                     # Create detailed result
                     result = self._create_game_result(game, game_id, population, final_scores, winner_id)
                     return result
@@ -359,10 +369,138 @@ class SelfPlayTrainer:
         # If all retries failed, return a dummy result
         self.logger.error(f"All attempts failed for game {game_num}, last error: {last_error}")
         return None
+
+
+    def _extract_action_outcomes(self, game: EstimationGame, players: List[Player]) -> Dict[int, List[Dict]]:
+        """Extract action-outcome pairs for reward calculation."""
+        action_outcomes = {i: [] for i in range(4)}
+        
+        # Analyze each round for estimation accuracy
+        for round_data in game.game_data.get('rounds', []):
+            for player_id in range(4):
+                estimated = round_data.get('estimations', {}).get(player_id, 0)
+                actual = round_data.get('actual_tricks', {}).get(player_id, 0)
+                round_score = round_data.get('scores', {}).get(player_id, 0)
+                
+                # Estimation outcome
+                estimation_outcome = {
+                    'action_type': 'estimation',
+                    'action': estimated,
+                    'actual_tricks': actual,
+                    'round_score': round_score,
+                    'made_estimation': estimated == actual,
+                    'was_declarer': player_id == round_data.get('declarer_id'),
+                    'was_with': player_id in round_data.get('with_players', []),
+                    'was_dash': player_id in round_data.get('dash_players', [])
+                }
+                action_outcomes[player_id].append(estimation_outcome)
+                
+                # If there was bidding data, add bid outcomes
+                if not round_data.get('is_speed_round', False) and player_id == round_data.get('declarer_id'):
+                    bid_outcome = {
+                        'action_type': 'bid',
+                        'won_bid': True,
+                        'made_bid': estimated == actual,
+                        'round_score': round_score
+                    }
+                    action_outcomes[player_id].append(bid_outcome)
+        
+        return action_outcomes
+        
+    def _calculate_estimation_reward(self, outcome: Dict, final_score: int) -> float:
+        """Calculate reward for a specific action outcome."""
+        reward = 0.0
+        action_type = outcome.get('action_type')
+        
+        if action_type == 'estimation':
+            estimated = outcome.get('action', 0)
+            actual = outcome.get('actual_tricks', 0)
+            
+            if estimated == actual:
+                # Base reward for accurate estimation
+                reward += 3.0
+                
+                # Bonus rewards
+                if outcome.get('was_dash', False):
+                    reward += 2.0  # DASH success bonus
+                elif outcome.get('was_declarer', False):
+                    reward += 1.5  # Declarer success bonus
+                elif outcome.get('was_with', False):
+                    reward += 1.0  # WITH success bonus
+                    
+                # Difficulty bonus
+                if estimated == 0 or estimated >= 8:
+                    reward += 1.0  # Difficult estimation bonus
+            else:
+                # Penalty for inaccurate estimation
+                penalty = abs(estimated - actual)
+                reward -= penalty * 0.8
+                
+                # Extra penalty for special calls
+                if outcome.get('was_declarer', False):
+                    reward -= 1.0  # Declarer failure penalty
+        
+        elif action_type == 'bid':
+            if outcome.get('made_bid', False):
+                reward += 2.0  # Successful bid
+            else:
+                reward -= 3.0  # Failed bid penalty
+        
+        # Small contribution from round score
+        round_score = outcome.get('round_score', 0)
+        reward += round_score / 20.0  # Normalize round score impact
+        
+        return reward
+    
+    def run_single_game(self, bot_types: List[str], game_mode: str = "FULL", 
+                   verbose: bool = False) -> Dict[str, Any]:
+        """Run a single game between bots."""
+        players = [self.create_bot(bot_type, i) for i, bot_type in enumerate(bot_types)]
+        game = EstimationGame(players, game_mode)
+        
+        start_time = time.time()
+        
+        try:
+            final_scores = game.play_game()
+            winner_id, winning_score = game.get_winner()
+            
+            # Extract action outcomes AFTER the game completes
+            action_outcomes = self._extract_action_outcomes(game, players)
+            
+            game_duration = time.time() - start_time
+            
+            result = {
+                'timestamp': datetime.now().isoformat(),
+                'bot_types': bot_types,
+                'game_mode': game_mode,
+                'winner_id': winner_id,
+                'winner_type': bot_types[winner_id],
+                'final_scores': {f"{bot_types[i]}_{i}": score 
+                            for i, score in final_scores.items()},
+                'rounds_played': game.current_round,
+                'duration_seconds': game_duration,
+                'action_outcomes': action_outcomes,  # Add this
+                'success': True
+            }
+            
+            if verbose:
+                self.logger.logger.info(f"Game complete: {bot_types[winner_id]} wins with {winning_score}")
+            
+            return result
+            
+        except Exception as e:
+            self.logger.logger.error(f"Game failed: {e}")
+            return {
+                'timestamp': datetime.now().isoformat(),
+                'bot_types': bot_types,
+                'game_mode': game_mode,
+                'error': str(e),
+                'success': False
+            }
     
     def _create_game_result(self, game: EstimationGame, game_id: str, 
                                population: List[ModelInterface], final_scores: Dict[int, int],
-                               winner_id: int) -> GameResult:
+                               winner_id: int, detailed_outcomes: Dict[int, List[Dict]] = None) -> GameResult:
         """Create comprehensive game result with enhanced metrics."""
         
         # Calculate performance metrics
@@ -410,8 +548,18 @@ class SelfPlayTrainer:
                 estimation_accuracy[player_id] = np.mean(estimation_accuracy[player_id])
             else:
                 estimation_accuracy[player_id] = 0.0
+
+        player_rewards = {}
+        if detailed_outcomes:
+            for player_id, outcomes in detailed_outcomes.items():
+                total_reward = 0.0
+                for outcome in outcomes:
+                    reward = self._calculate_estimation_reward(outcome, final_scores[player_id])
+                    total_reward += reward
+                player_rewards[player_id] = total_reward
         
-        return GameResult(
+        # Create the GameResult
+        result = GameResult(
             game_id=game_id,
             timestamp=datetime.now(),
             players=[model.get_id() for model in population],
@@ -424,6 +572,11 @@ class SelfPlayTrainer:
             estimation_accuracy=dict(estimation_accuracy),
             successful_calls=dict(successful_calls)
         )
+        
+        # Add reward data to result
+        result.player_rewards = player_rewards
+        
+        return result
 
     
     def _analyze_generation(self, game_results: List[GameResult], 

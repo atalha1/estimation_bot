@@ -2400,3 +2400,24 @@ Generation Summary:
 2025-08-01 04:21:43,173 - SelfPlayTrainer - INFO - Processed 200/200 valid game results
 2025-08-01 04:22:27,234 - SelfPlayTrainer - INFO - Processed 200/200 valid game results
 2025-08-01 04:22:28,051 - SelfPlayTrainer - INFO - Final results saved to training_data (800 valid games)
+2025-08-01 04:28:33,435 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 04:29:07,475 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 04:29:41,033 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 04:30:13,080 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 04:30:13,543 - SelfPlayTrainer - INFO - Final results saved to training_data (200 valid games)
+2025-08-01 04:51:34,125 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:53:07,265 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 04:53:07,267 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 05:39:31,812 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 05:40:02,011 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 05:40:02,013 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 06:26:16,955 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 06:26:48,513 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 06:26:48,515 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 06:35:27,636 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 06:35:57,797 - SelfPlayTrainer - INFO - Processed 0/50 valid game results
+2025-08-01 06:35:57,799 - SelfPlayTrainer - INFO - Final results saved to training_data (0 valid games)
+2025-08-01 06:37:16,603 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 06:42:24,700 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 06:42:35,611 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 06:42:35,687 - SelfPlayTrainer - INFO - Final results saved to training_data (100 valid games)

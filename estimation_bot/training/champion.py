@@ -90,37 +90,102 @@ class ChampionManager:
         with open(metadata_path, 'w') as f:
             json.dump(metadata, f, indent=2)
     
-    def update_champion(self, new_champion: ModelInterface, stats: ModelStats):
-        """Update NADL with better performing model."""
+    def _validate_candidate(self, candidate: ModelInterface, num_games: int = 20) -> Dict:
+        """Run direct validation games between champion and candidate."""
+        
+        if not self.current_champion:
+            return {'candidate_wins': num_games, 'champion_wins': 0}
+        
+        from estimation_bot.game import EstimationGame
+        from estimation_bot.player import Player
+        
+        candidate_wins = 0
+        champion_wins = 0
+        
+        print(f"🎯 Running {num_games} validation games...")
+        
+        for game_num in range(num_games):
+            try:
+                # Create players: 2 candidates vs 2 champions
+                players = []
+                for i in range(4):
+                    if i < 2:  # First 2 are candidates
+                        player = Player(i, f"Candidate_{i}")
+                        player.strategy = candidate.create_bot(f"Candidate_{i}")
+                    else:  # Last 2 are current champions
+                        player = Player(i, f"Champion_{i}")
+                        player.strategy = self.current_champion.create_bot(f"Champion_{i}")
+                    players.append(player)
+                
+                game = EstimationGame(players, "MICRO")  # Quick validation games
+                final_scores = game.play_game()
+                winner_id, _ = game.get_winner()
+                
+                if winner_id < 2:  # Candidate won
+                    candidate_wins += 1
+                else:  # Champion won
+                    champion_wins += 1
+                    
+            except Exception as e:
+                print(f"Validation game {game_num} failed: {e}")
+                continue
+        
+        return {'candidate_wins': candidate_wins, 'champion_wins': champion_wins}
+    
+    def update_champion(self, candidate_champion: ModelInterface, stats: ModelStats) -> bool:
+        """Update NADL with better performing model (with validation)."""
+        
+        # Require minimum games for consideration
+        if stats.games_played < 50:
+            print(f"⏳ Candidate needs more games ({stats.games_played}/50)")
+            return False
+        
         old_win_rate = self.champion_stats['best_win_rate']
         new_win_rate = stats.win_rate
         
-        if new_win_rate > old_win_rate:
-            # Archive old champion
-            self._archive_champion()
-            
-            # Update champion
-            self.current_champion = new_champion
-            self.generation_count += 1
-            
-            # Update stats
-            self.champion_stats.update({
-                'total_games': self.champion_stats['total_games'] + stats.games_played,
-                'wins': self.champion_stats['wins'] + stats.wins,
-                'best_win_rate': new_win_rate,
-                'last_updated': datetime.now().isoformat()
-            })
-            
-            # Set new model ID
-            self.current_champion.model_id = f"NADL_v{self.generation_count}.0"
-            
-            print(f"🚀 NADL evolved to v{self.generation_count}.0")
-            print(f"   Win rate improved: {old_win_rate:.2%} → {new_win_rate:.2%}")
-            
-            self.save_champion()
-            return True
+        # Require significant improvement (not just tiny gains)
+        improvement_threshold = 0.05  # Must be 5% better
         
-        return False
+        # Reverted to original comparison using best_win_rate
+        if new_win_rate > old_win_rate + improvement_threshold:
+            print(f"🧪 Validating candidate: {new_win_rate:.1%} vs {old_win_rate:.1%}")
+            
+            # Run validation games between current champion and candidate
+            validation_result = self._validate_candidate(candidate_champion, num_games=50)
+            
+            if validation_result['candidate_wins'] > validation_result['champion_wins']:
+                # Archive old champion
+                self._archive_champion()
+                
+                # Update champion
+                self.current_champion = candidate_champion
+                self.generation_count += 1
+                
+                # Update stats
+                self.champion_stats.update({
+                    'total_games': self.champion_stats['total_games'] + stats.games_played,
+                    'wins': self.champion_stats['wins'] + stats.wins,
+                    'best_win_rate': new_win_rate,
+                    'last_updated': datetime.now().isoformat()
+                })
+                
+                # Set new model ID
+                self.current_champion.model_id = f"NADL_v{self.generation_count}.0"
+                
+                print(f"🚀 NADL evolved to v{self.generation_count}.0")
+                print(f"   Validated: {validation_result['candidate_wins']}-{validation_result['champion_wins']}")
+                print(f"   Win rate: {old_win_rate:.1%} → {new_win_rate:.1%}")
+                
+                self.save_champion()
+                return True
+            else:
+                print(f"❌ Validation failed: {validation_result['candidate_wins']}-{validation_result['champion_wins']}")
+                print("   Keeping current champion")
+                return False
+        else:
+            improvement = (new_win_rate - old_win_rate) * 100
+            print(f"📊 Insufficient improvement: +{improvement:.1f}% (need +{improvement_threshold*100:.1f}%)")
+            return False
     
     def _archive_champion(self):
         """Archive current champion before updating."""
