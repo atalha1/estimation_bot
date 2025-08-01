@@ -99,41 +99,81 @@ class EstimationGame:
         return round_obj
     
     def collect_bids_and_estimations(self, round_obj: Round):
-        """Collect bids and estimations from all players according to proper rules."""
-        if round_obj.is_speed_round:
-            # Speed rounds: No bidding, straight to estimation
-            self._collect_estimations_speed_round(round_obj)
-        else:
-            # Normal rounds: Bidding phase then estimation phase
-            self._collect_bids_normal_round(round_obj)
-            self._collect_estimations_normal_round(round_obj)
+        """Execute all 5 phases of the round according to strict rules."""
         
-        # Log the round type (Over/Under)
-        total_estimations = sum(v for v in round_obj.estimations.values() if v is not None)
+        # Phase 1: Void declarations
+        round_obj.execute_phase_1_void_declarations()
+        
+        # Phase 2: Dash declarations  
+        round_obj.execute_phase_2_dash_declarations()
+        
+        # Phase 3: Trump bidding
+        result = round_obj.execute_phase_3_trump_bidding()
+        if result == "SA_AYDEH":
+            print("All players passed or declared Dash! This round becomes Sa'aydeh (doubled)")
+            self.sa_aydeh_multiplier *= 2
+            return "RESTART_ROUND"
+        
+        # Phase 4: Estimation
+        round_obj.execute_phase_4_estimation()
+        
+        # Display round summary
+        self._display_round_setup_summary(round_obj)
+
+    def _display_round_setup_summary(self, round_obj: Round):
+        """Display comprehensive round setup summary."""
+        total_estimations = sum(round_obj.estimations.values())
         round_type = "Over" if total_estimations > 13 else "Under" if total_estimations < 13 else "Exact"
         
         print(f"\n=== Round {round_obj.round_number} Setup Complete ===")
-        print(f"Trump: {round_obj.trump_suit or 'No Trump'}")
+        print(f"Trump: {round_obj.trump_suit.name if round_obj.trump_suit else 'No Trump'}")
         print(f"Round Type: {round_type} ({total_estimations} total tricks estimated)")
         
-        if not round_obj.is_speed_round:
-            declarer_name = self.players[round_obj.declarer_id].name if round_obj.declarer_id is not None else "None"
+        if not round_obj.is_speed_round and round_obj.declarer_id is not None:
+            declarer_name = self.players[round_obj.declarer_id].name
             print(f"Declarer: {declarer_name}")
         
-        # Show all estimations
+        # Show void declarations
+        if round_obj.void_declarations:
+            print("Void Declarations:")
+            for pid, suits in round_obj.void_declarations.items():
+                print(f"  {self.players[pid].name}: {', '.join(s.name for s in suits)}")
+        
+        # Show estimations with tags
         print("Final Estimations:")
         for i, player in enumerate(self.players):
             estimation = round_obj.estimations.get(i, 0)
             tags = []
             if i == round_obj.declarer_id:
-                tags.append("CALL")
-            if round_obj.with_players and i in round_obj.with_players:
+                tags.append("DECLARER")
+            if i in round_obj.with_players:
                 tags.append("WITH")
-            if round_obj.dash_players and i in round_obj.dash_players:
+            if i in round_obj.dash_players:
                 tags.append("DASH")
             tag_str = f" ({', '.join(tags)})" if tags else ""
             print(f"  {player.name}: {estimation}{tag_str}")
+        
+        # Show risk level
+        risk_level = abs(total_estimations - 13) // 2
+        if risk_level > 0:
+            last_estimator = round_obj._get_last_estimator()
+            risk_name = ["", "Risk", "Double Risk", "Triple Risk"][min(risk_level, 3)]
+            print(f"Risk Level: {risk_name} (affects {self.players[last_estimator].name})")
+        
+        # Check for double WITH
+        if len(round_obj.with_players) >= 2:
+            print("⚠️  DOUBLE WITH: All scores will be doubled!")
+        
         print()
+
+    def get_speed_round_trump(self, round_number: int) -> Optional[Suit]:
+        """Get predetermined trump for speed rounds"""
+        if self.game_mode == "FULL":
+            # Rounds 14-18: No Trump, Spades, Hearts, Diamonds, Clubs
+            trump_map = {14: None, 15: Suit.SPADES, 16: Suit.HEARTS, 17: Suit.DIAMONDS, 18: Suit.CLUBS}
+        else:  # MINI: Rounds 6-10
+            trump_map = {6: None, 7: Suit.SPADES, 8: Suit.HEARTS, 9: Suit.DIAMONDS, 10: Suit.CLUBS}
+        return trump_map.get(round_number)
     
     def _collect_bids_normal_round(self, round_obj: Round):
         """Collect bids for normal rounds with proper DASH logic."""
@@ -414,19 +454,18 @@ class EstimationGame:
         return round_obj.leader_id
     
     def play_round(self) -> Dict[int, int]:
-        """Play a complete round."""
+        """Play a complete round using the 5-phase structure."""
         while True:
             round_obj = self.start_new_round()
             
-            # Collect bids and estimations
+            # Execute all 5 phases
             result = self.collect_bids_and_estimations(round_obj)
             
             if result == "RESTART_ROUND":
-                continue  # Restart with a new round
+                continue  # Sa'aydeh - start new round with doubled multiplier
             
-            # Play all 13 tricks
-            for trick_num in range(1, 14):
-                self.play_trick(round_obj, trick_num)
+            # Phase 5: Card play (all 13 tricks)
+            round_obj.execute_phase_5_card_play()
             
             # Calculate and apply scores
             round_scores = round_obj.calculate_scores()
@@ -445,7 +484,7 @@ class EstimationGame:
             self._log_round_completion(round_obj, round_scores)
             
             return round_scores
-    
+
     def _log_round_completion(self, round_obj: Round, round_scores: Dict[int, int]):
         """Log detailed round completion data."""
         print(f"\n=== Round {round_obj.round_number} Complete ===")

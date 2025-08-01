@@ -5,203 +5,452 @@ Handles trick resolution and round progression with proper bidding flow.
 
 from typing import List, Dict, Optional, Tuple, Set
 from estimation_bot.card import Card, Suit
-from estimation_bot.player import Player
-
-
-class Trick:
-    """Represents a single trick in the game."""
-    
-    def __init__(self, leader_id: int):
-        self.leader_id = leader_id
-        self.cards: Dict[int, Card] = {}  # player_id -> card
-        self.play_order: List[int] = []
-        self.winner_id: Optional[int] = None
-        self.led_suit: Optional[Suit] = None
-    
-    def add_card(self, player_id: int, card: Card):
-        """Add a card played by a player."""
-        if player_id not in self.cards:
-            self.play_order.append(player_id)
-        self.cards[player_id] = card
-        
-        # First card determines led suit
-        if self.led_suit is None:
-            self.led_suit = card.suit
-    
-    def is_complete(self) -> bool:
-        """Check if all 4 players have played."""
-        return len(self.cards) == 4
-    
-    def determine_winner(self, trump_suit: Optional[Suit]) -> int:
-        """
-        Determine winner of the trick.
-        
-        Args:
-            trump_suit: Current trump suit (None for No Trump)
-            
-        Returns:
-            Player ID of trick winner
-        """
-        if not self.is_complete():
-            raise ValueError("Cannot determine winner of incomplete trick")
-        
-        winning_card = None
-        winner_id = None
-        
-        for player_id in self.play_order:
-            card = self.cards[player_id]
-            
-            if winning_card is None or card.beats(winning_card, trump_suit, self.led_suit):
-                winning_card = card
-                winner_id = player_id
-        
-        self.winner_id = winner_id
-        return winner_id
+from estimation_bot.player import Player, HumanPlayer
 
 
 class Round:
-    """Manages a complete round of Estimation with proper bidding flow."""
+    """Manages a complete round of Estimation with proper 5-phase structure."""
     
     def __init__(self, round_number: int, trump_suit: Optional[Suit], players: List[Player], is_speed_round: bool = False):
         self.round_number = round_number
-        self.trump_suit = trump_suit  # For speed rounds, this is predetermined
+        self.predetermined_trump = trump_suit  # For speed rounds only
         self.players = {p.player_id: p for p in players}
         self.is_speed_round = is_speed_round
         
-        self.tricks: List[Trick] = []
-        self.current_trick: Optional[Trick] = None
-        self.leader_id = 0  # First player leads first trick
+        # Phase tracking
+        self.current_phase = 1  # 1=Void, 2=Dash, 3=Bidding, 4=Estimation, 5=Play
         
-        # Bidding phase data
-        self.other_bids: Dict[int, Optional[Tuple[int, Optional[Suit]]]] = {i: None for i in range(4)}
-        self.dash_players: Set[int] = set()  # Players who made dash calls
+        # Phase 1: Void declarations
+        self.void_declarations = {}  # player_id -> [suits]
         
-        # After declarer is determined
+        # Phase 2: Dash declarations  
+        self.dash_players: Set[int] = set()
+        
+        # Phase 3: Trump bidding
+        self.bidding_active = True
+        self.current_bidder = 0  # Will be set randomly for first round
+        self.highest_bid = 0
+        self.highest_bidder = None
+        self.trump_suit = None
+        self.bid_history = []  # [(player_id, bid_amount, trump_suit), ...]
+        self.passes = set()  # Players who have passed
+        
+        # Phase 4: Estimation
+        self.estimations: Dict[int, int] = {}
+        self.with_players: Set[int] = set()
         self.declarer_id: Optional[int] = None
         self.declarer_bid: Optional[int] = None
         
-        # Estimation phase data
-        self.estimations: Dict[int, int] = {}
-        self.with_players: Set[int] = set()  # Players who bid "with"
+        # Phase 5: Card play
+        self.tricks: List[Trick] = []
+        self.current_trick: Optional[Trick] = None
+        self.leader_id = 0
         
-    def set_bid(self, player_id: int, amount: int, trump_suit: Optional[Suit]):
-        """Set a player's bid during bidding phase."""
-        if 4 <= amount <= 13:  # Valid bid range
-            self.other_bids[player_id] = (amount, trump_suit)
-            self.players[player_id].bid = amount
-            self.players[player_id].trump_suit = trump_suit
+    def execute_phase_1_void_declarations(self):
+        """Phase 1: Each player declares void suits."""
+        print(f"\n=== PHASE 1: VOID DECLARATIONS - Round {self.round_number} ===")
+        
+        for player_id in range(4):
+            player = self.players[player_id]
+            void_suits = player.declare_avoid()
+            if void_suits:
+                self.void_declarations[player_id] = void_suits
+                print(f"{player.name} declares VOID in: {', '.join(suit.name for suit in void_suits)}")
+            else:
+                print(f"{player.name} has cards in all suits")
+        
+        self.current_phase = 2
     
-    def set_dash_call(self, player_id: int):
-        """Set a player's dash call."""
-        self.dash_players.add(player_id)
-        self.other_bids[player_id] = "DASH"
-        self.players[player_id].is_dash = True
-    
-    def determine_declarer(self):
-        """Determine the declarer (highest bidder) after bidding phase."""
+    def execute_phase_2_dash_declarations(self):
+        """Phase 2: Players declare dash intentions."""
         if self.is_speed_round:
-            return  # No declarer in speed rounds, handled differently
+            print("Speed Round: No Dash declarations allowed")
+            self.current_phase = 3
+            return
+            
+        print(f"\n=== PHASE 2: DASH DECLARATIONS - Round {self.round_number} ===")
         
-        highest_bid = 0
-        highest_trump_rank = 0
-        declarer_candidates = []
+        dash_count = 0
+        for player_id in range(4):
+            player = self.players[player_id]
+            
+            if dash_count >= 2:
+                print(f"{player.name} cannot declare Dash (2 players already declared)")
+                continue
+                
+            # Show hand and get dash decision
+            if isinstance(player, HumanPlayer):
+                print(f"\n{player.name}'s hand: {player._format_hand()}")
+                wants_dash = player.make_dash_choice()
+            elif hasattr(player, 'strategy'):
+                # Bot decision (simplified for now)
+                wants_dash = False  # Bots don't dash in this implementation
+            else:
+                wants_dash = False
+                
+            if wants_dash:
+                self.dash_players.add(player_id)
+                dash_count += 1
+                print(f"{player.name} declares DASH (aims for 0 tricks)")
+            else:
+                print(f"{player.name} will participate in normal bidding")
         
-        # Find highest bid(s)
-        for player_id, bid_data in self.other_bids.items():
-            if bid_data and bid_data != "DASH":
-                amount, trump_suit = bid_data
-                if amount > highest_bid:
-                    highest_bid = amount
-                    declarer_candidates = [(player_id, trump_suit)]
-                elif amount == highest_bid:
-                    declarer_candidates.append((player_id, trump_suit))
+        self.current_phase = 3
+    
+    def execute_phase_3_trump_bidding(self):
+        """Phase 3: Trump bidding auction."""
+        if self.is_speed_round:
+            self._handle_speed_round_trump()
+            self.current_phase = 4
+            return
+            
+        print(f"\n=== PHASE 3: TRUMP BIDDING - Round {self.round_number} ===")
         
-        if not declarer_candidates:
-            # All passed or only dash calls
-            self.declarer_id = None
+        # Eligible bidders (non-dash players)
+        eligible_bidders = [i for i in range(4) if i not in self.dash_players]
+        
+        if len(eligible_bidders) == 0:
+            print("All players declared Dash! Round becomes Sa'aydeh (doubled)")
+            return "SA_AYDEH"
+        
+        # Set random starting bidder for first round (simplified: use player 0)
+        self.current_bidder = eligible_bidders[0]
+        
+        bidding_complete = False
+        consecutive_passes = 0
+        
+        while not bidding_complete:
+            current_player = self.players[self.current_bidder]
+            
+            if self.current_bidder in self.passes:
+                # Skip passed players
+                self.current_bidder = self._get_next_bidder(eligible_bidders)
+                consecutive_passes += 1
+                if consecutive_passes >= len(eligible_bidders) - 1:
+                    bidding_complete = True
+                continue
+            
+            # Get bid from player
+            print(f"\n{current_player.name}'s turn to bid")
+            print(f"Current highest: {self.highest_bid} {self.trump_suit.name if self.trump_suit else 'No bid yet'}")
+            
+            if isinstance(current_player, HumanPlayer):
+                bid_result = current_player.make_bid_interactive(self._get_bidding_context(), False)
+            elif hasattr(current_player, 'strategy'):
+                bid_result = current_player.strategy.make_bid(
+                    current_player.hand, self._get_bidding_context(), False, False
+                )
+            else:
+                bid_result = None
+            
+            if bid_result is None:
+                # Pass
+                self.passes.add(self.current_bidder)
+                print(f"{current_player.name} passes")
+                consecutive_passes += 1
+            else:
+                # New bid
+                bid_amount, trump_suit = bid_result
+                if self._is_valid_bid(bid_amount, trump_suit):
+                    self._record_bid(self.current_bidder, bid_amount, trump_suit)
+                    consecutive_passes = 0
+                else:
+                    print("Invalid bid, must pass")
+                    self.passes.add(self.current_bidder)
+                    consecutive_passes += 1
+            
+            # Check if bidding should end
+            if len(self.passes) >= len(eligible_bidders) - 1:
+                bidding_complete = True
+            else:
+                self.current_bidder = self._get_next_bidder(eligible_bidders)
+        
+        # Determine declarer and WITH players
+        self._determine_declarer_and_with()
+        
+        if self.declarer_id is None:
+            print("All players passed! Round becomes Sa'aydeh (doubled)")
+            return "SA_AYDEH"
+        
+        self.current_phase = 4
+    
+    def execute_phase_4_estimation(self):
+        """Phase 4: Trick estimation by non-dash, non-declarer players."""
+        print(f"\n=== PHASE 4: ESTIMATION - Round {self.round_number} ===")
+        
+        if self.is_speed_round:
+            self._handle_speed_round_estimation()
+            self.current_phase = 5
             return
         
-        # If tied, use trump suit ranking
-        if len(declarer_candidates) > 1:
-            # Trump suit rankings: No Trump > Spades > Hearts > Diamonds > Clubs
-            suit_ranks = {None: 5, Suit.SPADES: 4, Suit.HEARTS: 3, Suit.DIAMONDS: 2, Suit.CLUBS: 1}
+        # Declarer's estimation is locked to their bid
+        self.estimations[self.declarer_id] = self.declarer_bid
+        print(f"Declarer {self.players[self.declarer_id].name}: {self.declarer_bid} tricks (locked)")
+        
+        # Get estimation order (excluding declarer and dash players)
+        estimation_order = self._get_estimation_order()
+        
+        for i, player_id in enumerate(estimation_order):
+            player = self.players[player_id]
+            is_last = (i == len(estimation_order) - 1)
             
-            best_candidate = max(declarer_candidates, key=lambda x: suit_ranks.get(x[1], 0))
-            self.declarer_id, self.trump_suit = best_candidate
+            if isinstance(player, HumanPlayer):
+                estimation = player.make_estimation_interactive(
+                    self.trump_suit, self.declarer_bid,
+                    list(self.estimations.values()), is_last, False
+                )
+            elif hasattr(player, 'strategy'):
+                estimation = player.strategy.make_estimation(
+                    player.hand, self.trump_suit, self.declarer_bid,
+                    list(self.estimations.values()), is_last, False
+                )
+            else:
+                estimation = min(3, self.declarer_bid)
+            
+            # Handle WITH detection
+            if player_id in self.with_players:
+                min_estimation = self._get_player_last_bid(player_id)
+                max_estimation = self.declarer_bid
+                if estimation < min_estimation:
+                    estimation = min_estimation
+                elif estimation > max_estimation:
+                    estimation = max_estimation
+                print(f"{player.name} (WITH): {estimation} tricks")
+            else:
+                print(f"{player.name}: {estimation} tricks")
+            
+            # Apply risk constraint for last estimator
+            if is_last:
+                estimation = self._apply_risk_constraint(estimation)
+            
+            self.estimations[player_id] = estimation
+        
+        # Set dash player estimations to 0
+        for dash_player in self.dash_players:
+            self.estimations[dash_player] = 0
+        
+        self.current_phase = 5
+    
+    def execute_phase_5_card_play(self):
+        """Phase 5: Play all 13 tricks."""
+        print(f"\n=== PHASE 5: CARD PLAY - Round {self.round_number} ===")
+        
+        # Declarer leads first trick (or highest estimator in speed rounds)
+        if self.is_speed_round:
+            highest_est = max(self.estimations.values())
+            for pid, est in self.estimations.items():
+                if est == highest_est:
+                    self.leader_id = pid
+                    break
         else:
-            self.declarer_id, self.trump_suit = declarer_candidates[0]
+            self.leader_id = self.declarer_id
         
-        self.declarer_bid = highest_bid
-        self.players[self.declarer_id].is_declarer = True
-    
-    def start_trick(self, leader_id: int):
-        """Start a new trick with specified leader."""
-        self.current_trick = Trick(leader_id)
-        self.leader_id = leader_id
-    
-    def play_card(self, player_id: int, card: Card) -> bool:
-        """
-        Play a card to the current trick.
+        # Play all 13 tricks
+        for trick_num in range(1, 14):
+            self._play_single_trick(trick_num)
         
-        Args:
-            player_id: ID of player playing card
-            card: Card being played
+        return True  # Round complete
+    
+    def _handle_speed_round_trump(self):
+        """Handle trump determination for speed rounds."""
+        trump_order = [None, Suit.SPADES, Suit.HEARTS, Suit.DIAMONDS, Suit.CLUBS]
+        base_round = self.round_number - (14 if True else 6)  # Adjust based on game mode
+        self.trump_suit = trump_order[base_round % 5]
+        
+        # Check for super calls (8+ tricks)
+        for player_id in range(4):
+            player = self.players[player_id]
+            if hasattr(player, 'strategy'):
+                wants_super = False  # Simplified
+            else:
+                wants_super = False
             
-        Returns:
-            True if trick is complete after this play
-        """
-        if self.current_trick is None:
-            raise ValueError("No active trick")
+            if wants_super:
+                # Player can change trump with super call
+                print(f"{player.name} requests Super Call - can change trump")
+                # Implementation would allow trump selection here
         
-        # Validate play
-        player = self.players[player_id]
-        valid_plays = player.get_valid_plays(self.current_trick.led_suit)
-        
-        if card not in valid_plays:
-            raise ValueError(f"Invalid play: {card}")
-        
-        # Play the card
-        player.play_card(card)
-        self.current_trick.add_card(player_id, card)
-        
-        # Check if trick is complete
-        if self.current_trick.is_complete():
-            winner_id = self.current_trick.determine_winner(self.trump_suit)
-            self.players[winner_id].tricks_won += 1
+        print(f"Speed Round Trump: {self.trump_suit.name if self.trump_suit else 'No Trump'}")
+    
+    def _handle_speed_round_estimation(self):
+        """Handle estimation for speed rounds."""
+        for player_id in range(4):
+            player = self.players[player_id]
             
-            # Add to completed tricks
-            self.tricks.append(self.current_trick)
-            self.current_trick = None
-            self.leader_id = winner_id
+            if isinstance(player, HumanPlayer):
+                estimation = player.make_estimation_interactive(
+                    self.trump_suit, 13, list(self.estimations.values()), 
+                    player_id == 3, False
+                )
+            elif hasattr(player, 'strategy'):
+                estimation = player.strategy.make_estimation(
+                    player.hand, self.trump_suit, 13,
+                    list(self.estimations.values()), player_id == 3, False
+                )
+            else:
+                estimation = 3
             
-            return True
+            # Speed round: WITH is only same number
+            if estimation in self.estimations.values():
+                for other_pid, other_est in self.estimations.items():
+                    if other_est == estimation:
+                        self.with_players.add(player_id)
+                        self.with_players.add(other_pid)
+            
+            self.estimations[player_id] = estimation
+            print(f"{player.name}: {estimation} tricks")
+    
+    def _is_valid_bid(self, amount: int, trump_suit: Optional[Suit]) -> bool:
+        """Check if bid is valid according to rules."""
+        if amount < 4 or amount > 13:
+            return False
         
-        return False
+        # Must be higher than current highest
+        if amount < self.highest_bid:
+            return False
+        
+        # If same amount, trump must be stronger
+        if amount == self.highest_bid:
+            suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+            current_rank = suit_ranks.get(self.trump_suit, 0)
+            new_rank = suit_ranks.get(trump_suit, 0)
+            return new_rank >= current_rank
+        
+        return True
     
-    def is_complete(self) -> bool:
-        """Check if round is complete (all cards played)."""
-        return len(self.tricks) == 13 and self.current_trick is None
+    def _record_bid(self, player_id: int, amount: int, trump_suit: Optional[Suit]):
+        """Record a valid bid."""
+        self.bid_history.append((player_id, amount, trump_suit))
+        self.highest_bid = amount
+        self.highest_bidder = player_id
+        self.trump_suit = trump_suit
+        player_name = self.players[player_id].name
+        trump_name = trump_suit.name if trump_suit else "No Trump"
+        print(f"{player_name} bids {amount} {trump_name}")
     
-    def get_next_player(self, current_player_id: int) -> int:
-        """Get ID of next player in turn order."""
-        return (current_player_id + 1) % len(self.players)
+    def _get_next_bidder(self, eligible_bidders: List[int]) -> int:
+        """Get next bidder in counterclockwise order."""
+        current_idx = eligible_bidders.index(self.current_bidder)
+        # Counterclockwise: go backwards in list, wrap around
+        next_idx = (current_idx - 1) % len(eligible_bidders)
+        return eligible_bidders[next_idx]
     
-    def get_play_order(self, leader_id: int) -> List[int]:
-        """Get play order starting from leader."""
+    def _determine_declarer_and_with(self):
+        """Determine declarer and WITH players."""
+        if not self.bid_history:
+            return
+        
+        # Declarer is highest bidder
+        self.declarer_id = self.highest_bidder
+        self.declarer_bid = self.highest_bid
+        
+        # Determine WITH players
+        final_trump = self.trump_suit
+        for player_id, bid_amount, trump_suit in self.bid_history:
+            if player_id != self.declarer_id and trump_suit == final_trump:
+                self.with_players.add(player_id)
+    
+    def _get_estimation_order(self) -> List[int]:
+        """Get order for estimation phase."""
+        # Order: 2nd highest, 3rd highest, 4th highest bidder, then counterclockwise from declarer
+        bidders_by_amount = {}
+        for player_id, amount, trump_suit in self.bid_history:
+            if amount not in bidders_by_amount:
+                bidders_by_amount[amount] = []
+            bidders_by_amount[amount].append(player_id)
+        
         order = []
-        current = leader_id
-        for _ in range(len(self.players)):
-            order.append(current)
-            current = self.get_next_player(current)
+        sorted_amounts = sorted(bidders_by_amount.keys(), reverse=True)
+        
+        # Add bidders in order of bid amount
+        for amount in sorted_amounts[1:]:  # Skip highest (declarer)
+            order.extend(bidders_by_amount[amount])
+        
+        # Add remaining non-dash players counterclockwise from declarer
+        remaining = [i for i in range(4) 
+                    if i not in order and i != self.declarer_id and i not in self.dash_players]
+        
+        # Sort counterclockwise from declarer
+        declarer_pos = self.declarer_id
+        remaining_sorted = []
+        pos = (declarer_pos - 1) % 4
+        while len(remaining_sorted) < len(remaining):
+            if pos in remaining:
+                remaining_sorted.append(pos)
+            pos = (pos - 1) % 4
+        
+        order.extend(remaining_sorted)
         return order
     
-    def calculate_scores(self) -> Dict[int, int]:
-        """
-        Calculate round scores based on bids vs tricks won with full Estimation rules.
+    def _apply_risk_constraint(self, estimation: int) -> int:
+        """Apply risk constraint to last estimator."""
+        current_total = sum(self.estimations.values())
+        if current_total + estimation == 13:
+            print(f"Risk constraint: Cannot estimate {estimation} (total would be 13)")
+            if estimation > 0:
+                estimation -= 1
+            else:
+                estimation += 1
+            print(f"Adjusted to {estimation}")
+        return estimation
+    
+    def _get_player_last_bid(self, player_id: int) -> int:
+        """Get player's last recorded bid amount."""
+        for pid, amount, trump in reversed(self.bid_history):
+            if pid == player_id:
+                return amount
+        return 0
+    
+    def _play_single_trick(self, trick_num: int):
+        """Play a single trick."""
+        print(f"\n--- Trick {trick_num} ---")
         
-        Returns:
-            Dictionary of player_id -> points earned
-        """
+        self.current_trick = Trick(self.leader_id)
+        play_order = self._get_counterclockwise_order(self.leader_id)
+        
+        for player_id in play_order:
+            player = self.players[player_id]
+            valid_plays = player.get_valid_plays(self.current_trick.led_suit)
+            
+            if isinstance(player, HumanPlayer):
+                card = player.choose_card_interactive(
+                    valid_plays, self.trump_suit, self.current_trick.led_suit, []
+                )
+            elif hasattr(player, 'strategy'):
+                card = player.strategy.choose_card(
+                    player.hand, valid_plays, self.trump_suit,
+                    self.current_trick.led_suit, list(self.current_trick.cards.values())
+                )
+            else:
+                card = valid_plays[0]
+            
+            player.play_card(card)
+            self.current_trick.add_card(player_id, card)
+            print(f"{player.name} plays {card}")
+        
+        # Determine winner
+        winner_id = self.current_trick.determine_winner(self.trump_suit)
+        self.players[winner_id].tricks_won += 1
+        self.tricks.append(self.current_trick)
+        self.leader_id = winner_id
+        
+        print(f">>> {self.players[winner_id].name} wins the trick! <<<")
+    
+    def _get_counterclockwise_order(self, start_id: int) -> List[int]:
+        """Get play order counterclockwise from start_id."""
+        order = []
+        pos = start_id
+        for _ in range(4):
+            order.append(pos)
+            pos = (pos - 1) % 4  # Counterclockwise
+        return order
+    
+    def _get_bidding_context(self) -> List:
+        """Get current bidding context for players."""
+        return [(pid, amt, trump) for pid, amt, trump in self.bid_history]
+    
+    def calculate_scores(self) -> Dict[int, int]:
+        """Calculate round scores according to strict Estimation rules."""
         scores = {}
         total_estimations = sum(self.estimations.values())
         
@@ -209,95 +458,97 @@ class Round:
         is_over_round = total_estimations > 13
         is_under_round = total_estimations < 13
         
-        # Calculate risk level
+        # Calculate risk level for last estimator
         risk_level = abs(total_estimations - 13) // 2
+        last_estimator = self._get_last_estimator()
         
-        # Count winners and losers
-        winners = []
-        losers = []
+        # Count successful/failed players
+        successful_players = []
+        failed_players = []
         
-        for player_id, player in self.players.items():
+        for player_id in range(4):
             estimation = self.estimations.get(player_id, 0)
-            actual_tricks = player.tricks_won
+            actual = self.players[player_id].tricks_won
             
-            if actual_tricks == estimation:
-                winners.append(player_id)
+            if actual == estimation:
+                successful_players.append(player_id)
             else:
-                losers.append(player_id)
+                failed_players.append(player_id)
         
-        # Calculate scores for each player
-        for player_id, player in self.players.items():
+        # Check for double WITH
+        double_with = len(self.with_players) >= 2
+        
+        for player_id in range(4):
             estimation = self.estimations.get(player_id, 0)
-            actual_tricks = player.tricks_won
+            actual = self.players[player_id].tricks_won
             score = 0
             
-            if actual_tricks == estimation:
-                # Made estimation exactly
-                score = 10 + estimation  # Base points
+            # Base scoring
+            if actual == estimation:
+                score += 10  # Success bonus
                 
-                # Call/With bonus
-                if player_id == self.declarer_id or player_id in self.with_players:
-                    score += 10
-                
-                # Sole winner bonus
-                if len(winners) == 1:
-                    score += 10
-                
-                # Risk bonus
-                if risk_level > 0:
-                    score += 10 * risk_level
-                
-                # Dash bonus
-                if player_id in self.dash_players:
-                    if is_over_round:
-                        score = 25  # Override base calculation
-                    elif is_under_round:
-                        score = 33  # Override base calculation
+                # Super call scoring (8+ tricks)
+                if estimation >= 8:
+                    score += estimation * estimation  # T*T
+                else:
+                    score += estimation  # Regular trick points
                 
             else:
-                # Missed estimation
-                difference = abs(actual_tricks - estimation)
-                score = -difference  # Base penalty per trick difference
+                score -= 10  # Failure penalty
                 
-                # Additional penalties
-                score -= 10  # Base penalty for missing
-                
-                # Call/With penalty
-                if player_id == self.declarer_id or player_id in self.with_players:
+                # Super call penalty
+                if estimation >= 8:
+                    score -= (estimation * estimation) // 2  # T*T/2
+                else:
+                    score -= abs(actual - estimation)  # Difference penalty
+            
+            # Caller/WITH bonus/penalty
+            is_caller_or_with = (player_id == self.declarer_id or player_id in self.with_players)
+            if is_caller_or_with:
+                if actual == estimation:
+                    score += 10
+                else:
                     score -= 10
-                
-                # Sole loser penalty
-                if len(losers) == 1:
-                    score -= 10
-                
-                # Risk penalty
-                if risk_level > 0:
+            
+            # Sole success/failure bonus/penalty
+            if len(successful_players) == 1 and player_id in successful_players:
+                score += 10
+            elif len(failed_players) == 1 and player_id in failed_players:
+                score -= 10
+            
+            # Risk scoring (only for last estimator)
+            if player_id == last_estimator and risk_level > 0:
+                if actual == estimation:
+                    score += 10 * risk_level
+                else:
                     score -= 10 * risk_level
-                
-                # Dash penalty
-                if player_id in self.dash_players:
+            
+            # Dash scoring
+            if player_id in self.dash_players:
+                if actual == 0:  # Dash success
                     if is_over_round:
-                        score = -25  # Override base calculation
+                        score = 25
                     elif is_under_round:
-                        score = -33  # Override base calculation
+                        score = 33
+                    else:
+                        score = 10  # Exact round
+                else:  # Dash failure
+                    if is_over_round:
+                        score = -25
+                    elif is_under_round:
+                        score = -33
+                    else:
+                        score = -10  # Exact round
+            
+            # Double WITH multiplier
+            if double_with:
+                score *= 2
             
             scores[player_id] = score
         
         return scores
     
-    def get_status(self) -> Dict:
-        """Get current round status for display."""
-        return {
-            'round_number': self.round_number,
-            'trump_suit': str(self.trump_suit) if self.trump_suit else 'No Trump',
-            'is_speed_round': self.is_speed_round,
-            'tricks_completed': len(self.tricks),
-            'declarer_id': self.declarer_id,
-            'declarer_bid': self.declarer_bid,
-            'estimations': dict(self.estimations),
-            'tricks_won': {pid: p.tricks_won for pid, p in self.players.items()},
-            'current_leader': self.leader_id,
-            'is_complete': self.is_complete(),
-            'with_players': list(self.with_players),
-            'dash_players': list(self.dash_players)
-        }
+    def _get_last_estimator(self) -> int:
+        """Get the player who estimated last (at risk)."""
+        estimation_order = self._get_estimation_order()
+        return estimation_order[-1] if estimation_order else 0

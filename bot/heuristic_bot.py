@@ -15,23 +15,49 @@ class HeuristicBot(BotInterface):
     def __init__(self, name: str = "HeuristicBot"):
         self.name = name
 
-    def make_bid(self, hand: List[Card], other_bids: List[Optional[Union[Tuple[int, Optional[Suit]], str]]], 
-                 is_speed_round: bool = False, can_dash: bool = True) -> Optional[Union[Tuple[int, Optional[Suit]], str]]:
-        """Strategic bidding based on hand analysis."""
+    def make_bid(self, hand: List[Card], bid_history: List, 
+             is_speed_round: bool = False, can_dash: bool = True) -> Optional[Union[Tuple[int, Optional[Suit]], str]]:
+        """Strategic bidding based on hand analysis with proper trump hierarchy."""
         if is_speed_round:
             return None  # No bidding in speed rounds
         
         # Analyze hand strength for different trump suits
         suit_analysis = self._analyze_hand_by_suit(hand)
         
-        # Find best trump option
+        # Determine current minimum requirements
+        min_bid = 4
+        min_trump_rank = 0
+        
+        if bid_history:
+            highest = max(bid_history, key=lambda x: x[1])
+            min_bid = highest[1]
+            current_trump = highest[2]
+            
+            # Trump hierarchy: Clubs=1, Diamonds=2, Hearts=3, Spades=4, NoTrump=5
+            suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+            min_trump_rank = suit_ranks.get(current_trump, 0)
+        
+        # Find best trump option that meets requirements
         best_trump = None
         best_strength = 0
         best_bid = 0
         
-        for trump_suit in [None, Suit.SPADES, Suit.HEARTS, Suit.DIAMONDS, Suit.CLUBS]:
+        trump_options = [Suit.CLUBS, Suit.DIAMONDS, Suit.HEARTS, Suit.SPADES, None]
+        suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+        
+        for trump_suit in trump_options:
+            trump_rank = suit_ranks[trump_suit]
+            
             strength = self._calculate_hand_strength(hand, trump_suit)
             estimated_tricks = self._estimate_tricks(hand, trump_suit)
+            
+            # Must be able to outbid current high
+            required_bid = min_bid
+            if estimated_tricks == min_bid and trump_rank < min_trump_rank:
+                continue  # Can't match with weaker trump
+            
+            if estimated_tricks < required_bid:
+                continue  # Can't make minimum bid
             
             if estimated_tricks >= 4 and strength > best_strength:
                 best_strength = strength
@@ -40,20 +66,17 @@ class HeuristicBot(BotInterface):
         
         # Decide whether to bid
         if best_strength < 0.4:  # Weak hand
-            if can_dash and best_strength < 0.2:
-                return "DASH"
             return None  # Pass
         
-        # Check if we can outbid others
-        highest_bid = 0
-        for bid in (other_bids.values() if hasattr(other_bids, 'values') else other_bids):
-            if bid and bid != "DASH" and isinstance(bid, tuple):
-                amount, trump = bid
-                if amount > highest_bid:
-                    highest_bid = amount
+        # Ensure we can legally outbid
+        if best_bid < min_bid:
+            return None
         
-        if best_bid <= highest_bid:
-            return None  # Can't outbid
+        if best_bid == min_bid:
+            # Must have stronger trump
+            best_trump_rank = suit_ranks[best_trump]
+            if best_trump_rank < min_trump_rank:
+                return None
         
         return (best_bid, best_trump)
 

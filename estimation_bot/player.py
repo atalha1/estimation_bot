@@ -171,75 +171,84 @@ class BotInterface(ABC):
 class HumanPlayer(Player):
     """Human player that gets input from console."""
     
-    def make_bid_interactive(self, other_bids: List[Optional[Union[Tuple[int, Optional[Suit]], str]]], can_dash: bool = True) -> Optional[Union[Tuple[int, Optional[Suit]], str]]:
-        """Get bid from human player via console input."""
+    def make_bid_interactive(self, bid_history: List, can_dash: bool = False) -> Optional[Union[Tuple[int, Optional[Suit]], str]]:
+        """Get bid from human player with proper trump hierarchy."""
         print(f"\n{self.name}'s turn to bid")
         print(f"Your hand: {self._format_hand()}")
         
-        # Show other bids
-        bid_summary = []
-        for i, bid in enumerate(other_bids):
-            if i == self.player_id:
-                continue  # Skip showing own bid slot
-            if bid is None:
-                continue  # Don't show passes until there are actual bids
-            elif bid == "DASH":
-                bid_summary.append(f"Player {i}: DASH CALL")
-            elif isinstance(bid, tuple):
-                amount, trump = bid
-                trump_str = trump.name if trump else "No Trump"
-                bid_summary.append(f"Player {i}: {amount} {trump_str}")
+        # Show bid history
+        if bid_history:
+            print("Previous bids:")
+            for player_id, amount, trump_suit in bid_history:
+                trump_name = trump_suit.name if trump_suit else "No Trump"
+                print(f"  Player {player_id}: {amount} {trump_name}")
         
-        if bid_summary:
-            print(f"Previous bids: {', '.join(bid_summary)}")
+        # Determine current minimum bid
+        if bid_history:
+            current_high = max(bid_history, key=lambda x: x[1])
+            min_bid = current_high[1]
+            current_trump = current_high[2]
+            print(f"Current high bid: {min_bid} {current_trump.name if current_trump else 'No Trump'}")
+        else:
+            min_bid = 4
+            current_trump = None
+            print("No bids yet. Minimum bid: 4")
         
-        print("\nOptions:")
-        print("1. Make a regular bid (4-13 tricks + trump suit)")
-        if can_dash:
-            print("2. Make a DASH CALL (0 tricks)")
-        print("3. Pass")
+        print("\nOptions: 1. Make bid  2. Pass")
         
         while True:
             try:
-                choice = input("Enter your choice (1/2/3): ").strip()
+                choice = input("Enter choice (1/2): ").strip()
                 
-                if choice == "3":
+                if choice == "2":
                     return None  # Pass
                 
-                elif choice == "2" and can_dash:
-                    return "DASH"
-                
                 elif choice == "1":
-                    # Regular bid
+                    # Get bid amount
                     while True:
                         try:
-                            amount = int(input("Enter bid amount (4-13): "))
-                            if 4 <= amount <= 13:
-                                break
-                            print("Bid must be between 4 and 13")
+                            amount = int(input(f"Enter bid amount ({min_bid}-13): "))
+                            if amount < min_bid or amount > 13:
+                                print(f"Must bid at least {min_bid}")
+                                continue
+                            break
                         except ValueError:
                             print("Please enter a valid number")
                     
-                    print("Choose trump suit:")
-                    print("1. No Trump")
-                    print("2. Spades ♠")
-                    print("3. Hearts ♥") 
-                    print("4. Diamonds ♦")
-                    print("5. Clubs ♣")
+                    # Get trump suit
+                    print("\nChoose trump suit:")
+                    print("1. Clubs ♣ (weakest)")
+                    print("2. Diamonds ♦")
+                    print("3. Hearts ♥")
+                    print("4. Spades ♠") 
+                    print("5. No Trump (strongest)")
+                    
+                    # Show which suits are valid for current bid amount
+                    if amount == min_bid and current_trump is not None:
+                        suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+                        min_rank = suit_ranks[current_trump]
+                        print(f"Must choose trump rank {min_rank} or higher")
                     
                     while True:
                         try:
                             trump_choice = int(input("Enter trump choice (1-5): "))
-                            trump_map = {
-                                1: None,
-                                2: Suit.SPADES,
-                                3: Suit.HEARTS,
-                                4: Suit.DIAMONDS,
-                                5: Suit.CLUBS
-                            }
-                            if trump_choice in trump_map:
-                                return (amount, trump_map[trump_choice])
-                            print("Please enter 1-5")
+                            trump_map = {1: Suit.CLUBS, 2: Suit.DIAMONDS, 3: Suit.HEARTS, 4: Suit.SPADES, 5: None}
+                            
+                            if trump_choice not in trump_map:
+                                print("Please enter 1-5")
+                                continue
+                            
+                            trump_suit = trump_map[trump_choice]
+                            
+                            # Validate trump hierarchy
+                            if amount == min_bid and current_trump is not None:
+                                suit_ranks = {Suit.CLUBS: 1, Suit.DIAMONDS: 2, Suit.HEARTS: 3, Suit.SPADES: 4, None: 5}
+                                if suit_ranks[trump_suit] < suit_ranks[current_trump]:
+                                    print("Trump suit must be equal or stronger than current")
+                                    continue
+                            
+                            return (amount, trump_suit)
+                            
                         except ValueError:
                             print("Please enter a valid number")
                 
@@ -266,9 +275,10 @@ class HumanPlayer(Player):
                 print("Please enter 'y' or 'n'")
 
     def make_estimation_interactive(self, trump_suit: Optional[Suit], declarer_bid: int,
-                                  other_estimations: List[int], is_last_estimator: bool = False,
-                                  can_dash: bool = True) -> Union[int, str]:
-        """Get estimation from human player via console input."""
+                                        other_estimations: List[int], is_last_estimator: bool = False,
+                                        can_dash: bool = False, is_with: bool = False, 
+                                        min_with_bid: int = 0) -> Union[int, str]:
+        """Get estimation with WITH constraints and proper risk handling."""
         print(f"\n{self.name}'s turn to estimate")
         print(f"Trump suit: {trump_suit.name if trump_suit else 'No Trump'}")
         print(f"Declarer bid: {declarer_bid}")
@@ -279,44 +289,41 @@ class HumanPlayer(Player):
             current_total = sum(other_estimations)
             print(f"Other estimations so far: {other_estimations} (Total: {current_total})")
         
-        print(f"\nOptions:")
+        # Show constraints
+        min_est = min_with_bid if is_with else 0
+        max_est = declarer_bid
+        
+        print(f"\nEstimation range: {min_est}-{max_est}")
+        
+        if is_with:
+            print(f"⚠️  You are WITH - minimum estimate: {min_with_bid}")
+        
         if is_last_estimator:
             current_total = sum(other_estimations)
             forbidden = 13 - current_total
-            print(f"⚠️  You are the Risk player! Cannot estimate {forbidden} (total would be 13)")
-
-        print(f"1. Regular estimation (0-{declarer_bid})")
-        if can_dash:
-            print("2. DASH (estimate 0 tricks)")
-        print(f"3. WITH (estimate {declarer_bid} same as declarer)")
+            if 0 <= forbidden <= max_est:
+                print(f"⚠️  You are at RISK! Cannot estimate {forbidden} (total would be 13)")
         
         while True:
             try:
-                choice = input("Enter your choice (1/2/3): ").strip()
+                estimation_str = input(f"Enter estimation ({min_est}-{max_est}): ").strip()
+                estimation = int(estimation_str)
                 
-                if choice == "2" and can_dash:
-                    return "DASH"
-                elif choice == "3":
-                    return declarer_bid  # WITH call
-                elif choice == "1":
-                    while True:
-                        try:
-                            estimation = int(input(f"Enter estimation (0-{declarer_bid}): "))
-                            if 0 <= estimation <= declarer_bid:
-                                # Check risk constraint
-                                if is_last_estimator:
-                                    current_total = sum(other_estimations)
-                                    if current_total + estimation == 13:
-                                        print(f"Cannot estimate {estimation} - total would be exactly 13 (Risk rule)")
-                                        continue
-                                return estimation
-                            print(f"Estimation must be between 0 and {declarer_bid}")
-                        except ValueError:
-                            print("Please enter a valid number")
-                else:
-                    print("Invalid choice. Please enter 1, 2, or 3")
-            except (ValueError, KeyboardInterrupt):
-                print("Please enter a valid choice")
+                if estimation < min_est or estimation > max_est:
+                    print(f"Estimation must be between {min_est} and {max_est}")
+                    continue
+                
+                # Check risk constraint
+                if is_last_estimator:
+                    current_total = sum(other_estimations)
+                    if current_total + estimation == 13:
+                        print(f"Cannot estimate {estimation} - total would be exactly 13 (Risk rule)")
+                        continue
+                
+                return estimation
+                
+            except ValueError:
+                print("Please enter a valid number")
     
     def choose_card_interactive(self, valid_plays: List[Card], trump_suit: Optional[Suit], 
                                led_suit: Optional[Suit], cards_on_table: List[str] = None) -> Card:
