@@ -2603,3 +2603,243 @@ Generation Summary:
 2025-08-01 07:22:31,953 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
 2025-08-01 07:22:48,532 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
 2025-08-01 07:22:51,798 - SelfPlayTrainer - INFO - Final results saved to training_data (4000 valid games)
+2025-08-01 07:34:26,353 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:34:38,613 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:34:49,239 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:35:00,195 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:35:10,209 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:35:20,532 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:35:30,958 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:35:42,614 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:35:53,213 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:36:03,807 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:36:14,188 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:36:24,582 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:36:36,528 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:36:46,605 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:36:56,234 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:37:05,896 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:37:15,574 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:37:27,371 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:37:38,624 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:37:48,716 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:37:58,798 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:38:08,971 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:38:19,609 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:38:32,540 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:38:43,714 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:38:57,009 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:39:11,200 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:39:23,275 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:39:36,115 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:39:47,797 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:39:59,087 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:40:10,300 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:40:21,501 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:40:32,679 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:40:45,228 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:40:56,966 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:41:10,571 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:41:21,341 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:41:32,699 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:41:43,503 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:41:54,313 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:42:05,265 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:42:16,911 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:42:30,316 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:42:43,292 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:42:56,945 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:43:10,255 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:43:23,138 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:43:35,462 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:43:47,177 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:43:59,003 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:44:11,127 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:44:22,869 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:44:35,219 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:44:47,730 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:45:01,056 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:45:13,279 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:45:25,625 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:45:38,022 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:45:50,338 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:46:02,568 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:46:15,314 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:46:32,186 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:46:47,730 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:47:02,025 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:47:19,307 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:47:34,303 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:47:48,268 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:48:03,302 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:48:17,899 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:48:33,287 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:48:48,622 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:49:03,228 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:49:18,988 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:49:36,296 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:49:53,318 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:50:09,476 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:50:28,581 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:50:44,779 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:51:03,028 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:51:19,265 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:51:36,764 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:51:52,099 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:52:08,386 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:52:24,251 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:52:40,567 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:52:56,972 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:53:13,368 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:53:31,011 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:53:48,886 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:54:06,850 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:54:28,148 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:54:49,773 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:55:08,468 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:55:27,060 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:55:48,005 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:56:09,333 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:56:30,247 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:56:50,638 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:57:10,452 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:57:30,066 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:57:49,930 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:58:11,189 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:58:34,043 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:58:54,725 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:59:16,316 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 07:59:38,149 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:00:01,852 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:00:22,745 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:00:45,426 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:01:07,471 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:01:30,887 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:01:53,980 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:02:17,928 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:02:44,715 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:03:07,509 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:03:31,283 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:03:54,659 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:04:17,838 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:04:40,780 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:05:03,744 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:05:26,537 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:05:50,476 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:06:16,676 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:06:42,206 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:07:06,120 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:07:30,548 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:07:55,928 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:08:20,502 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:08:48,452 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:09:14,842 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:09:39,219 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:10:04,250 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:10:31,859 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:10:56,414 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:11:20,641 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:11:46,557 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:12:11,818 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:12:35,954 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:13:07,967 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:13:38,249 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:14:09,196 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:14:37,942 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:15:05,718 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:15:31,922 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:15:58,323 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:16:24,713 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:16:56,721 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:17:26,549 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:18:00,173 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:18:30,141 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:18:59,917 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:19:30,546 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:20:01,211 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:20:32,289 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:21:03,668 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:21:35,330 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:22:05,873 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:22:35,864 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:23:05,706 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:23:38,512 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:24:10,585 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:24:42,533 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:25:14,344 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:25:42,714 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:42,739 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:42,945 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:42,967 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:43,598 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:44,036 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:25:44,051 - SelfPlayTrainer - INFO - Processed 44/44 valid game results
+2025-08-01 08:25:45,235 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,252 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,278 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,298 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,317 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,405 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,466 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,480 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,497 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,516 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:45,699 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:46,204 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:25:46,592 - SelfPlayTrainer - ERROR - Game simulation failed: 
+2025-08-01 08:26:10,280 - SelfPlayTrainer - INFO - Processed 37/37 valid game results
+2025-08-01 08:26:43,919 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:27:16,507 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:27:45,788 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:28:14,317 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:28:47,795 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:29:16,917 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:29:45,737 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:30:14,538 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:30:44,490 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:31:13,635 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:31:44,126 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:32:15,113 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:32:47,848 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:33:19,048 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:33:50,938 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:34:22,327 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:34:55,048 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:35:26,386 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:35:57,813 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:36:29,696 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:37:01,275 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:37:33,476 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:38:06,354 - SelfPlayTrainer - INFO - Processed 50/50 valid game results
+2025-08-01 08:38:20,688 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,690 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,691 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,691 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,691 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,691 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,692 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,692 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,693 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,701 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,702 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,702 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,702 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,702 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,703 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,704 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,706 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,707 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,707 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,707 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,707 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,707 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,708 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,709 - SelfPlayTrainer - ERROR - Game simulation failed: A process in the process pool was terminated abruptly while the future was running or pending.
+2025-08-01 08:38:20,711 - SelfPlayTrainer - INFO - Processed 18/19 valid game results

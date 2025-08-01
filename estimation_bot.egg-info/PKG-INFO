@@ -1,0 +1,228 @@
+Metadata-Version: 2.4
+Name: estimation-bot
+Version: 0.1.0
+Summary: AI bot for Middle Eastern Estimation card game
+Home-page: https://github.com/yourusername/estimation-bot
+Author: Your Name
+Author-email: your.email@example.com
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Games/Entertainment
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.21.0
+Requires-Dist: pytest>=6.0.0
+Provides-Extra: ml
+Requires-Dist: torch>=1.9.0; extra == "ml"
+Requires-Dist: gym>=0.21.0; extra == "ml"
+Provides-Extra: analysis
+Requires-Dist: pandas>=1.3.0; extra == "analysis"
+Requires-Dist: matplotlib>=3.4.0; extra == "analysis"
+Provides-Extra: dev
+Requires-Dist: black>=21.0.0; extra == "dev"
+Requires-Dist: flake8>=3.9.0; extra == "dev"
+Requires-Dist: mypy>=0.910; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Estimation Card Game Bot 🎴
+
+A complete implementation of the Middle Eastern card game **Estimation** with AI bots, built for reinforcement learning research and gameplay simulation.
+
+## 🎯 About Estimation
+
+Estimation is a popular 4-player trick-taking card game where players bid on how many tricks they'll win, then try to achieve exactly that number. The game features:
+
+- **18 rounds** in Full Bola (or 10/5 in Mini/Micro Bola)
+- **Strategic bidding** with trump suit selection
+- **Speed rounds** with predetermined trump suits
+- **Complex scoring** system with bonuses and penalties
+- **Dash calls** for winning zero tricks
+
+## 🚀 Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/estimation-bot.git
+cd estimation-bot
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Play a game with 4 random bots
+python main.py --bots random random random random
+
+# Play with 1 human vs 3 bots
+python main.py --humans 1 --bots heuristic heuristic random
+
+# Run a quick Mini Bola game
+python main.py --mode MINI --bots weighted weighted heuristic advanced
+```
+
+## 📁 Project Structure
+
+```
+estimation_bot/
+├── game/                   # Core game logic
+│   ├── card.py            # Card, Suit, Rank classes
+│   ├── deck.py            # Deck management and dealing
+│   ├── player.py          # Player logic and bot interface
+│   ├── round.py           # Round management and trick resolution
+│   ├── game.py            # Main game loop and state
+│   ├── rules.py           # Game rules and validation
+│   └── utils.py           # Utilities and logging
+├── bot/                   # AI implementations
+│   ├── random_bot.py      # Baseline random bot
+│   ├── heuristic_bot.py   # Rule-based strategic bot
+│   ├── rl_bot.py          # Reinforcement learning bot
+│   ├── trainer.py         # Self-play training system
+│   └── features.py        # Feature extraction for RL
+├── cli/                   # Command-line interface
+│   └── play.py            # Human player interaction
+├── tests/                 # Unit tests
+├── data/logs/             # Game logs and training data
+├── main.py                # Entry point
+└── requirements.txt       # Dependencies
+```
+
+## 🎮 Game Modes (Bolas)
+
+- **Full Bola**: 18 rounds (13 normal + 5 speed rounds)
+- **Mini Bola**: 10 rounds (5 normal + 5 speed rounds)  
+- **Micro Bola**: 5 rounds (normal rounds only)
+
+## 🤖 Available Bots
+
+1. **RandomBot**: Makes completely random legal moves
+2. **WeightedRandomBot**: Random with slight strategic preferences
+3. **HeuristicBot**: Rule-based strategy with card analysis
+4. **AdvancedHeuristicBot**: Enhanced heuristics with card counting
+5. **RLBot**: Reinforcement learning agent (future implementation)
+
+## 🎯 Game Rules Summary
+
+### Bidding Phase
+- Players bid 4-13 tricks with trump suit, or pass
+- Special "Dash Call" for 0 tricks (max 2 per round)
+- Highest bid wins and sets trump suit
+- Suit rankings: No Trump > Spades > Hearts > Diamonds > Clubs
+
+### Estimation Phase  
+- Non-winning players estimate tricks based on winner's trump
+- Cannot estimate more than winner's bid
+- Total estimations cannot equal exactly 13 ("Risk" rule)
+- "With" bid = same as winner for bonus scoring
+
+### Speed Rounds
+- Last 5 rounds have predetermined trump suits
+- No bidding phase, straight to estimation
+- Round 14: No Trump, 15: Spades, 16: Hearts, 17: Diamonds, 18: Clubs
+
+### Scoring
+**Made estimation exactly:**
+- Base: 10 + tricks won
+- +10 for Call/With
+- +10 for sole winner  
+- +10 per Risk level
+- 25/33 for Dash (Over/Under rounds)
+
+**Missed estimation:**
+- -1 per trick difference
+- -10 for Call/With
+- -10 for sole loser
+- -10 per Risk level
+- -25/-33 for Dash
+
+## 🔧 Development
+
+### Running Tests
+```bash
+python -m pytest tests/
+```
+
+### Training a Bot
+```bash
+python -m bot.trainer --episodes 10000 --save-model
+```
+
+### Detailed Logging
+```bash
+python main.py --verbose --bots heuristic heuristic random random
+```
+
+## 📊 Self-Play Simulation
+
+The project supports automated self-play for:
+- Bot performance evaluation
+- Reinforcement learning training
+- Strategy analysis
+- Statistical game analysis
+
+```python
+from bot.trainer import SelfPlayTrainer
+trainer = SelfPlayTrainer()
+trainer.run_training(episodes=1000)
+```
+
+## 🎯 Future Enhancements
+
+- [ ] Deep reinforcement learning bot with PPO/A3C
+- [ ] Web interface for online play
+- [ ] Tournament system with ELO ratings  
+- [ ] Advanced statistics and game analysis
+- [ ] Mobile app integration
+- [ ] Multiplayer networking
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes following the modular design
+4. Add tests for new functionality
+5. Commit changes (`git commit -m 'Add amazing feature'`)
+6. Push to branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Development Guidelines
+- Keep game logic and AI separate
+- All functions need docstrings
+- Follow the BotInterface for new bots
+- Maintain clean, commented code
+- Add unit tests for new features
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Traditional Middle Eastern Estimation game rules
+- Open source Python gaming community
+- Contributors and testers
+
+## 📧 Contact
+
+- Project maintainer: [AbdelRahman Talha](mailto:your.email@example.com)
+- Issues: [GitHub Issues](https://github.com/yourusername/estimation-bot/issues)
+- Discussions: [GitHub Discussions](https://github.com/yourusername/estimation-bot/discussions)
+
+---
+
+**Ready to master the art of Estimation? Let the cards fall where they may! 🎴✨**

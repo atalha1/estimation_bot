@@ -1,0 +1,3 @@
+[console_scripts]
+estimation-game = main:main
+estimation-train = bot.trainer:run_quick_evaluation

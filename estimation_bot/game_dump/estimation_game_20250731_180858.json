@@ -1,0 +1,313 @@
+{
+  "game_mode": "MINI",
+  "players": [
+    "heuristic_050e5aa1_0",
+    "heuristic_a9e9abd0_1",
+    "heuristic_7f086521_2",
+    "heuristic_e1be624a_3"
+  ],
+  "rounds": [
+    {
+      "round_number": 1,
+      "trump_suit": "\u2665",
+      "is_speed_round": false,
+      "declarer_id": 0,
+      "declarer_name": "heuristic_050e5aa1_0",
+      "estimations": {
+        "0": 4,
+        "1": 0,
+        "2": 3,
+        "3": 0
+      },
+      "actual_tricks": {
+        "0": 4,
+        "1": 4,
+        "2": 2,
+        "3": 3
+      },
+      "scores": {
+        "0": 64,
+        "1": -33,
+        "2": -41,
+        "3": -33
+      },
+      "with_players": [],
+      "dash_players": [
+        1,
+        3
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 2,
+      "trump_suit": "\u2666",
+      "is_speed_round": false,
+      "declarer_id": 2,
+      "declarer_name": "heuristic_7f086521_2",
+      "estimations": {
+        "2": 5,
+        "0": 3,
+        "1": 0,
+        "3": 0
+      },
+      "actual_tricks": {
+        "0": 3,
+        "1": 2,
+        "2": 4,
+        "3": 4
+      },
+      "scores": {
+        "0": 43,
+        "1": -33,
+        "2": -41,
+        "3": -33
+      },
+      "with_players": [],
+      "dash_players": [
+        1,
+        3
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 3,
+      "trump_suit": "\u2665",
+      "is_speed_round": false,
+      "declarer_id": 1,
+      "declarer_name": "heuristic_a9e9abd0_1",
+      "estimations": {
+        "1": 4,
+        "0": 0,
+        "2": 4,
+        "3": 0
+      },
+      "actual_tricks": {
+        "0": 5,
+        "1": 2,
+        "2": 4,
+        "3": 2
+      },
+      "scores": {
+        "0": -33,
+        "1": -42,
+        "2": 54,
+        "3": -32
+      },
+      "with_players": [
+        2
+      ],
+      "dash_players": [
+        0
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 4,
+      "trump_suit": "\u2663",
+      "is_speed_round": false,
+      "declarer_id": 2,
+      "declarer_name": "heuristic_7f086521_2",
+      "estimations": {
+        "2": 6,
+        "0": 2,
+        "1": 2,
+        "3": 0
+      },
+      "actual_tricks": {
+        "0": 2,
+        "1": 3,
+        "2": 5,
+        "3": 3
+      },
+      "scores": {
+        "0": 32,
+        "1": -21,
+        "2": -31,
+        "3": -33
+      },
+      "with_players": [],
+      "dash_players": [
+        3
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 5,
+      "trump_suit": "\u2665",
+      "is_speed_round": false,
+      "declarer_id": 2,
+      "declarer_name": "heuristic_7f086521_2",
+      "estimations": {
+        "2": 6,
+        "0": 0,
+        "1": 0,
+        "3": 0
+      },
+      "actual_tricks": {
+        "0": 0,
+        "1": 5,
+        "2": 7,
+        "3": 1
+      },
+      "scores": {
+        "0": 33,
+        "1": -33,
+        "2": -51,
+        "3": -41
+      },
+      "with_players": [],
+      "dash_players": [
+        0,
+        1
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 6,
+      "trump_suit": "No Trump",
+      "is_speed_round": true,
+      "declarer_id": 1,
+      "declarer_name": "heuristic_a9e9abd0_1",
+      "estimations": {
+        "0": 1,
+        "1": 3,
+        "2": 2,
+        "3": 2
+      },
+      "actual_tricks": {
+        "0": 3,
+        "1": 3,
+        "2": 2,
+        "3": 5
+      },
+      "scores": {
+        "0": -32,
+        "1": 43,
+        "2": 32,
+        "3": -33
+      },
+      "with_players": [],
+      "dash_players": [],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 7,
+      "trump_suit": "\u2660",
+      "is_speed_round": true,
+      "declarer_id": 2,
+      "declarer_name": "heuristic_7f086521_2",
+      "estimations": {
+        "0": 3,
+        "1": 3,
+        "2": 4,
+        "3": 2
+      },
+      "actual_tricks": {
+        "0": 4,
+        "1": 1,
+        "2": 5,
+        "3": 3
+      },
+      "scores": {
+        "0": -11,
+        "1": -12,
+        "2": -21,
+        "3": -11
+      },
+      "with_players": [],
+      "dash_players": [],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 8,
+      "trump_suit": "\u2665",
+      "is_speed_round": true,
+      "declarer_id": 2,
+      "declarer_name": "heuristic_7f086521_2",
+      "estimations": {
+        "0": 3,
+        "1": 3,
+        "2": 4,
+        "3": 2
+      },
+      "actual_tricks": {
+        "0": 3,
+        "1": 1,
+        "2": 4,
+        "3": 5
+      },
+      "scores": {
+        "0": 13,
+        "1": -12,
+        "2": 24,
+        "3": -13
+      },
+      "with_players": [],
+      "dash_players": [],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 9,
+      "trump_suit": "\u2666",
+      "is_speed_round": true,
+      "declarer_id": 0,
+      "declarer_name": "heuristic_050e5aa1_0",
+      "estimations": {
+        "0": 5,
+        "1": 3,
+        "2": 2,
+        "3": 2
+      },
+      "actual_tricks": {
+        "0": 4,
+        "1": 3,
+        "2": 1,
+        "3": 5
+      },
+      "scores": {
+        "0": -21,
+        "1": 23,
+        "2": -11,
+        "3": -13
+      },
+      "with_players": [],
+      "dash_players": [],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 10,
+      "trump_suit": "\u2663",
+      "is_speed_round": true,
+      "declarer_id": 0,
+      "declarer_name": "heuristic_050e5aa1_0",
+      "estimations": {
+        "0": 4,
+        "1": 3,
+        "2": 3,
+        "3": 2
+      },
+      "actual_tricks": {
+        "0": 2,
+        "1": 4,
+        "2": 5,
+        "3": 2
+      },
+      "scores": {
+        "0": -22,
+        "1": -11,
+        "2": -12,
+        "3": 22
+      },
+      "with_players": [],
+      "dash_players": [],
+      "round_type": "Under"
+    }
+  ],
+  "final_scores": {
+    "heuristic_050e5aa1_0": 66,
+    "heuristic_a9e9abd0_1": -131,
+    "heuristic_7f086521_2": -98,
+    "heuristic_e1be624a_3": -220
+  },
+  "winner": "heuristic_050e5aa1_0"
+}

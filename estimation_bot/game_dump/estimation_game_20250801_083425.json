@@ -1,0 +1,173 @@
+{
+  "game_mode": "MICRO",
+  "players": [
+    "NADL_v3.0_0",
+    "heuristic_b3dbd13d_1",
+    "NADL_v1.0_2",
+    "NADL_v2.0_3"
+  ],
+  "rounds": [
+    {
+      "round_number": 1,
+      "trump_suit": "\u2665",
+      "is_speed_round": false,
+      "declarer_id": 3,
+      "declarer_name": "NADL_v2.0_3",
+      "estimations": {
+        "3": 5,
+        "0": 2,
+        "1": 0,
+        "2": 3
+      },
+      "actual_tricks": {
+        "0": 1,
+        "1": 5,
+        "2": 4,
+        "3": 3
+      },
+      "scores": {
+        "0": -21,
+        "1": -33,
+        "2": -21,
+        "3": -32
+      },
+      "with_players": [],
+      "dash_players": [
+        1
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 2,
+      "trump_suit": "\u2665",
+      "is_speed_round": false,
+      "declarer_id": 0,
+      "declarer_name": "NADL_v3.0_0",
+      "estimations": {
+        "0": 4,
+        "1": 0,
+        "2": 0,
+        "3": 2
+      },
+      "actual_tricks": {
+        "0": 4,
+        "1": 2,
+        "2": 4,
+        "3": 3
+      },
+      "scores": {
+        "0": 64,
+        "1": -33,
+        "2": -33,
+        "3": -41
+      },
+      "with_players": [],
+      "dash_players": [
+        1,
+        2
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 3,
+      "trump_suit": "\u2663",
+      "is_speed_round": false,
+      "declarer_id": 0,
+      "declarer_name": "NADL_v3.0_0",
+      "estimations": {
+        "0": 6,
+        "1": 2,
+        "2": 0,
+        "3": 0
+      },
+      "actual_tricks": {
+        "0": 6,
+        "1": 0,
+        "2": 2,
+        "3": 5
+      },
+      "scores": {
+        "0": 56,
+        "1": -32,
+        "2": -33,
+        "3": -33
+      },
+      "with_players": [],
+      "dash_players": [
+        2,
+        3
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 4,
+      "trump_suit": "\u2666",
+      "is_speed_round": false,
+      "declarer_id": 0,
+      "declarer_name": "NADL_v3.0_0",
+      "estimations": {
+        "0": 4,
+        "1": 1,
+        "2": 4,
+        "3": 0
+      },
+      "actual_tricks": {
+        "0": 4,
+        "1": 1,
+        "2": 4,
+        "3": 4
+      },
+      "scores": {
+        "0": 44,
+        "1": 31,
+        "2": 44,
+        "3": -33
+      },
+      "with_players": [
+        2
+      ],
+      "dash_players": [
+        3
+      ],
+      "round_type": "Under"
+    },
+    {
+      "round_number": 5,
+      "trump_suit": "\u2663",
+      "is_speed_round": false,
+      "declarer_id": 3,
+      "declarer_name": "NADL_v2.0_3",
+      "estimations": {
+        "3": 6,
+        "0": 3,
+        "1": 0,
+        "2": 0
+      },
+      "actual_tricks": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 7
+      },
+      "scores": {
+        "0": -31,
+        "1": -33,
+        "2": -33,
+        "3": -41
+      },
+      "with_players": [],
+      "dash_players": [
+        1,
+        2
+      ],
+      "round_type": "Under"
+    }
+  ],
+  "final_scores": {
+    "NADL_v3.0_0": 112,
+    "heuristic_b3dbd13d_1": -100,
+    "NADL_v1.0_2": -76,
+    "NADL_v2.0_3": -180
+  },
+  "winner": "NADL_v3.0_0"
+}
