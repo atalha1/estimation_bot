@@ -1,12 +1,73 @@
 """
 Round module for Estimation card game.
-Handles trick resolution and round progression with proper bidding flow.
+Handles Trick resolution and round progression with proper bidding flow.
 """
 
 from typing import List, Dict, Optional, Tuple, Set
 from estimation_bot.card import Card, Suit
 from estimation_bot.player import Player, HumanPlayer
 
+
+class Trick:
+    """Represents a single trick in the card game."""
+    
+    def __init__(self, leader_id: int):
+        self.leader_id = leader_id
+        self.cards: Dict[int, Card] = {}
+        self.led_suit: Optional[Suit] = None
+    
+    def add_card(self, player_id: int, card: Card):
+        """Add a card to the trick."""
+        if len(self.cards) == 0:  # First card sets led suit
+            self.led_suit = card.suit
+        self.cards[player_id] = card
+    
+    def determine_winner(self, trump_suit: Optional[Suit]) -> int:
+        """Determine winner based on led suit and trump rules."""
+        winner_id = next(iter(self.cards))  # Default to first player
+        winning_card = self.cards[winner_id]
+        
+        for player_id, card in self.cards.items():
+            if self._is_better_card(
+                card, 
+                winning_card, 
+                self.led_suit, 
+                trump_suit
+            ):
+                winner_id = player_id
+                winning_card = card
+        
+        return winner_id
+    
+    def _is_better_card(
+        self, 
+        candidate: Card, 
+        current_winner: Card, 
+        led_suit: Suit, 
+        trump_suit: Optional[Suit]
+    ) -> bool:
+        """Compare two cards following trick rules."""
+        # Trump always beats non-trump
+        if candidate.suit == trump_suit and current_winner.suit != trump_suit:
+            return True
+        if current_winner.suit == trump_suit and candidate.suit != trump_suit:
+            return False
+        
+        # Both trump: higher rank wins
+        if candidate.suit == trump_suit and current_winner.suit == trump_suit:
+            return candidate.rank > current_winner.rank
+        
+        # Both non-trump: must follow led suit
+        if candidate.suit == led_suit and current_winner.suit != led_suit:
+            return True
+        if current_winner.suit == led_suit and candidate.suit != led_suit:
+            return False
+        
+        # Same suit: higher rank wins
+        if candidate.suit == current_winner.suit:
+            return candidate.rank > current_winner.rank
+        
+        return False  # Candidate doesn't beat current winner
 
 class Round:
     """Manages a complete round of Estimation with proper 5-phase structure."""
@@ -42,8 +103,8 @@ class Round:
         self.declarer_bid: Optional[int] = None
         
         # Phase 5: Card play
-        self.tricks: List[Trick] = []
-        self.current_trick: Optional[Trick] = None
+        self.Tricks: List[Trick] = []
+        self.current_Trick: Optional[Trick] = None
         self.leader_id = 0
         
     def execute_phase_1_void_declarations(self):
@@ -55,7 +116,7 @@ class Round:
             void_suits = player.declare_avoid()
             if void_suits:
                 self.void_declarations[player_id] = void_suits
-                print(f"{player.name} declares VOID in: {', '.join(suit.name for suit in void_suits)}")
+                print(f"{player.name} declares VOID")
             else:
                 print(f"{player.name} has cards in all suits")
         
@@ -91,7 +152,7 @@ class Round:
             if wants_dash:
                 self.dash_players.add(player_id)
                 dash_count += 1
-                print(f"{player.name} declares DASH (aims for 0 tricks)")
+                print(f"{player.name} declares DASH (aims for 0 Tricks)")
             else:
                 print(f"{player.name} will participate in normal bidding")
         
@@ -185,7 +246,7 @@ class Round:
         
         # Declarer's estimation is locked to their bid
         self.estimations[self.declarer_id] = self.declarer_bid
-        print(f"Declarer {self.players[self.declarer_id].name}: {self.declarer_bid} tricks (locked)")
+        print(f"Declarer {self.players[self.declarer_id].name}: {self.declarer_bid} Tricks (locked)")
         
         # Get estimation order (excluding declarer and dash players)
         estimation_order = self._get_estimation_order()
@@ -215,9 +276,9 @@ class Round:
                     estimation = min_estimation
                 elif estimation > max_estimation:
                     estimation = max_estimation
-                print(f"{player.name} (WITH): {estimation} tricks")
+                print(f"{player.name} (WITH): {estimation} Tricks")
             else:
-                print(f"{player.name}: {estimation} tricks")
+                print(f"{player.name}: {estimation} Tricks")
             
             # Apply risk constraint for last estimator
             if is_last:
@@ -232,10 +293,10 @@ class Round:
         self.current_phase = 5
     
     def execute_phase_5_card_play(self):
-        """Phase 5: Play all 13 tricks."""
+        """Phase 5: Play all 13 Tricks."""
         print(f"\n=== PHASE 5: CARD PLAY - Round {self.round_number} ===")
         
-        # Declarer leads first trick (or highest estimator in speed rounds)
+        # Declarer leads first Trick (or highest estimator in speed rounds)
         if self.is_speed_round:
             highest_est = max(self.estimations.values())
             for pid, est in self.estimations.items():
@@ -245,9 +306,9 @@ class Round:
         else:
             self.leader_id = self.declarer_id
         
-        # Play all 13 tricks
-        for trick_num in range(1, 14):
-            self._play_single_trick(trick_num)
+        # Play all 13 Tricks
+        for Trick_num in range(1, 14):
+            self._play_single_Trick(Trick_num)
         
         return True  # Round complete
     
@@ -257,7 +318,7 @@ class Round:
         base_round = self.round_number - (14 if True else 6)  # Adjust based on game mode
         self.trump_suit = trump_order[base_round % 5]
         
-        # Check for super calls (8+ tricks)
+        # Check for super calls (8+ Tricks)
         for player_id in range(4):
             player = self.players[player_id]
             if hasattr(player, 'strategy'):
@@ -298,7 +359,7 @@ class Round:
                         self.with_players.add(other_pid)
             
             self.estimations[player_id] = estimation
-            print(f"{player.name}: {estimation} tricks")
+            print(f"{player.name}: {estimation} Tricks")
     
     def _is_valid_bid(self, amount: int, trump_suit: Optional[Suit]) -> bool:
         """Check if bid is valid according to rules."""
@@ -401,40 +462,40 @@ class Round:
                 return amount
         return 0
     
-    def _play_single_trick(self, trick_num: int):
-        """Play a single trick."""
-        print(f"\n--- Trick {trick_num} ---")
+    def _play_single_Trick(self, Trick_num: int):
+        """Play a single Trick."""
+        print(f"\n--- Trick {Trick_num} ---")
         
-        self.current_trick = Trick(self.leader_id)
+        self.current_Trick = Trick(self.leader_id)
         play_order = self._get_counterclockwise_order(self.leader_id)
         
         for player_id in play_order:
             player = self.players[player_id]
-            valid_plays = player.get_valid_plays(self.current_trick.led_suit)
+            valid_plays = player.get_valid_plays(self.current_Trick.led_suit)
             
             if isinstance(player, HumanPlayer):
                 card = player.choose_card_interactive(
-                    valid_plays, self.trump_suit, self.current_trick.led_suit, []
+                    valid_plays, self.trump_suit, self.current_Trick.led_suit, []
                 )
             elif hasattr(player, 'strategy'):
                 card = player.strategy.choose_card(
                     player.hand, valid_plays, self.trump_suit,
-                    self.current_trick.led_suit, list(self.current_trick.cards.values())
+                    self.current_Trick.led_suit, list(self.current_Trick.cards.values())
                 )
             else:
                 card = valid_plays[0]
             
             player.play_card(card)
-            self.current_trick.add_card(player_id, card)
+            self.current_Trick.add_card(player_id, card)
             print(f"{player.name} plays {card}")
         
         # Determine winner
-        winner_id = self.current_trick.determine_winner(self.trump_suit)
+        winner_id = self.current_Trick.determine_winner(self.trump_suit)
         self.players[winner_id].tricks_won += 1
-        self.tricks.append(self.current_trick)
+        self.Tricks.append(self.current_Trick)
         self.leader_id = winner_id
         
-        print(f">>> {self.players[winner_id].name} wins the trick! <<<")
+        print(f">>> {self.players[winner_id].name} wins the Trick! <<<")
     
     def _get_counterclockwise_order(self, start_id: int) -> List[int]:
         """Get play order counterclockwise from start_id."""
@@ -487,11 +548,11 @@ class Round:
             if actual == estimation:
                 score += 10  # Success bonus
                 
-                # Super call scoring (8+ tricks)
+                # Super call scoring (8+ Tricks)
                 if estimation >= 8:
                     score += estimation * estimation  # T*T
                 else:
-                    score += estimation  # Regular trick points
+                    score += estimation  # Regular Trick points
                 
             else:
                 score -= 10  # Failure penalty
