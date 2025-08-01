@@ -147,6 +147,7 @@ class SelfPlayTrainer:
                  num_workers: int = None,
                  games_per_generation: int = 100,
                  game_mode: str = "MICRO"):
+                 
         """
         Initialize trainer.
         
@@ -161,9 +162,16 @@ class SelfPlayTrainer:
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(exist_ok=True)
         
-        self.num_workers = num_workers or mp.cpu_count()
         self.games_per_generation = games_per_generation
         self.game_mode = game_mode
+
+        # Memory optimizations
+        self.max_stored_games = 1000  # Limit memory usage
+        self.batch_process_size = 10   # Process games in small batches
+        
+        # CPU optimizations  
+        self.num_workers = min(2, mp.cpu_count())  # Limit workers to prevent overheating
+        
         
         self.generation = 0
         self.all_game_results: List[GameResult] = []
