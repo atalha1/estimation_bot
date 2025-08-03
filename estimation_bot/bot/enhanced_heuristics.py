@@ -8,7 +8,7 @@ Sophisticated heuristic evaluation functions for bidding, play, and nil estimati
 
 import random
 import math
-from typing import List, Dict, Optional, Tuple, Set
+from typing import List, Dict, Optional, Tuple, Set, Any
 from collections import defaultdict, Counter
 
 from ..card import Card, Suit, Rank
@@ -435,12 +435,15 @@ class BiddingStrategy:
         if not other_bids:
             return {'highest_bid': 0, 'num_bidders': 0, 'competition_level': 'none'}
         
-        active_bids = [bid for bid in other_bids.values() if bid is not None]
+        if isinstance(other_bids, dict):
+            active_bids = [bid for bid in other_bids.values() if bid is not None]
+        else:
+            active_bids = [bid for bid in other_bids if bid is not None]
         
         if not active_bids:
             return {'highest_bid': 0, 'num_bidders': 0, 'competition_level': 'none'}
         
-        bid_amounts = [bid[0] for bid in active_bids if len(bid) >= 1]
+        bid_amounts = [bid[0] for bid in active_bids if bid is not None and len(bid) >= 1]
         highest_bid = max(bid_amounts) if bid_amounts else 0
         num_bidders = len(active_bids)
         

@@ -9,7 +9,7 @@ A competitive AI agent using hybrid ISMCTS + heuristics approach.
 import random
 import math
 import time
-from typing import List, Dict, Optional, Tuple, Set
+from typing import List, Dict, Optional, Tuple, Set, Any
 from collections import defaultdict
 from dataclasses import dataclass
 from copy import deepcopy
@@ -307,7 +307,12 @@ class ISMCTSAgent(BotInterface):
             
             # Competitive bidding
             highest_bid = 0
-            for bid_data in other_bids.values():
+            if isinstance(other_bids, dict):
+                bid_values = other_bids.values()
+            else:
+                bid_values = other_bids  # It's already a list
+                
+            for bid_data in bid_values:
                 if bid_data and len(bid_data) >= 1:
                     highest_bid = max(highest_bid, bid_data[0])
             
@@ -359,7 +364,8 @@ class ISMCTSAgent(BotInterface):
         
         # Analyze competition
         highest_bid = 0
-        for bid_data in other_bids.values():
+        bid_values = other_bids.values() if isinstance(other_bids, dict) else other_bids
+        for bid_data in bid_values:
             if bid_data and len(bid_data) >= 1:
                 highest_bid = max(highest_bid, bid_data[0])
         
