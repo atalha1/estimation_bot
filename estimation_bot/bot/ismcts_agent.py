@@ -266,14 +266,20 @@ class ISMCTSAgent(BotInterface):
         self.nil_attempts = 0
         self.nil_successes = 0
         
-    def make_bid(self, hand: List[Card], other_bids: Dict[int, tuple], 
-                 is_last_bidder: bool, can_bid_dash: bool) -> Optional[Tuple[int, Optional[Suit]]]:
+    def make_bid(self, hand: List[Card], other_bids: List, 
+             is_last_bidder: bool, can_bid_dash: bool) -> Optional[Tuple[int, Optional[Suit]]]:
         """Make bidding decision using enhanced heuristics + ISMCTS."""
+        
+        # Convert other_bids to dict format if it's a list
+        if isinstance(other_bids, list):
+            other_bids_dict = {i: bid for i, bid in enumerate(other_bids) if bid is not None}
+        else:
+            other_bids_dict = other_bids
         
         if self.use_enhanced:
             # Use comprehensive evaluation
             evaluation = self.enhanced_evaluator.comprehensive_bid_evaluation(
-                hand, other_bids, None
+                hand, other_bids_dict, None
             )
             
             nil_eval = evaluation['nil_evaluation']
@@ -284,11 +290,11 @@ class ISMCTSAgent(BotInterface):
                 confidence = nil_eval['confidence']
                 if confidence > 0.6:
                     self.nil_attempts += 1
-                    return "DASH"
+                    return (0, None)  # Return tuple for nil, not string
             
             # Regular competitive bid
             recommended = bid_eval['recommended_bid']
-            if recommended:
+            if recommended and recommended != "PASS":
                 return recommended
             else:
                 return None  # Pass
@@ -303,26 +309,23 @@ class ISMCTSAgent(BotInterface):
                 sim_prob = self.evaluator.simulate_zero_bid(hand, None)
                 if sim_prob > 0.6:
                     self.nil_attempts += 1
-                    return "DASH"
+                    return (0, None)  # Return tuple for nil
             
             # Competitive bidding
             highest_bid = 0
-            if isinstance(other_bids, dict):
-                bid_values = other_bids.values()
-            else:
-                bid_values = other_bids  # It's already a list
-                
-            for bid_data in bid_values:
+            for bid_data in other_bids_dict.values():
                 if bid_data and len(bid_data) >= 1:
                     highest_bid = max(highest_bid, bid_data[0])
-            
+
             if highest_bid > 0:
-                my_bid = max(highest_bid + 1, heuristic_estimate)
-                if my_bid <= len(hand):
+                my_bid = highest_bid + 1  # Must bid higher to compete
+                if my_bid <= len(hand) and heuristic_estimate >= my_bid - 1:  # Only bid if confident
                     trump_suit = self._select_trump_suit(hand)
                     return (my_bid, trump_suit)
-                return None
+                else:
+                    return None  # Pass - can't compete
             else:
+                # First to bid or no valid bids yet
                 bid_amount = max(4, heuristic_estimate)
                 trump_suit = self._select_trump_suit(hand)
                 return (bid_amount, trump_suit)
@@ -380,8 +383,8 @@ class ISMCTSAgent(BotInterface):
         return None
     
     def make_estimation(self, hand: List[Card], trump_suit: Optional[Suit], 
-                       declarer_bid: int, current_estimations: List[int],
-                       is_last_estimator: bool, can_dash: bool) -> int:
+                   declarer_bid: int, current_estimations: List[int],
+                   is_last_estimator: bool, can_dash: bool) -> int:
         """Make estimation using heuristics."""
         
         heuristic_estimate = self.evaluator.heuristic_bid(hand, trump_suit)
@@ -392,11 +395,11 @@ class ISMCTSAgent(BotInterface):
             if zero_prob > self.nil_threshold:
                 sim_prob = self.evaluator.simulate_zero_bid(hand, trump_suit)
                 if sim_prob > 0.6:
-                    return "DASH"
+                    return 0  # Return 0 for nil, not string
         
         # Risk player logic
         if is_last_estimator:
-            total_so_far = sum(est for est in current_estimations if est is not None)
+            total_so_far = sum(est for est in current_estimations if est is not None and isinstance(est, int))
             if total_so_far + heuristic_estimate == 13:
                 # Avoid exact 13 (Risk)
                 return max(0, heuristic_estimate - 1)

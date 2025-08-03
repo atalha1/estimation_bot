@@ -493,7 +493,7 @@ class BiddingStrategy:
     
     @staticmethod
     def _determine_final_bid(base_estimate: int, competition: Dict, 
-                           risk: Dict, hand: List[Card]) -> Optional[Tuple[int, Optional[Suit]]]:
+                        risk: Dict, hand: List[Card]) -> Optional[Tuple[int, Optional[Suit]]]:
         """Determine final bid based on all factors."""
         
         highest_bid = competition['highest_bid']
@@ -510,20 +510,21 @@ class BiddingStrategy:
             # Need to bid higher to compete
             min_competitive_bid = highest_bid + 1
             
-            if adjusted_estimate >= min_competitive_bid and confidence > 0.5:
+            if adjusted_estimate >= min_competitive_bid and confidence > 0.5 and min_competitive_bid <= 13:
                 # We can compete
                 bid_amount = min_competitive_bid
+                # Select trump suit
+                trump_suit = BiddingStrategy._select_optimal_trump(hand)
+                return (bid_amount, trump_suit)
             else:
                 # Can't compete reliably, pass
                 return None
         else:
             # First to bid
             bid_amount = max(4, adjusted_estimate)  # Minimum opening bid
-        
-        # Select trump suit
-        trump_suit = BiddingStrategy._select_optimal_trump(hand)
-        
-        return (bid_amount, trump_suit)
+            # Select trump suit
+            trump_suit = BiddingStrategy._select_optimal_trump(hand)
+            return (bid_amount, trump_suit)
     
     @staticmethod 
     def _select_optimal_trump(hand: List[Card]) -> Optional[Suit]:
@@ -660,7 +661,7 @@ class EnhancedHeuristicEvaluator:
             'recommendation': self._make_final_recommendation(nil_evaluation, bid_evaluation)
         }
     
-    def _make_final_recommendation(self, nil_eval: Dict, bid_eval: Dict) -> str:
+    def _make_final_recommendation(self, nil_eval: Dict, bid_eval: Dict) -> Tuple[int, Optional[Suit]]:
         """Make final bidding recommendation."""
         
         nil_prob = nil_eval['probability']
@@ -668,11 +669,15 @@ class EnhancedHeuristicEvaluator:
         
         # Strong nil candidate
         if nil_prob > 0.7 and nil_confidence > 0.6:
-            return "STRONG_NIL"
+            return (0, None)
         elif nil_prob > 0.5 and nil_confidence > 0.7:
-            return "CONSIDER_NIL"
+            return (0, None)
         else:
-            return f"BID_{bid_eval['recommended_bid']}"
+            recommended = bid_eval['recommended_bid']
+            if recommended:
+                return recommended
+            else:
+                return (4, None)  # Default safe bid
     
     def evaluate_card_plays(self, hand: List[Card], valid_plays: List[Card],
                            game_state: Dict) -> List[Tuple[Card, float]]:
